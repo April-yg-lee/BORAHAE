@@ -10,8 +10,8 @@ import SignInRegister from './pages/SignInRegister';
 function App() {
   return (
     <>
-      <SignInMain></SignInMain>
-      {/* <SignInQuestions></SignInQuestions> */}
+      {/* <SignInMain></SignInMain> */}
+      <SignInQuestions></SignInQuestions>
       {/* <SignInRegister></SignInRegister> */}
     </>
   );
