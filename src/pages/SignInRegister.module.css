@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 375px;
+  height: 750px;
+  margin: auto;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 375px;
+  height: 750px;
+  border: 1px solid lightgray;
+  background-color: #a493ff;
+}
+
+.slide {
+  position: absolute;
+  bottom: -750px;
+  width: 375px;
+  height: 650px;
+  background: white;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 0.5s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.5s;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+}
+
+@-webkit-keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+.back_btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  margin: 17% 0% 1% 5%;
+}
+
+.title {
+  font-family: "Caveat Brush", cursive;
+  font-weight: 200;
+  width: 300px;
+  height: 95px;
+  font-size: 45px;
+  text-align: left;
+  transform: translate(30px, 30px);
+  line-height: 1.1;
+}
+
+.subTitle {
+  transform: translate(30px, 40px);
+  font-weight: 200;
+}
+
+.input_box {
+  transform: translate(0px, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.input_Q {
+  width: 319px;
+  height: 45px;
+  color: rgba(136, 136, 136, 1);
+  font-size: 14px;
+  border: 1px solid rgba(187, 187, 187, 1);
+  padding: 1%;
+  margin-top: 3%;
+}
+
+.confirm_btn {
+  position: absolute;
+  transform: translate(150px, 100px);
+  width: 70px;
+  height: 70px;
+  line-height: 20px;
+  background-color: rgba(164, 147, 255, 0.25);
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  line-height: 2.2;
+  border-radius: 50%;
+}
