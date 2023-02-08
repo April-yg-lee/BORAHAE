@@ -7,6 +7,7 @@ import SignInMain from "./pages/SignInMain";
 import SignInQuestions from "./pages/SignInQuestions";
 import SignInRegister from './pages/SignInRegister';
 import Loading from './pages/Loading';
+import MainBoard from './pages/MainBoard';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       {/* <SignInMain></SignInMain> */}
       {/* <SignInQuestions></SignInQuestions> */}
       {/* <SignInRegister></SignInRegister> */}
-      <Loading></Loading>
+      {/* <Loading></Loading> */}
+      <MainBoard></MainBoard>
     </>
   );
 }

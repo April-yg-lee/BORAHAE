@@ -11,7 +11,7 @@ export default function SignInMain() {
       <div className={styles.signin_contents}>
         <FontAwesomeIcon icon={faHeart} className={styles.b_logo} />
         <h2 className={styles.b_title}>BORAHAE</h2>
-        <div className={styles.input_box}>
+        <section className={styles.input_box}>
           <input
             className={styles.email_input}
             type='email'
@@ -22,14 +22,14 @@ export default function SignInMain() {
             type='password'
             placeholder='&nbsp;Enter your password'
           ></input>
-        </div>
-        <div className={styles.signin_btn_box}>
+        </section>
+        <section className={styles.signin_btn_box}>
           <button className={styles.signin_btn}>SIGN IN</button>
           <button className={styles.signup_btn}>SIGN UP</button>
-        </div>
-        <div className={styles.othermode_box}>
+        </section>
+        <section className={styles.othermode_box}>
           <h4>Other modes</h4>
-        </div>
+        </section>
       </div>
     </div>
   )

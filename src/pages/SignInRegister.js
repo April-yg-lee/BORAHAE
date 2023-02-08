@@ -13,7 +13,7 @@ export default function SignInRegister() {
           <h1 className={styles.title}>
             Congrats!💜 <br></br> Quick Registration
           </h1>
-          <div className={styles.input_box}>
+          <section className={styles.input_box}>
             <input
               className={styles.input_Q}
               type='text'
@@ -39,7 +39,7 @@ export default function SignInRegister() {
               type='text'
               placeholder='Enter your country (ex: Canada)'
             ></input>
-          </div>
+          </section>
           <div className={styles.confirm_btn}>&gt;</div>
         </div>
       </div>

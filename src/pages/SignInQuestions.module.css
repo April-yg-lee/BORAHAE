@@ -4,7 +4,7 @@
 }
 
 .container {
-  width: 375px;
+  width: 390px;
   height: 750px;
   margin: auto;
 }
@@ -12,7 +12,7 @@
 .wrapper {
   position: relative;
   overflow: hidden;
-  width: 375px;
+  width: 390px;
   height: 750px;
   border: 1px solid lightgray;
   background-color: #a493ff;
@@ -21,7 +21,7 @@
 .slide {
   position: absolute;
   bottom: -750px;
-  width: 375px;
+  width: 390px;
   height: 650px;
   background: white;
   -webkit-animation: slide 0.5s forwards;
