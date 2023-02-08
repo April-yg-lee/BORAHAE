@@ -8,6 +8,7 @@ import SignInQuestions from "./pages/SignInQuestions";
 import SignInRegister from './pages/SignInRegister';
 import Loading from './pages/Loading';
 import MainBoard from './pages/MainBoard';
+import PersonalPageApril from './pages/PersonalPageApril';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       {/* <SignInQuestions></SignInQuestions> */}
       {/* <SignInRegister></SignInRegister> */}
       {/* <Loading></Loading> */}
-      <MainBoard></MainBoard>
+      {/* <MainBoard></MainBoard> */}
+      <PersonalPageApril></PersonalPageApril>
     </>
   );
 }

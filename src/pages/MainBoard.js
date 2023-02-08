@@ -20,6 +20,7 @@ export default function MainBoard() {
             &nbsp;Vancouver, Canada
           </h3>
           <h3 className={styles.postYourToday}>Post Your Today!</h3>
+          <button className={styles.post_btn}>+</button>
         </div>
 
         <div className={styles.slide}>
@@ -30,8 +31,8 @@ export default function MainBoard() {
           <section className={styles.article_box}>
             <article className={styles.article}>
               <div className={styles.article_title}>
-                  <div className={styles.article_profile_img}></div>
-                  <span className={styles.article_profile_name}>April</span>
+                <div className={styles.article_profile_img}></div>
+                <span className={styles.article_profile_name}>April</span>
               </div>
               <div className={styles.article_content}>
                 <h6>Everything will be fine with JK's smile</h6>
@@ -66,7 +67,6 @@ export default function MainBoard() {
             </article>
           </section> */}
         </div>
-        <button className={styles.post_btn}>+</button>
       </div>
     </div>
   );
