@@ -6,13 +6,15 @@ import styled from "styled-components";
 import SignInMain from "./pages/SignInMain";
 import SignInQuestions from "./pages/SignInQuestions";
 import SignInRegister from './pages/SignInRegister';
+import Loading from './pages/Loading';
 
 function App() {
   return (
     <>
       {/* <SignInMain></SignInMain> */}
-      <SignInQuestions></SignInQuestions>
+      {/* <SignInQuestions></SignInQuestions> */}
       {/* <SignInRegister></SignInRegister> */}
+      <Loading></Loading>
     </>
   );
 }

@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 390px;
+  height: 750px;
+  background-image: url("./img/우주.jpg");
+  background-size: cover;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.b_logo {
+  color: white;
+  font-size: 50px;
+  padding: 25% 0% 5% 0%;
+  width: 100%;
+}
+
+.b_title {
+  color: white;
+  font-family: "Caveat Brush", cursive;
+  text-align: center;
+  font-size: 45px;
+}
