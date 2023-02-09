@@ -12,18 +12,20 @@ import PersonalPage from './pages/PersonalPage';
 import PostingPage from './pages/PostingPage';
 import Myinfo from './pages/Myinfo';
 import ProfileEdit from './pages/ProfileEdit';
+import SignOutEdit from './pages/SignOutEdit';
 
 function App() {
   return (
     <>
-      {/* <SignInMain></SignInMain> */}
-      {/* <SignInQuestions></SignInQuestions> */}
-      {/* <SignInRegister></SignInRegister> */}
-      {/* <Loading></Loading> */}
-      {/* <MainBoard></MainBoard> */}
-      {/* <PersonalPage></PersonalPage> */}
-      {/* <Myinfo></Myinfo> */}
-      <ProfileEdit></ProfileEdit>
+      {/* <SignInMain></SignInMain>
+      <SignInQuestions></SignInQuestions>
+      <SignInRegister></SignInRegister>
+      <Loading></Loading>
+      <MainBoard></MainBoard>
+      <PersonalPage></PersonalPage>
+      <Myinfo></Myinfo>
+      <ProfileEdit></ProfileEdit> */}
+      <SignOutEdit></SignOutEdit>
     </>
   );
 }

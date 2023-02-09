@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 390px;
+  height: 750px;
+  margin: auto;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 390px;
+  height: 750px;
+  border: 1px solid lightgray;
+  background-color: #dcd8f2;
+  /* overflow: scroll; */
+}
+
+.slide {
+  position: absolute;
+  bottom: -750px;
+  width: 390px;
+  height: 550px;
+  background: white;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 0.5s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.5s;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+}
+
+@-webkit-keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+.back_btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  margin: 10% 0% 1% 5%;
+}
+
+.profile_box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3%;
+}
+
+.profile_img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-image: url("./img/kelly.PNG");
+  background-size: cover;
+}
+
+.profile_name {
+  padding-top: 2%;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.name {
+  color: #7259f5;
+}
+
+/* .submit_btn {
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #a493ff;
+  border: none;
+  color: white;
+}
+ */
+
+.article_box {
+  transform: translate(0px, 40px);
+}
+
+.article_box > h3 {
+  padding: 0% 5%;
+}
+
+.edit_section {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+}
+
+.btn_section {
+  display: flex;
+  justify-content: center;
+}
+
+.edit_section > h5 {
+  font-weight: 400;
+}
+
+.signOut_btn {
+  width: 88px;
+  height: 35px;
+  background-color: #a493ff;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
