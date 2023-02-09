@@ -10,6 +10,8 @@ import Loading from './pages/Loading';
 import MainBoard from './pages/MainBoard';
 import PersonalPage from './pages/PersonalPage';
 import PostingPage from './pages/PostingPage';
+import Myinfo from './pages/Myinfo';
+import ProfileEdit from './pages/ProfileEdit';
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
       {/* <Loading></Loading> */}
       {/* <MainBoard></MainBoard> */}
       {/* <PersonalPage></PersonalPage> */}
-      <PostingPage></PostingPage>
+      {/* <Myinfo></Myinfo> */}
+      <ProfileEdit></ProfileEdit>
     </>
   );
 }
