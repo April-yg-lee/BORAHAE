@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignInRegister() {
   return (
@@ -11,7 +11,7 @@ export default function SignInRegister() {
         <button className={styles.back_btn}>&lt;&nbsp;&nbsp;Back</button>
         <div className={styles.slide}>
           <h1 className={styles.title}>
-            Congrats!💜 <br></br> Quick Registration
+            Congrats!<span><FontAwesomeIcon className={styles.heart_icon} icon={faHeart} /></span> <br></br> Quick Registration
           </h1>
           <section className={styles.input_box}>
             <input
