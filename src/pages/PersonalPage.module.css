@@ -119,16 +119,17 @@
 }
 
 .del_edit_btn {
-  width: 40px;
+  width: 60px;
   display: flex;
   justify-content: space-between;
   color: rgb(85, 85, 85);
 }
 
 .chat_btn {
-  width: 50px;
-  height: 30px;
+  width: 70px;
+  height: 35px;
   border-radius: 15px;
+  font-size: 15px;
   background-color: #A493FF;
   border: none;
   color: white;

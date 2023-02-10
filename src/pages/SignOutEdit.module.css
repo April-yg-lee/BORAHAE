@@ -62,8 +62,8 @@
 }
 
 .profile_img {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   border: 1px solid white;
   background-image: url("./img/kelly.PNG");
@@ -80,15 +80,7 @@
   color: #7259f5;
 }
 
-/* .submit_btn {
-  width: 80px;
-  height: 40px;
-  border-radius: 5px;
-  background-color: #a493ff;
-  border: none;
-  color: white;
-}
- */
+
 
 .article_box {
   transform: translate(0px, 40px);

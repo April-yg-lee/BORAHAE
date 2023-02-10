@@ -35,7 +35,7 @@ export default function MainBoard() {
                 <span className={styles.article_profile_name}>April</span>
               </div>
               <div className={styles.article_content}>
-                <h6>Everything will be fine with JK's smile</h6>
+                <h6>Everything will be fine with JK smile</h6>
                 <div></div>
               </div>
               <div className={styles.article_footer}>

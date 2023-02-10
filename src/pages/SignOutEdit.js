@@ -21,7 +21,7 @@ export default function SignOutEdit() {
               <h5>Do you really want to sign out?</h5>
             </section>
             <div className={styles.btn_section}>
-              <button className={styles.signOut_btn}>SAVE</button>
+              <button className={styles.signOut_btn}>SIGN OUT</button>
             </div>
           </section>
         </div>
