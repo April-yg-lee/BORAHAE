@@ -162,6 +162,10 @@
   padding-left: 7%;
 }
 
+.like_heart {
+  color: #A493FF;
+}
+
 .post_time {
   color: rgb(174, 172, 172);
 }

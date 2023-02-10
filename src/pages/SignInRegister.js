@@ -3,15 +3,21 @@ import React from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons";
+import BackBtn from '../components/BackBtn';
+import SignUpBtn from '../components/SignUpBtn';
 
 export default function SignInRegister() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <button className={styles.back_btn}>&lt;&nbsp;&nbsp;Back</button>
+        <BackBtn></BackBtn>
         <div className={styles.slide}>
           <h1 className={styles.title}>
-            Congrats!<span><FontAwesomeIcon className={styles.heart_icon} icon={faHeart} /></span> <br></br> Quick Registration
+            Congrats!
+            <span>
+              <FontAwesomeIcon className={styles.heart_icon} icon={faHeart} />
+            </span>{" "}
+            <br></br> Quick Registration
           </h1>
           <section className={styles.input_box}>
             <input
@@ -40,7 +46,7 @@ export default function SignInRegister() {
               placeholder='Enter your country (ex: Canada)'
             ></input>
           </section>
-          <div className={styles.confirm_btn}>&gt;</div>
+          <SignUpBtn></SignUpBtn>
         </div>
       </div>
     </div>

@@ -9,16 +9,14 @@ import {
   faRightFromBracket,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import ProfileEditTop from '../components/ProfileEditTop';
 
 export default function Myinfo() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <button className={styles.back_btn}>&lt; Back</button>
-        <div className={styles.profile_box}>
-          <div className={styles.profile_img}></div>
-          <h2 className={styles.profile_name}>Kelly</h2>
-        </div>
+        <ProfileEditTop></ProfileEditTop>
         <div className={styles.slide}>
           <section className={styles.article_box}>
             <h3>Profile</h3>

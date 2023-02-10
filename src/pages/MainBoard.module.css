@@ -53,6 +53,18 @@
   margin: 5% 0% 0% 70%;
 }
 
+.name_box {
+  display: flex;
+  /* transform: translate(-30px,20px); */
+}
+
+.next_btn {
+  width: 20px;
+  height: 30px;
+  font-size: 30px;
+  transform: translate(-80px, 25px);
+}
+
 .title {
   font-family: "Caveat Brush", cursive;
   font-weight: 200;

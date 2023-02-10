@@ -30,8 +30,8 @@
   animation-delay: 0.5s;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
-  -webkit-box-shadow: 0px -3px 9px 4px rgba(0,0,0,0.5); 
-box-shadow: 0px -3px 9px 4px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px -3px 9px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px -3px 9px 4px rgba(0, 0, 0, 0.5);
 }
 
 @-webkit-keyframes slide {
@@ -67,7 +67,7 @@ box-shadow: 0px -3px 9px 4px rgba(0,0,0,0.5);
 
 .heart_icon {
   font-size: 30px;
-  color: rgba(167, 152, 247, 1);;
+  color: rgba(167, 152, 247, 1);
 }
 
 .input_box {

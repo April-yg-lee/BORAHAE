@@ -2,7 +2,7 @@
 import React, { Profiler } from "react";
 import styles from "./PersonalPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function PersonalPage() {
   return (
@@ -49,7 +49,7 @@ export default function PersonalPage() {
               </div>
               <div className={styles.article_footer}>
                 <div>
-                  <span className={styles.like_heart}>💜</span>
+                  <span className={styles.like_heart}> <FontAwesomeIcon icon={faHeart}/></span>
                   <span className={styles.like_num}>18</span>
                 </div>
                 <span className={styles.post_time}>3 hours ago</span>

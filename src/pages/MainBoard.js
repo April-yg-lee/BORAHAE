@@ -3,6 +3,7 @@ import React, { Profiler } from "react";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import Location from "../components/Location";
 
 export default function MainBoard() {
   return (
@@ -10,15 +11,13 @@ export default function MainBoard() {
       <div className={styles.wrapper}>
         <button className={styles.chat_btn}>My Chat &gt;</button>
         <div>
-          <h1 className={styles.title}>
-            Hello, <span className={styles.name}>Kelly!&nbsp;</span>
+          <div className={styles.name_box}>
+            <h1 className={styles.title}>
+              Hello, <span className={styles.name}>Kelly!&nbsp;</span>
+            </h1>
             <span className={styles.next_btn}>&gt;</span>
-          </h1>
-
-          <h3 className={styles.subTitle}>
-            <FontAwesomeIcon icon={faLocationDot} />
-            &nbsp;Vancouver, Canada
-          </h3>
+          </div>
+          <Location></Location>
           <h3 className={styles.postYourToday}>Post Your Today!</h3>
           <button className={styles.post_btn}>+</button>
         </div>

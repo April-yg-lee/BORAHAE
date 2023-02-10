@@ -25,6 +25,7 @@ function App() {
       <Loading></Loading>
       <MainBoard></MainBoard>
       <PersonalPage></PersonalPage>
+      <PostingPage></PostingPage>
       <Myinfo></Myinfo>
       <ProfileEdit></ProfileEdit>
       <SignOutEdit></SignOutEdit>
