@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 390px;
+  height: 750px;
+  margin: auto;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 390px;
+  height: 750px;
+  border: 1px solid lightgray;
+  background-color: #dcd8f2;
+}
+
+.slide {
+  position: absolute;
+  /* bottom: -750px; */
+  width: 390px;
+  height: 650px;
+  background: white;
+  transform: translate(0px, 25px);
+}
+
+@-webkit-keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+.back_btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+
+.chat_header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 5%;
+  flex-direction: row;
+  transform: translate(0, 30px);
+}
+
+.chatting_name {
+  transform: translate(5px, 0px);
+  font-weight: 500;
+}
+
+.inbox {
+  /* border: 1px solid red; */
+  width: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  transform: translate(-25px, 0px);
+}
+
+.bell_icon {
+  color: white;
+}
+
+.profile_img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-image: url("./img/aboutme-pic.jpg");
+  background-size: cover;
+}
+
+.chat_section {
+  overflow-y: scroll;
+}
+
+.chat_myAnswer {
+  width: 70%;
+  height: 5%;
+  line-height: 20px;
+  border-radius: 20px 20px 0px 20px;
+  background-color: rgba(81, 51, 245, 1);
+  text-align: center;
+  line-height: 2;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  color: white;
+  float: right;
+  transform: translate(-20px, 0px);
+}
+
+.chat_yourAnswer {
+  width: 70%;
+  height: 5%;
+  line-height: 20px;
+  border-radius: 20px 20px 20px 0px;
+  text-align: center;
+  border: 1px solid rgba(81, 51, 245, 1);
+  line-height: 2;
+  float: left;
+  transform: translate(20px, 0px);
+}
+
+.date_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date {
+  width: 40px;
+  padding: 0.5%;
+  border-radius: 15px;
+  background-color: lightgray;
+  color: white;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 3%;
+}
+
+footer {
+  transform: translate(0px, 450px);
+  display: flex;
+  justify-content: center;
+
+}
+
+.input_part {
+  width: 70%;
+  padding: 2%;
+  border-radius: 20px;
+  background-color: rgb(241, 240, 240);
+  color: rgba(16, 16, 16, 1);
+  font-size: 14px;
+  text-align: center;
+  font-family: Arial;
+  border: none;
+}
+
+.input_btn {
+  width: 15%;
+  height: 38px;
+  line-height: 20px;
+  border-radius: 20px;
+  background-color: rgba(164, 147, 255, 1);
+  text-align: center;
+  border: none;
+  color: white;
+}

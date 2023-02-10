@@ -8,7 +8,7 @@ export default function PersonalPage() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <button className={styles.back_btn}>&lt;</button>
+        <button className={styles.back_btn}>&lt; Back</button>
         <div className={styles.slide}>
           <section className={styles.article_box}>
             <article className={styles.article}>
