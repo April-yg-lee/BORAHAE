@@ -5,12 +5,16 @@ import styles from "./ProfileEdit.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import ProfileEditTop from '../components/ProfileEditTop';
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileEdit() {
+  let navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <button className={styles.back_btn}>&lt; Back</button>
+        <button  onClick={() => {
+            navigate(-1);
+          }} className={styles.back_btn}>&lt; Back</button>
        <ProfileEditTop></ProfileEditTop>
         <div className={styles.slide}>
           <section className={styles.article_box}>
@@ -36,7 +40,9 @@ export default function ProfileEdit() {
               ></input>
             </section>
             <div className={styles.btn_section}>
-              <button className={styles.save_btn}>SAVE</button>
+              <button  onClick={() => {
+            navigate('/mainboard');
+          }} className={styles.save_btn}>SAVE</button>
             </div>
           </section>
         </div>

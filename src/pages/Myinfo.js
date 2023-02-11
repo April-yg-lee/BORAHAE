@@ -9,13 +9,22 @@ import {
   faRightFromBracket,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import ProfileEditTop from '../components/ProfileEditTop';
+import ProfileEditTop from "../components/ProfileEditTop";
+import { useNavigate } from "react-router-dom";
 
 export default function Myinfo() {
+  let navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <button className={styles.back_btn}>&lt; Back</button>
+        <button
+          onClick={() => {
+            navigate(-1);
+          }}
+          className={styles.back_btn}
+        >
+          &lt; Back
+        </button>
         <ProfileEditTop></ProfileEditTop>
         <div className={styles.slide}>
           <section className={styles.article_box}>
@@ -25,7 +34,14 @@ export default function Myinfo() {
                 <FontAwesomeIcon className={styles.edit_icon} icon={faFile} />
                 <h4>Profile</h4>
               </div>
-              <button className={styles.next_btn}>&gt;</button>
+              <button
+                onClick={() => {
+                  navigate("/profileedit");
+                }}
+                className={styles.next_btn}
+              >
+                &gt;
+              </button>
             </div>
           </section>
           <section className={styles.article_box}>
@@ -39,7 +55,14 @@ export default function Myinfo() {
 
                 <h4>Sign Out</h4>
               </div>
-              <button className={styles.next_btn}>&gt;</button>
+              <button
+                onClick={() => {
+                  navigate("/signoutedit");
+                }}
+                className={styles.next_btn}
+              >
+                &gt;
+              </button>
             </div>
           </section>
         </div>

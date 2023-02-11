@@ -4,12 +4,21 @@ import React, { Profiler } from "react";
 import styles from "./PostingPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default function PostingPage() {
+  let navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <button className={styles.back_btn}>&lt; Back</button>
+        <button
+          onClick={() => {
+            navigate(-1);
+          }}
+          className={styles.back_btn}
+        >
+          &lt; Back
+        </button>
         <div>
           <h1 className={styles.title}>
             Hello, <span className={styles.name}>Kelly!&nbsp;</span>
@@ -31,7 +40,14 @@ export default function PostingPage() {
                   <span>Picture</span>
                 </div>
                 <div className={styles.btn_section}>
-                  <button className={styles.submit_btn}>Submit</button>
+                  <button
+                    onClick={() => {
+                      navigate("/personalpage");
+                    }}
+                    className={styles.submit_btn}
+                  >
+                    Submit
+                  </button>
                 </div>
               </section>
             </article>

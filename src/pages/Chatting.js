@@ -7,13 +7,17 @@ import {
   faBell,
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default function Chatting() {
+  let navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <header className={styles.chat_header}>
-          <button className={styles.back_btn}>&lt;&nbsp;&nbsp;</button>
+          <button  onClick={() => {
+              navigate(-1);
+            }} className={styles.back_btn}>&lt;&nbsp;&nbsp;</button>
           <div className={styles.profile_img}></div>
           <span className={styles.chatting_name}>April</span>
         </header>

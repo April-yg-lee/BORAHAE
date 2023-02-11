@@ -4,22 +4,40 @@ import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
+import { useNavigate } from "react-router-dom";
 
 export default function MainBoard() {
+  let navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <button className={styles.chat_btn}>My Chat &gt;</button>
+        <button
+          onClick={() => {
+            navigate("/inbox");
+          }}
+          className={styles.chat_btn}
+        >
+          My Chat &gt;
+        </button>
         <div>
           <div className={styles.name_box}>
             <h1 className={styles.title}>
               Hello, <span className={styles.name}>Kelly!&nbsp;</span>
             </h1>
-            <span className={styles.next_btn}>&gt;</span>
+            <span
+              onClick={() => {
+                navigate("/myinfo");
+              }}
+              className={styles.next_btn}
+            >
+              &gt;
+            </span>
           </div>
           <Location></Location>
           <h3 className={styles.postYourToday}>Post Your Today!</h3>
-          <button className={styles.post_btn}>+</button>
+          <button  onClick={() => {
+        navigate('/postingpage');
+      }} className={styles.post_btn}>+</button>
         </div>
 
         <div className={styles.slide}>

@@ -1,7 +1,7 @@
 /*eslint-disable */
 import React from "react";
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SignInMain from "./pages/SignInMain";
 import SignInQuestions from "./pages/SignInQuestions";
@@ -14,23 +14,46 @@ import Myinfo from "./pages/Myinfo";
 import ProfileEdit from "./pages/ProfileEdit";
 import SignOutEdit from "./pages/SignOutEdit";
 import Inbox from "./pages/Inbox";
-import Chatting from './pages/Chatting';
+import Chatting from "./pages/Chatting";
 
 function App() {
+  let navigate = useNavigate();
+
   return (
     <>
-      <SignInMain></SignInMain>
-      <SignInQuestions></SignInQuestions>
-      <SignInRegister></SignInRegister>
-      <Loading></Loading>
-      <MainBoard></MainBoard>
-      <PersonalPage></PersonalPage>
-      <PostingPage></PostingPage>
-      <Myinfo></Myinfo>
-      <ProfileEdit></ProfileEdit>
-      <SignOutEdit></SignOutEdit>
-      <Inbox></Inbox>
-      <Chatting></Chatting>
+      <Routes>
+        <Route path='/' element={<SignInMain></SignInMain>}></Route>
+        <Route
+          path='/signinquestions'
+          element={<SignInQuestions></SignInQuestions>}
+        ></Route>
+        <Route
+          path='/signinregister'
+          element={<SignInRegister></SignInRegister>}
+        ></Route>
+        <Route path='/loading' element={<Loading></Loading>}></Route>
+        <Route path='/mainboard' element={<MainBoard></MainBoard>}></Route>
+        <Route
+          path='/personalpage'
+          element={<PersonalPage></PersonalPage>}
+        ></Route>
+        <Route
+          path='/postingpage'
+          element={<PostingPage></PostingPage>}
+        ></Route>
+        <Route path='/myinfo' element={<Myinfo></Myinfo>}></Route>
+        <Route
+          path='/profileedit'
+          element={<ProfileEdit></ProfileEdit>}
+        ></Route>
+        <Route
+          path='/signoutedit'
+          element={<SignOutEdit></SignOutEdit>}
+        ></Route>
+        <Route path='/inbox' element={<Inbox></Inbox>}></Route>
+        <Route path='/chatting' element={<Chatting></Chatting>}></Route>
+      </Routes>
+
     </>
   );
 }

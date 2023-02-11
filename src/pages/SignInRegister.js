@@ -3,10 +3,11 @@ import React from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons";
-import BackBtn from '../components/BackBtn';
-import SignUpBtn from '../components/SignUpBtn';
+import BackBtn from "../components/BackBtn";
+import { useNavigate } from "react-router-dom";
 
 export default function SignInRegister() {
+  let navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -46,7 +47,14 @@ export default function SignInRegister() {
               placeholder='Enter your country (ex: Canada)'
             ></input>
           </section>
-          <SignUpBtn></SignUpBtn>
+          <div
+            onClick={() => {
+              navigate('/');
+            }}
+            className={styles.confirm_btn}
+          >
+            &gt;
+          </div>
         </div>
       </div>
     </div>

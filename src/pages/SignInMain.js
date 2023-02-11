@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
+import { useNavigate } from "react-router-dom";
 
 export default function SignInMain() {
+  let navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.signin_contents}>
@@ -23,8 +26,17 @@ export default function SignInMain() {
           ></input>
         </section>
         <section className={styles.signin_btn_box}>
-          <button className={styles.signin_btn}>SIGN IN</button>
-          <button className={styles.signup_btn}>SIGN UP</button>
+          <button
+            onClick={() => {
+              navigate("/mainboard");
+            }}
+            className={styles.signin_btn}
+          >
+            SIGN IN
+          </button>
+          <button  onClick={() => {
+              navigate("/signinquestions");
+            }} className={styles.signup_btn}>SIGN UP</button>
         </section>
         <section className={styles.othermode_box}>
           <h4>Other modes</h4>
