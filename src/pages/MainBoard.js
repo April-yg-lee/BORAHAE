@@ -46,7 +46,9 @@ export default function MainBoard() {
             <span className={styles.option_nearby}>Nearby</span>
           </div>
           <section className={styles.article_box}>
-            <article className={styles.article}>
+            <article   onClick={() => {
+                navigate("/personalpage");
+              }} className={styles.article}>
               <div className={styles.article_title}>
                 <div className={styles.article_profile_img}></div>
                 <span className={styles.article_profile_name}>April</span>

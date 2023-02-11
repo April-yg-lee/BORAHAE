@@ -2,7 +2,6 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import SignInMain from "./pages/SignInMain";
 import SignInQuestions from "./pages/SignInQuestions";
 import SignInRegister from "./pages/SignInRegister";
@@ -15,6 +14,7 @@ import ProfileEdit from "./pages/ProfileEdit";
 import SignOutEdit from "./pages/SignOutEdit";
 import Inbox from "./pages/Inbox";
 import Chatting from "./pages/Chatting";
+import MyDashBoard from './pages/MyDashBoard';
 
 function App() {
   let navigate = useNavigate();
@@ -33,6 +33,10 @@ function App() {
         ></Route>
         <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/mainboard' element={<MainBoard></MainBoard>}></Route>
+        <Route
+          path='/mydashboard'
+          element={<MyDashBoard></MyDashBoard>}
+        ></Route>
         <Route
           path='/personalpage'
           element={<PersonalPage></PersonalPage>}

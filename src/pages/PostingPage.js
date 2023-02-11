@@ -42,7 +42,7 @@ export default function PostingPage() {
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
-                      navigate("/personalpage");
+                      navigate("/mydashboard");
                     }}
                     className={styles.submit_btn}
                   >

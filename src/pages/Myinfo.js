@@ -28,7 +28,24 @@ export default function Myinfo() {
         <ProfileEditTop></ProfileEditTop>
         <div className={styles.slide}>
           <section className={styles.article_box}>
-            <h3>Profile</h3>
+            <h3>My</h3>
+            <div className={styles.edit_section}>
+              <div className={styles.edit_title}>
+                <FontAwesomeIcon className={styles.edit_icon} icon={faFile} />
+                <h4>Dashboard</h4>
+              </div>
+              <button
+                onClick={() => {
+                  navigate("/mydashboard");
+                }}
+                className={styles.next_btn}
+              >
+                &gt;
+              </button>
+            </div>
+          </section>
+          <section className={styles.article_box}>
+            <h3>Setting</h3>
             <div className={styles.edit_section}>
               <div className={styles.edit_title}>
                 <FontAwesomeIcon className={styles.edit_icon} icon={faFile} />

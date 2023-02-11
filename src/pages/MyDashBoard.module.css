@@ -1,0 +1,187 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 390px;
+  height: 750px;
+  margin: auto;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 390px;
+  height: 750px;
+  border: 1px solid lightgray;
+  background-color: #dcd8f2;
+  /* overflow: scroll; */
+}
+
+.slide {
+  position: absolute;
+  bottom: -750px;
+  width: 390px;
+  height: 650px;
+  background: white;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 0.5s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.5s;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  -webkit-box-shadow: 0px -3px 9px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px -3px 9px 0px rgba(0, 0, 0, 0.5);
+}
+
+@-webkit-keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes slide {
+  100% {
+    bottom: 0;
+  }
+}
+
+.back_btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  margin: 10% 0% 1% 5%;
+}
+
+.article_box {
+  position: relative;
+}
+
+.title_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article {
+  padding: 5%;
+}
+
+.article_title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.article_content {
+  padding: 0% 7%;
+}
+
+.article_content > h6 {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.article_content > div {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background-image: url('./img/jin-1.PNG');
+  background-size: cover;
+}
+
+.article_big_profile_img {
+  width: 50px;
+  height: 50px;
+  /* width: 35px;
+  height: 35px; */
+  border-radius: 50%;
+  border: 1px solid white;
+  background-image: url("./img/kelly.PNG");
+  background-size: cover;
+}
+
+.article_profile_img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-image: url("./img/kelly.PNG");
+  background-size: cover;
+}
+
+.article_profile_name {
+  padding-left: 2%;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.del_edit_btn {
+  width: 60px;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(85, 85, 85);
+}
+
+.chat_btn {
+  width: 70px;
+  height: 35px;
+  border-radius: 15px;
+  font-size: 15px;
+  background-color: #A493FF;
+  border: none;
+  color: white;
+  
+}
+.introduce > h4 {
+  padding: 2% 0% 3% 0%;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 700;
+    color: rgb(85, 85, 85);
+
+
+}
+
+.introduce > h5 {
+  padding-bottom: 10%;
+  text-align: left;
+  font-weight: 400;
+  color: rgb(85, 85, 85);
+
+}
+
+.article_footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2%;
+}
+
+.article_footer > div {
+  padding-left: 7%;
+}
+
+.like_heart {
+  color: #A493FF;
+}
+
+.post_time {
+  color: rgb(174, 172, 172);
+}
+
+.mainBoard_option {
+  position: relative;
+  padding-top: 7%;
+  padding-left: 5%;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.option_all {
+  margin-right: 10%;
+  border-bottom: 3px solid #A493FF;
+}
