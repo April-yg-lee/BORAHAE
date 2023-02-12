@@ -93,15 +93,14 @@
   border: 1px solid #c4c3c3;
 }
 
-.picture > button {
+.picture > input {
   margin: 5% 2% 5% 5%;
   width: 23px;
   height: 23px;
   border-radius: 50%;
-  border: none;
-  background-color: white;
+  background-color: black;
   color: rgba(164, 147, 255, 1);
-  font-size: 20px;
+  font: none;
   -webkit-box-shadow: 1px 1px 5px 1px #adadad;
   box-shadow: 1px 1px 5px 1px #adadad;
 }

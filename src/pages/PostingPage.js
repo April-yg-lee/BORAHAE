@@ -36,7 +36,7 @@ export default function PostingPage() {
                 <h4>Post your today :&#41; </h4>
                 <input type='text' placeholder='Type here...'></input>
                 <div className={styles.picture}>
-                  <button>+</button>
+                  <input type='file'></input>
                   <span>Picture</span>
                 </div>
                 <div className={styles.btn_section}>

@@ -5,9 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeName, changeAge, addCount } from '../Store';
+// import { changeName } from './../Store.js';
 
 export default function MainBoard() {
+  let dispatch = useDispatch()
+  let state = useSelector((state) => state);
+  console.log(state.user.age);
+
   let navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -34,10 +42,15 @@ export default function MainBoard() {
             </span>
           </div>
           <Location></Location>
-          <h3 className={styles.postYourToday}>Post Your Today!</h3>
-          <button  onClick={() => {
-        navigate('/postingpage');
-      }} className={styles.post_btn}>+</button>
+          <h3 className={styles.postYourToday}>Post Your Today</h3>
+          <button
+            onClick={() => {
+              navigate("/postingpage");
+            }}
+            className={styles.post_btn}
+          >
+            +
+          </button>
         </div>
 
         <div className={styles.slide}>
@@ -46,9 +59,12 @@ export default function MainBoard() {
             <span className={styles.option_nearby}>Nearby</span>
           </div>
           <section className={styles.article_box}>
-            <article   onClick={() => {
+            <article
+              onClick={() => {
                 navigate("/personalpage");
-              }} className={styles.article}>
+              }}
+              className={styles.article}
+            >
               <div className={styles.article_title}>
                 <div className={styles.article_profile_img}></div>
                 <span className={styles.article_profile_name}>April</span>
@@ -85,6 +101,36 @@ export default function MainBoard() {
               </div>
             </article>
           </section> */}
+
+          {/* redux practice  */}
+          {/* <button onClick={()=>{
+            dispatch(changeAge(10))
+          }}>increase</button>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>아이템이름</th>
+                <th>수량</th>
+                <th>변경하기</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.items.map((a, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{state.items[i].id}</td>
+                    <td>{state.items[i].name}</td>
+                    <td>{state.items[i].count}</td>
+                    <td><button onClick={()=>{
+                      // dispatch(addCount(i));
+                      dispatch(addCount(state.items[i].id));
+                    }}>+</button></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table> */}
         </div>
       </div>
     </div>
