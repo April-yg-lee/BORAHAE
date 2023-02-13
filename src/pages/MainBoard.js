@@ -6,11 +6,21 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeAge, addCount } from '../Store';
-// import { changeName } from './../Store.js';
+import { changeName, changeAge, addCount } from "../Store";
+import { db } from "../index.js";
+import "firebase/firestore";
 
 export default function MainBoard() {
-  let dispatch = useDispatch()
+  // get data from firebase
+  db.collection("post")
+    .get()
+    .then((result) => {
+      result.forEach((doc) => {
+        console.log(doc.data().상품명);
+      });
+    });
+
+  let dispatch = useDispatch();
   let state = useSelector((state) => state);
   console.log(state.user.age);
 

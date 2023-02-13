@@ -100,4 +100,9 @@
   text-align: center;
   line-height: 2.2;
   border-radius: 50%;
+  border: none;
+}
+
+.confirm_btn_add {
+  background-color: blueviolet;
 }

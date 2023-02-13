@@ -26,16 +26,19 @@ let items = createSlice({
   ],
   reducers: {
     addCount(state, action) {
-      let 번호 = state.findIndex((a)=>{ return a.id === action.payload })
+      let 번호 = state.findIndex((a) => {
+        return a.id === action.payload;
+      });
       state[번호].count++;
       // state[action.payload].count++;
     },
   },
 });
 
+
 // export part
-export let { changeName, changeAge} = user.actions;
-export let { addCount} = items.actions;
+export let { changeName, changeAge } = user.actions;
+export let { addCount } = items.actions;
 
 export default configureStore({
   reducer: {

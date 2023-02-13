@@ -5,8 +5,12 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
+import {db} from '../index.js'
+import "firebase/firestore"; 
 
 export default function SignInMain() {
+
+
   let navigate = useNavigate();
 
   return (

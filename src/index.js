@@ -7,16 +7,32 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import Store from "./Store.js";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCjhIkrWABOdXIMq9qkLLhZbJ1NR0B7I9c",
+  authDomain: "borahae-59bba.firebaseapp.com",
+  projectId: "borahae-59bba",
+  storageBucket: "borahae-59bba.appspot.com",
+  messagingSenderId: "826104112881",
+  appId: "1:826104112881:web:1a8bf4525cf0dbf83d6b50"
+};
+
+firebase.initializeApp(firebaseConfig);
+export const db = firebase.firestore();
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={Store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
