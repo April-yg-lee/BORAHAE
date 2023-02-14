@@ -35,15 +35,26 @@ let items = createSlice({
   },
 });
 
+let like = createSlice({
+  name: "like", // state 이름
+  initialState: 0,
+  reducers: {
+    increaseLike(state) {
+      return state = state + 1;
+    },
+  },
+});
 
 // export part
 export let { changeName, changeAge } = user.actions;
 export let { addCount } = items.actions;
+export let { increaseLike } = like.actions;
 
 export default configureStore({
   reducer: {
     user: user.reducer,
     stock: stock.reducer,
     items: items.reducer,
+    like: like.reducer,
   },
 });

@@ -15,6 +15,8 @@ import SignOutEdit from "./pages/SignOutEdit";
 import Inbox from "./pages/Inbox";
 import Chatting from "./pages/Chatting";
 import MyDashBoard from './pages/MyDashBoard';
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 function App() {
   let navigate = useNavigate();

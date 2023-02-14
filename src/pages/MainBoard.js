@@ -1,14 +1,14 @@
 /*eslint-disable */
-import React, { Profiler } from "react";
+import React, { Profiler, useState } from "react";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeAge, addCount } from "../Store";
-import { db } from "../index.js";
-import "firebase/firestore";
+import { changeName, changeAge, addCount, increaseLike } from "../Store";
+import { db, storage } from "../index.js";
+import firebase from 'firebase';
 
 export default function MainBoard() {
   // get data from firebase
@@ -16,13 +16,16 @@ export default function MainBoard() {
     .get()
     .then((result) => {
       result.forEach((doc) => {
-        console.log(doc.data().상품명);
+        console.log(doc.data());
+        // let arr = Object.entries(doc.data());
+        // console.log(arr[0][0]);
       });
     });
 
+
   let dispatch = useDispatch();
   let state = useSelector((state) => state);
-  console.log(state.user.age);
+  let like = useSelector((state) => state.like);
 
   let navigate = useNavigate();
 
@@ -85,32 +88,35 @@ export default function MainBoard() {
               </div>
               <div className={styles.article_footer}>
                 <div>
-                  <span className={styles.like_heart}>💜</span>
-                  <span className={styles.like_num}>18</span>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(increaseLike());
+                    }}
+                    className={styles.like_heart}
+                  >
+                    {" "}
+                    <FontAwesomeIcon
+                      className={styles.heart_icon}
+                      icon={faHeart}
+                    />
+                    &nbsp;
+                  </span>
+                  <span className={styles.like_num}>{like}</span>
                 </div>
                 <span className={styles.post_time}>3 hours ago</span>
               </div>
             </article>
           </section>
-          {/* <section className={styles.article_box}>
-            <article className={styles.article}>
-              <div className={styles.article_title}>
-                <div className={styles.article_profile_img}></div>
-                <span className={styles.article_profile_name}>April</span>
-              </div>
-              <div className={styles.article_content}>
-                <h6>Everything will be fine with JK's smile</h6>
-                <div></div>
-              </div>
-              <div className={styles.article_footer}>
-                <div>
-                  <span className={styles.like_heart}>💜</span>
-                  <span className={styles.like_num}>18</span>
-                </div>
-                <span className={styles.post_time}>3 hours ago</span>
-              </div>
-            </article>
-          </section> */}
+          <button onClick={() => {
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword('jej@gmail.com', 'qwer1234')
+                .then((result) => {
+                  console.log(result);
+                  console.log(result.user);
+                });
+            }}>BTN</button>
 
           {/* redux practice  */}
           {/* <button onClick={()=>{

@@ -4,7 +4,6 @@ import BackBtn from "../components/BackBtn";
 import styles from "./SignInQuestions.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSwitch } from "../Store";
 
 export default function SignInQuestions() {
   let navigate = useNavigate();
@@ -14,7 +13,6 @@ export default function SignInQuestions() {
   let [Q2_input, setQ2_input] = useState("");
   let [Q3_input, setQ3_input] = useState("");
 
-  let switches = useSelector((state) => state.switches);
 
   function signUpQ_checker(Q1, Q2, Q3) {
     if (Q1 == "20130613") {
