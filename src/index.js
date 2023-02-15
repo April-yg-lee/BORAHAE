@@ -24,6 +24,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
+export const storage = firebase.storage();
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

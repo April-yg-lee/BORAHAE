@@ -1,12 +1,22 @@
 /*eslint-disable */
 
-import React, { Profiler } from "react";
+import React, { Profiler, useState } from "react";
 import styles from "./PostingPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { db, storage } from "../index.js";
+import firebase from "firebase";
+import "firebase/firestore";
+import "firebase/database";
+import "firebase/storage";
 
 export default function PostingPage() {
+  // db.collection('post').doc('post3').set({content: 'Love you!'})
+
+  let [content, setContent] = useState("");
+  let [file, setFile] = useState();
+
   let navigate = useNavigate();
   return (
     <div className={styles.container}>
@@ -34,21 +44,48 @@ export default function PostingPage() {
               </div>
               <section className={styles.post_section}>
                 <h4>Post your today :&#41; </h4>
-                <input type='text' placeholder='Type here...'></input>
+                <input
+                  type='text'
+                  placeholder='Type here...'
+                  onChange={(e) => {
+                    setContent(e.target.value);
+                  }}
+                ></input>
                 <div className={styles.picture}>
                   <div className={styles.btn_container}>
                     <div className={styles.button_wrap}>
-                      <label className={styles.button} for='upload'>
+                      <label className={styles.button} htmlFor='upload'>
                         + Picture
                       </label>
-                      <input id='upload' type='file'></input>
+                      <input
+                        onChange={(e) => {
+                          setFile(e.target.files[0]);
+                        }}
+                        id='upload'
+                        type='file'
+                      ></input>
                     </div>
                   </div>
                 </div>
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
-                      navigate("/mydashboard");
+                      let storageRef = storage.ref();
+                      let savePath = storageRef.child("image/" + file.name);
+                      let upload = savePath.put(file);
+
+                      let saveData = {
+                        content: content,
+                        date: new Date(),
+                      };
+                      db.collection("post")
+                        .add(saveData)
+                        .then(() => {
+                          navigate("/mydashboard");
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
                     }}
                     className={styles.submit_btn}
                   >

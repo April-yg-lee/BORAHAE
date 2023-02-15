@@ -73,6 +73,7 @@ export default function MainBoard() {
             <span className={styles.option_all}>All</span>
             <span className={styles.option_nearby}>Nearby</span>
           </div>
+
           {test.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
