@@ -92,8 +92,14 @@
   height: 180px;
   border: 1px solid #c4c3c3;
 }
-
-.picture > input {
+/* 
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  top: 15px;
+  left: 20px;
+  font-size: 17px;
+  color: #b8b8b8;
   margin: 5% 2% 5% 5%;
   width: 23px;
   height: 23px;
@@ -103,7 +109,40 @@
   font: none;
   -webkit-box-shadow: 1px 1px 5px 1px #adadad;
   box-shadow: 1px 1px 5px 1px #adadad;
+} */
+
+.btn_container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
 }
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  font-size: 17px;
+  color: #b8b8b8;
+}
+.button_wrap {
+  position: relative;
+}
+.button {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+  border: 4px double #cccccc;
+  color: #7259f5;
+  text-align: center;
+  font-size: 15px;
+  padding: 5px;
+  width: 70px;
+  height: 15px;
+  transition: all 0.5s;
+  line-height: 1.0;
+  margin-top: 5px;
+  margin-left: 17px;
+}
+
 
 .btn_section {
   display: flex;

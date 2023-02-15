@@ -6,18 +6,36 @@ import { faArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons";
 import BackBtn from "../components/BackBtn";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../index.js";
-import firebase from 'firebase';
+import firebase from "firebase";
+import "firebase/firestore";
+import "firebase/auth";
 
 export default function SignInRegister() {
- 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
 
+  function signUpRg_checker(name, email, pw, city, country) {
+    if (name == "" && !isNaN(name)) {
+      return false;
+    }
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (email.match(emailPattern)) {
+      return false;
+      // Please enter a valid email address.
+    }
+    const passPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (pw == "" && pw.length < 6 && pw.match(passPattern)) {
+      return false;
+    }
+  }
 
   let navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -38,7 +56,7 @@ export default function SignInRegister() {
               value={userName}
               className={styles.input_Q}
               type='text'
-              placeholder='Enter your name...'
+              placeholder='Enter your name. (ex: Jimin)'
             ></input>
             <input
               onChange={(e) => {
@@ -47,7 +65,7 @@ export default function SignInRegister() {
               value={userEmail}
               className={styles.input_Q}
               type='email'
-              placeholder='Enter your email...'
+              placeholder='Enter your email. (ex: bts@army.com)'
             ></input>
             <input
               onChange={(e) => {
@@ -56,7 +74,7 @@ export default function SignInRegister() {
               value={userPassword}
               className={styles.input_Q}
               type='password'
-              placeholder='Enter your password...'
+              placeholder='Enter your password. (min 6 characters)'
             ></input>
             <input
               onChange={(e) => {
@@ -79,14 +97,34 @@ export default function SignInRegister() {
           </section>
           <div
             onClick={() => {
-              firebase
-                .auth()
-                .createUserWithEmailAndPassword(userEmail, userPassword)
-                .then((result) => {
-                  console.log(result);
-                  console.log(result.user);
-                });
-              navigate("/");
+              if (
+                signUpRg_checker(
+                  userName,
+                  userEmail,
+                  userPassword,
+                  userCity,
+                  userCountry
+                ) == true
+              ) {
+                firebase
+                  .auth()
+                  .createUserWithEmailAndPassword(userEmail, userPassword)
+                  .then((result) => {
+                    console.log(result);
+                    console.log(result.user);
+                    result.user.updateProfile({ displayName: userName });
+                    let userInfo = {
+                      name: userName,
+                      email: userEmail,
+                      city: userCity,
+                      country: userCountry,
+                    };
+                    db.collection("user")
+                      .doc(result.user.uid)
+                      .set({ userInfo });
+                    navigate("/");
+                  });
+              }
             }}
             className={styles.confirm_btn}
           >

@@ -36,8 +36,14 @@ export default function PostingPage() {
                 <h4>Post your today :&#41; </h4>
                 <input type='text' placeholder='Type here...'></input>
                 <div className={styles.picture}>
-                  <input type='file'></input>
-                  <span>Picture</span>
+                  <div className={styles.btn_container}>
+                    <div className={styles.button_wrap}>
+                      <label className={styles.button} for='upload'>
+                        + Picture
+                      </label>
+                      <input id='upload' type='file'></input>
+                    </div>
+                  </div>
                 </div>
                 <div className={styles.btn_section}>
                   <button

@@ -1,5 +1,5 @@
 /*eslint-disable */
-import React, { Profiler, useState } from "react";
+import React, { Profiler, useEffect, useState } from "react";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -8,20 +8,22 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeAge, addCount, increaseLike } from "../Store";
 import { db, storage } from "../index.js";
-import firebase from 'firebase';
+import firebase from "firebase";
+import "firebase/firestore";
+import "firebase/database";
+// import 'firebase/storage';
 
 export default function MainBoard() {
+  let test = ["h1", "h2"];
+
   // get data from firebase
   db.collection("post")
     .get()
     .then((result) => {
       result.forEach((doc) => {
-        console.log(doc.data());
-        // let arr = Object.entries(doc.data());
-        // console.log(arr[0][0]);
+        doc.data();
       });
     });
-
 
   let dispatch = useDispatch();
   let state = useSelector((state) => state);
@@ -71,82 +73,47 @@ export default function MainBoard() {
             <span className={styles.option_all}>All</span>
             <span className={styles.option_nearby}>Nearby</span>
           </div>
-          <section className={styles.article_box}>
-            <article
-              onClick={() => {
-                navigate("/personalpage");
-              }}
-              className={styles.article}
-            >
-              <div className={styles.article_title}>
-                <div className={styles.article_profile_img}></div>
-                <span className={styles.article_profile_name}>April</span>
-              </div>
-              <div className={styles.article_content}>
-                <h6>Everything will be fine with JK smile</h6>
-                <div></div>
-              </div>
-              <div className={styles.article_footer}>
-                <div>
-                  <span
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(increaseLike());
-                    }}
-                    className={styles.like_heart}
-                  >
-                    {" "}
-                    <FontAwesomeIcon
-                      className={styles.heart_icon}
-                      icon={faHeart}
-                    />
-                    &nbsp;
-                  </span>
-                  <span className={styles.like_num}>{like}</span>
-                </div>
-                <span className={styles.post_time}>3 hours ago</span>
-              </div>
-            </article>
-          </section>
-          <button onClick={() => {
-              firebase
-                .auth()
-                .createUserWithEmailAndPassword('jej@gmail.com', 'qwer1234')
-                .then((result) => {
-                  console.log(result);
-                  console.log(result.user);
-                });
-            }}>BTN</button>
-
-          {/* redux practice  */}
-          {/* <button onClick={()=>{
-            dispatch(changeAge(10))
-          }}>increase</button>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>아이템이름</th>
-                <th>수량</th>
-                <th>변경하기</th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.items.map((a, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{state.items[i].id}</td>
-                    <td>{state.items[i].name}</td>
-                    <td>{state.items[i].count}</td>
-                    <td><button onClick={()=>{
-                      // dispatch(addCount(i));
-                      dispatch(addCount(state.items[i].id));
-                    }}>+</button></td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table> */}
+          {test.map(function (a, i) {
+            return (
+              <section className={styles.article_box} key={i}>
+                <article
+                  onClick={() => {
+                    navigate("/personalpage");
+                  }}
+                  className={styles.article}
+                >
+                  <div className={styles.article_title}>
+                    <div className={styles.article_profile_img}></div>
+                    <span className={styles.article_profile_name}>April</span>
+                  </div>
+                  <div className={styles.article_content}>
+                    <h6>Everything will be fine with JK smile</h6>
+                    <div></div>
+                  </div>
+                  <div className={styles.article_footer}>
+                    <div>
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(increaseLike());
+                        }}
+                        className={styles.like_heart}
+                      >
+                        {" "}
+                        <FontAwesomeIcon
+                          className={styles.heart_icon}
+                          icon={faHeart}
+                        />
+                        &nbsp;
+                      </span>
+                      <span className={styles.like_num}>{like}</span>
+                    </div>
+                    <span className={styles.post_time}>3 hours ago</span>
+                  </div>
+                </article>
+              </section>
+            );
+          })}
         </div>
       </div>
     </div>
