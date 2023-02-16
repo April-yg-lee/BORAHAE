@@ -1,11 +1,11 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 let user = createSlice({
-  name: "user", // state 이름
-  initialState: { name: "kim", age: 20 },
+  name: "userNameShow", // state 이름
+  initialState: "hey",
   reducers: {
-    changeName(state) {
-      state.name = "park";
+    setUserNameShow(state, action) {
+      return state = action.payload;
     },
     changeAge(state, action) {
       state.age += action.payload;
@@ -40,13 +40,13 @@ let like = createSlice({
   initialState: 0,
   reducers: {
     increaseLike(state) {
-      return state = state + 1;
+      return (state = state + 1);
     },
   },
 });
 
 // export part
-export let { changeName, changeAge } = user.actions;
+export let { setUserNameShow, changeName, changeAge } = user.actions;
 export let { addCount } = items.actions;
 export let { increaseLike } = like.actions;
 

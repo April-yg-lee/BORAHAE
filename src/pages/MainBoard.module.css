@@ -61,6 +61,7 @@
 }
 
 .next_btn {
+  border: 1px solid red;
   width: 20px;
   height: 30px;
   font-size: 30px;

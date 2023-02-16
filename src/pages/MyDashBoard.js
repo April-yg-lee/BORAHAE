@@ -7,16 +7,26 @@ import {
   faPenToSquare,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setUserNameShow,
+  changeName,
+  changeAge,
+  addCount,
+  increaseLike,
+} from "../Store";
 import { useNavigate } from "react-router-dom";
 
 export default function MyDashBoard() {
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+  let userNameShow = useSelector((state) => state.user);
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <button
           onClick={() => {
-            navigate('/mainboard');
+            navigate("/mainboard");
           }}
           className={styles.back_btn}
         >
@@ -28,7 +38,7 @@ export default function MyDashBoard() {
               <div className={styles.title_box}>
                 <div className={styles.article_title}>
                   <div className={styles.article_big_profile_img}></div>
-                  <span className={styles.article_profile_name}>Kelly</span>
+                  <span className={styles.article_profile_name}>{userNameShow}</span>
                 </div>
                 <button
                   onClick={() => {
@@ -53,7 +63,7 @@ export default function MyDashBoard() {
               <div className={styles.title_box}>
                 <div className={styles.article_title}>
                   <div className={styles.article_profile_img}></div>
-                  <span className={styles.article_profile_name}>Kelly</span>
+                  <span className={styles.article_profile_name}>{userNameShow}</span>
                 </div>
                 <div className={styles.del_edit_btn}>
                   <FontAwesomeIcon icon={faTrashCan} />

@@ -5,6 +5,14 @@ import styles from "./PostingPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setUserNameShow,
+  changeName,
+  changeAge,
+  addCount,
+  increaseLike,
+} from "../Store";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -17,7 +25,10 @@ export default function PostingPage() {
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
 
+  let dispatch = useDispatch();
+  let userNameShow = useSelector((state) => state.user);
   let navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -31,7 +42,7 @@ export default function PostingPage() {
         </button>
         <div>
           <h1 className={styles.title}>
-            Hello, <span className={styles.name}>Kelly!&nbsp;</span>
+            Hello, <span className={styles.name}>{userNameShow}!&nbsp;</span>
           </h1>
         </div>
         <div className={styles.slide}>
@@ -57,6 +68,7 @@ export default function PostingPage() {
                       <label className={styles.button} htmlFor='upload'>
                         + Picture
                       </label>
+
                       <input
                         onChange={(e) => {
                           setFile(e.target.files[0]);
@@ -74,18 +86,35 @@ export default function PostingPage() {
                       let savePath = storageRef.child("image/" + file.name);
                       let upload = savePath.put(file);
 
-                      let saveData = {
-                        content: content,
-                        date: new Date(),
-                      };
-                      db.collection("post")
-                        .add(saveData)
-                        .then(() => {
-                          navigate("/mydashboard");
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
+                      // firebase code
+                      upload.on(
+                        "state_changed",
+                        // 변화시 동작하는 함수
+                        null,
+                        //에러시 동작하는 함수
+                        (error) => {
+                          console.error("실패사유는", error);
+                        },
+                        // 성공시 동작하는 함수
+                        () => {
+                          upload.snapshot.ref.getDownloadURL().then((url) => {
+                            console.log("업로드된 경로는", url);
+                            let saveData = {
+                              content: content,
+                              date: new Date(),
+                              image: url,
+                            };
+                            db.collection("post")
+                              .add(saveData)
+                              .then(() => {
+                                navigate("/mydashboard");
+                              })
+                              .catch((err) => {
+                                console.log(err);
+                              });
+                          });
+                        }
+                      );
                     }}
                     className={styles.submit_btn}
                   >

@@ -5,16 +5,29 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../index.js";
 import firebase from 'firebase';
 import "firebase/firestore";
 import 'firebase/auth';
+import { setUserNameShow } from '../Store';
 
 export default function SignInMain() {
   let navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  let dispatch = useDispatch();
+
+  // user 가 로그인 되어 있는지 확인하는 코드
+  firebase.auth().onAuthStateChanged((user)=>{
+    if (user) {
+      console.log(user.uid)
+      console.log(user.displayName)
+      dispatch(setUserNameShow(user.displayName));
+    }
+  })
 
   return (
     <div className={styles.container}>
@@ -48,7 +61,6 @@ export default function SignInMain() {
                 .signInWithEmailAndPassword(userEmail, userPassword)
                 .then((result) => {  
                   navigate("/mainboard");
-                  console.log(result.user);
                 });
             }}
             className={styles.signin_btn}

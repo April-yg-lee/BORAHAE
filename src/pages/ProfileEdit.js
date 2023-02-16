@@ -26,6 +26,12 @@ export default function ProfileEdit() {
                 type='text'
                 placeholder='Kelly'
               ></input>
+              <h6>Introduction</h6>
+              <textarea
+                className={styles.edit_name}
+                type='text'
+                placeholder='I am mad for headband. Jin is my true love!!!'
+              ></textarea>
               <h6>City</h6>
               <input
                 className={styles.edit_city}

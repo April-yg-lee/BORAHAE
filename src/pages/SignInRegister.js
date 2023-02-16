@@ -19,12 +19,12 @@ export default function SignInRegister() {
 
   function signUpRg_checker(name, email, pw, city, country) {
     if (name == "" && !isNaN(name)) {
-      console.log('name')
+      console.log("name");
       return false;
     }
     const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
     if (!email.match(emailPattern)) {
-      console.log('email')
+      console.log("email");
       return false;
       // Please enter a valid email address.
     }
@@ -32,7 +32,7 @@ export default function SignInRegister() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (pw == "" && pw.length < 6 && pw.match(passPattern)) {
-      console.log('password')
+      console.log("password");
       return false;
     }
     return true;

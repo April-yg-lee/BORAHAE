@@ -2,11 +2,17 @@
 import React, { Profiler, useEffect, useState } from "react";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeAge, addCount, increaseLike } from "../Store";
+import {
+  setUserNameShow,
+  changeName,
+  changeAge,
+  addCount,
+  increaseLike,
+} from "../Store";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -26,8 +32,10 @@ export default function MainBoard() {
     });
 
   let dispatch = useDispatch();
-  let state = useSelector((state) => state);
+
+  let userNameShow = useSelector((state) => state.user);
   let like = useSelector((state) => state.like);
+  console.log(userNameShow);
 
   let navigate = useNavigate();
 
@@ -45,16 +53,21 @@ export default function MainBoard() {
         <div>
           <div className={styles.name_box}>
             <h1 className={styles.title}>
-              Hello, <span className={styles.name}>Kelly!&nbsp;</span>
+              Hello,{" "}
+              <span className={styles.name}>
+                {userNameShow}!{" "}
+                <span
+                  onClick={() => {
+                    navigate("/myinfo");
+                  }}
+                >
+                  <FontAwesomeIcon
+                    // className={styles.heart_icon}
+                    icon={faChevronRight}
+                  />
+                </span>
+              </span>
             </h1>
-            <span
-              onClick={() => {
-                navigate("/myinfo");
-              }}
-              className={styles.next_btn}
-            >
-              &gt;
-            </span>
           </div>
           <Location></Location>
           <h3 className={styles.postYourToday}>Post Your Today</h3>
