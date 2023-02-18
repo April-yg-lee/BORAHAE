@@ -134,15 +134,15 @@ export default function SignInRegister() {
                   });
               }
               // get data from firebase
-              db.collection("user")
-                .get()
-                .then((result) => {
-                  result.forEach((doc) => {
-                    dispatch(setUserNameShow(doc.data().userInfo.name));
-                    dispatch(setUserCityShow(doc.data().userInfo.city));
-                    dispatch(setUserCountryShow(doc.data().userInfo.country));
-                  });
-                });
+              // db.collection("user")
+              //   .get()
+              //   .then((result) => {
+              //     result.forEach((doc) => {
+              //       dispatch(setUserNameShow(doc.data().userInfo.name));
+              //       dispatch(setUserCityShow(doc.data().userInfo.city));
+              //       dispatch(setUserCountryShow(doc.data().userInfo.country));
+              //     });
+              //   });
             }}
             className={styles.confirm_btn}
           >

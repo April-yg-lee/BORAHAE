@@ -20,15 +20,6 @@ export default function SignInMain() {
 
   let dispatch = useDispatch();
 
-  // user 가 로그인 되어 있는지 확인하는 코드
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log(user.uid);
-      console.log(user.displayName);
-      dispatch(setUserNameShow(user.displayName));
-    }
-  });
-
   return (
     <div className={styles.container}>
       <div className={styles.signin_contents}>
@@ -62,17 +53,29 @@ export default function SignInMain() {
                 .then((result) => {
                   navigate("/mainboard");
                 });
-              // get data from firebase
-              db.collection("user")
-                .get()
-                .then((result) => {
-                  result.forEach((doc) => {
-                    console.log(doc.data());
-                    dispatch(setUserNameShow(doc.data().userInfo.name));
-                    dispatch(setUserCityShow(doc.data().userInfo.city));
-                    dispatch(setUserCountryShow(doc.data().userInfo.country));
-                  });
-                });
+
+              // user 가 로그인 되어 있는지 확인하는 코드
+              firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                  // console.log(user.uid);
+                  // console.log(user.displayName);
+                  dispatch(setUserNameShow(user.displayName));
+                  // get data from firebase
+                  db.collection("user")
+                    .get()
+                    .then((result) => {
+                      result.forEach((doc) => {
+                        // console.log(doc.data());
+
+                        if (user.uid == doc.data().userInfo.uid) {
+                          dispatch(setUserNameShow(doc.data().userInfo.name));
+                          dispatch(setUserCityShow(doc.data().userInfo.city));
+                          dispatch(setUserCountryShow(doc.data().userInfo.country));
+                        }
+                      });
+                    });
+                }
+              });
             }}
             className={styles.signin_btn}
           >

@@ -28,21 +28,15 @@ export default function MainBoard() {
   db.collection("user")
     .get()
     .then((result) => {
-      result.forEach((doc) => {
-        console.log(doc.data().userInfo.name);
-        dispatch(setUserNameShow(doc.data().userInfo.name))
-        dispatch(setUserCityShow(doc.data().userInfo.city));
-        dispatch(setUserCountryShow(doc.data().userInfo.country));
-      });
+      result.forEach((doc) => {});
     });
-
 
   let dispatch = useDispatch();
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCityShow = useSelector((state) => state.userCityShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
- 
+
   let like = useSelector((state) => state.like);
 
   let navigate = useNavigate();
