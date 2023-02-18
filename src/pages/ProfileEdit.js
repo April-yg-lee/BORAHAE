@@ -20,6 +20,21 @@ export default function ProfileEdit() {
           <section className={styles.article_box}>
             <h3>Profile</h3>
             <section className={styles.edit_section}>
+            <div className={styles.btn_container}>
+                  <div className={styles.button_wrap}>
+                    <label className={styles.button} htmlFor='upload'>
+                      + Picture
+                    </label>
+
+                    <input
+                      onChange={(e) => {
+                        setFile(e.target.files[0]);
+                      }}
+                      id='upload'
+                      type='file'
+                    ></input>
+                  </div>
+                </div>
               <h6>Name</h6>
               <input
                 className={styles.edit_name}

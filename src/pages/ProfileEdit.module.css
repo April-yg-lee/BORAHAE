@@ -106,7 +106,9 @@
   padding: 5%;
 }
 
-.edit_name, .edit_city, .edit_country {
+.edit_name,
+.edit_city,
+.edit_country {
   padding: 2.5%;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -121,14 +123,44 @@
 .btn_section {
   display: flex;
   justify-content: center;
-
 }
 
 .save_btn {
   width: 88px;
   height: 35px;
-  background-color: #A493FF;
+  background-color: #a493ff;
   border: none;
   color: white;
   border-radius: 10px;
+}
+
+.btn_container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  font-size: 17px;
+  color: #b8b8b8;
+  display: none;
+}
+.button_wrap {
+  position: relative;
+}
+.button {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+  border: 4px double #cccccc;
+  color: #7259f5;
+  text-align: center;
+  font-size: 15px;
+  padding: 5px;
+  width: 70px;
+  height: 15px;
+  transition: all 0.5s;
+  line-height: 1;
+  margin-bottom: 8px;
 }

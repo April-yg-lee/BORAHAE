@@ -26,7 +26,7 @@ export default function PostingPage() {
   let [file, setFile] = useState();
 
   let dispatch = useDispatch();
-  let userNameShow = useSelector((state) => state.user);
+  let userNameShow = useSelector((state) => state.userNameShow);
   let navigate = useNavigate();
 
   return (
@@ -62,28 +62,27 @@ export default function PostingPage() {
                     setContent(e.target.value);
                   }}
                 ></input>
-                <div className={styles.picture}>
-                  <div className={styles.btn_container}>
-                    <div className={styles.button_wrap}>
-                      <label className={styles.button} htmlFor='upload'>
-                        + Picture
-                      </label>
+                <div className={styles.btn_container}>
+                  <div className={styles.button_wrap}>
+                    <label className={styles.button} htmlFor='upload'>
+                      + Picture
+                    </label>
 
-                      <input
-                        onChange={(e) => {
-                          setFile(e.target.files[0]);
-                        }}
-                        id='upload'
-                        type='file'
-                      ></input>
-                    </div>
+                    <input
+                      onChange={(e) => {
+                        setFile(e.target.files[0]);
+                      }}
+                      id='upload'
+                      type='file'
+                    ></input>
                   </div>
                 </div>
+
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
                       let storageRef = storage.ref();
-                      let savePath = storageRef.child("image/" + file.name);
+                      let savePath = storageRef.child("postingImage/" + file.name);
                       let upload = savePath.put(file);
 
                       // firebase code

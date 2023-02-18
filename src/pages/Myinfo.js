@@ -9,11 +9,17 @@ import {
   faRightFromBracket,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserNameShow, changeName, changeAge, addCount, increaseLike } from "../Store";
 import ProfileEditTop from "../components/ProfileEditTop";
 import { useNavigate } from "react-router-dom";
 
 export default function Myinfo() {
   let navigate = useNavigate();
+
+  let dispatch = useDispatch();
+  let userNameShow = useSelector((state) => state.userNameShow);
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

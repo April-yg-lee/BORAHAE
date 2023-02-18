@@ -7,10 +7,10 @@ import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../index.js";
-import firebase from 'firebase';
+import firebase from "firebase";
 import "firebase/firestore";
-import 'firebase/auth';
-import { setUserNameShow } from '../Store';
+import "firebase/auth";
+import { setUserNameShow } from "../Store";
 
 export default function SignInMain() {
   let navigate = useNavigate();
@@ -21,13 +21,13 @@ export default function SignInMain() {
   let dispatch = useDispatch();
 
   // user 가 로그인 되어 있는지 확인하는 코드
-  firebase.auth().onAuthStateChanged((user)=>{
+  firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      console.log(user.uid)
-      console.log(user.displayName)
+      console.log(user.uid);
+      console.log(user.displayName);
       dispatch(setUserNameShow(user.displayName));
     }
-  })
+  });
 
   return (
     <div className={styles.container}>
@@ -59,7 +59,7 @@ export default function SignInMain() {
               firebase
                 .auth()
                 .signInWithEmailAndPassword(userEmail, userPassword)
-                .then((result) => {  
+                .then((result) => {
                   navigate("/mainboard");
                 });
             }}
@@ -69,6 +69,17 @@ export default function SignInMain() {
           </button>
           <button
             onClick={() => {
+              // get data from firebase
+              db.collection("user")
+                .get()
+                .then((result) => {
+                  result.forEach((doc) => {
+                    console.log(doc.data());
+                    dispatch(setUserNameShow(doc.data().userInfo.name));
+                    dispatch(setUserCityShow(doc.data().userInfo.city));
+                    dispatch(setUserCountryShow(doc.data().userInfo.country));
+                  });
+                });
               navigate("/signinquestions");
             }}
             className={styles.signup_btn}

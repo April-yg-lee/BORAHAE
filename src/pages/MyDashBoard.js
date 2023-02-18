@@ -20,7 +20,9 @@ import { useNavigate } from "react-router-dom";
 export default function MyDashBoard() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
-  let userNameShow = useSelector((state) => state.user);
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -30,7 +32,7 @@ export default function MyDashBoard() {
           }}
           className={styles.back_btn}
         >
-          &lt; Back
+          &lt; Main Board
         </button>
         <div className={styles.slide}>
           <section className={styles.article_box}>
@@ -50,7 +52,7 @@ export default function MyDashBoard() {
                 </button>
               </div>
               <div className={styles.introduce}>
-                <h4>Vancouver, Canada</h4>
+                <h4>{userCityShow}, {userCountryShow}</h4>
                 <h5>I'm mad for headband. Jin is my true love!!!</h5>
               </div>
             </article>

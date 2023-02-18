@@ -9,6 +9,7 @@
   background-image: url("./img/우주.jpg");
   background-size: cover;
   margin: auto;
+  opacity: 0.9;
 }
 
 .b_logo {

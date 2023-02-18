@@ -6,6 +6,8 @@ import { faArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons";
 import BackBtn from "../components/BackBtn";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../index.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserNameShow, setUserCountryShow, setUserCityShow } from "../Store";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
@@ -39,6 +41,9 @@ export default function SignInRegister() {
   }
 
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
 
   return (
     <div className={styles.container}>
@@ -114,14 +119,13 @@ export default function SignInRegister() {
                   .auth()
                   .createUserWithEmailAndPassword(userEmail, userPassword)
                   .then((result) => {
-                    console.log(result);
-                    console.log(result.user);
                     result.user.updateProfile({ displayName: userName });
                     let userInfo = {
                       name: userName,
                       email: userEmail,
                       city: userCity,
                       country: userCountry,
+                      uid: result.user.uid,
                     };
                     db.collection("user")
                       .doc(result.user.uid)
@@ -129,6 +133,16 @@ export default function SignInRegister() {
                     navigate("/");
                   });
               }
+              // get data from firebase
+              db.collection("user")
+                .get()
+                .then((result) => {
+                  result.forEach((doc) => {
+                    dispatch(setUserNameShow(doc.data().userInfo.name));
+                    dispatch(setUserCityShow(doc.data().userInfo.city));
+                    dispatch(setUserCountryShow(doc.data().userInfo.country));
+                  });
+                });
             }}
             className={styles.confirm_btn}
           >

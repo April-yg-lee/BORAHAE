@@ -1,14 +1,31 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-let user = createSlice({
+let userNameShow = createSlice({
   name: "userNameShow", // state 이름
   initialState: "hey",
   reducers: {
     setUserNameShow(state, action) {
       return state = action.payload;
     },
-    changeAge(state, action) {
-      state.age += action.payload;
+  },
+});
+
+let userCityShow = createSlice({
+  name: "userCityShow", // state 이름
+  initialState: "hey",
+  reducers: {
+    setUserCityShow(state, action) {
+      return state = action.payload;
+    },
+  },
+});
+
+let userCountryShow = createSlice({
+  name: "userCountryShow", // state 이름
+  initialState: "hey",
+  reducers: {
+    setUserCountryShow(state, action) {
+      return state = action.payload;
     },
   },
 });
@@ -46,13 +63,17 @@ let like = createSlice({
 });
 
 // export part
-export let { setUserNameShow, changeName, changeAge } = user.actions;
+export let { setUserNameShow, changeName, changeAge } = userNameShow.actions;
+export let { setUserCityShow } = userCityShow.actions;
+export let { setUserCountryShow } = userCountryShow.actions;
 export let { addCount } = items.actions;
 export let { increaseLike } = like.actions;
 
 export default configureStore({
   reducer: {
-    user: user.reducer,
+    userNameShow: userNameShow.reducer,
+    userCityShow: userCityShow.reducer,
+    userCountryShow: userCountryShow.reducer,
     stock: stock.reducer,
     items: items.reducer,
     like: like.reducer,

@@ -8,6 +8,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserNameShow,
+  setUserCityShow,
+  setUserCountryShow,
   changeName,
   changeAge,
   addCount,
@@ -23,19 +25,25 @@ export default function MainBoard() {
   let test = ["h1", "h2"];
 
   // get data from firebase
-  db.collection("post")
+  db.collection("user")
     .get()
     .then((result) => {
       result.forEach((doc) => {
-        doc.data();
+        console.log(doc.data().userInfo.name);
+        dispatch(setUserNameShow(doc.data().userInfo.name))
+        dispatch(setUserCityShow(doc.data().userInfo.city));
+        dispatch(setUserCountryShow(doc.data().userInfo.country));
       });
     });
 
+
   let dispatch = useDispatch();
 
-  let userNameShow = useSelector((state) => state.user);
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+ 
   let like = useSelector((state) => state.like);
-  console.log(userNameShow);
 
   let navigate = useNavigate();
 

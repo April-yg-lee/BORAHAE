@@ -8,6 +8,11 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { db, storage } from "../index.js";
+import firebase from "firebase";
+import "firebase/firestore";
+import "firebase/database";
+import "firebase/storage";
 
 export default function PersonalPage() {
   let navigate = useNavigate();

@@ -5,7 +5,7 @@ import { setUserNameShow, changeName, changeAge, addCount, increaseLike } from "
 
 export default function ProfileEditTop() {
   let dispatch = useDispatch();
-  let userNameShow = useSelector((state) => state.user);
+  let userNameShow = useSelector((state) => state.userNameShow);
 
   return (
     <div className={styles.profile_box}>
