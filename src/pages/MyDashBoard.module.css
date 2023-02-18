@@ -90,8 +90,8 @@
   width: 100px;
   height: 100px;
   border-radius: 10px;
-  background-image: url('./img/jin-1.PNG');
   background-size: cover;
+  background-image: url('./img/Jin.jpg');
 }
 
 .article_big_profile_img {

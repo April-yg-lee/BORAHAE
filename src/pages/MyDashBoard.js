@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserNameShow,
+  setPostingContentShow,
   changeName,
   changeAge,
   addCount,
@@ -23,6 +24,8 @@ export default function MyDashBoard() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
+
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -40,7 +43,9 @@ export default function MyDashBoard() {
               <div className={styles.title_box}>
                 <div className={styles.article_title}>
                   <div className={styles.article_big_profile_img}></div>
-                  <span className={styles.article_profile_name}>{userNameShow}</span>
+                  <span className={styles.article_profile_name}>
+                    {userNameShow}
+                  </span>
                 </div>
                 <button
                   onClick={() => {
@@ -52,7 +57,9 @@ export default function MyDashBoard() {
                 </button>
               </div>
               <div className={styles.introduce}>
-                <h4>{userCityShow}, {userCountryShow}</h4>
+                <h4>
+                  {userCityShow}, {userCountryShow}
+                </h4>
                 <h5>I'm mad for headband. Jin is my true love!!!</h5>
               </div>
             </article>
@@ -65,7 +72,9 @@ export default function MyDashBoard() {
               <div className={styles.title_box}>
                 <div className={styles.article_title}>
                   <div className={styles.article_profile_img}></div>
-                  <span className={styles.article_profile_name}>{userNameShow}</span>
+                  <span className={styles.article_profile_name}>
+                    {userNameShow}
+                  </span>
                 </div>
                 <div className={styles.del_edit_btn}>
                   <FontAwesomeIcon icon={faTrashCan} />
@@ -73,8 +82,9 @@ export default function MyDashBoard() {
                 </div>
               </div>
               <div className={styles.article_content}>
-                <h6>WHO THE HELL LOVE JIN LIKE ME?</h6>
+                <h6>Wonderful Days</h6>
                 <div></div>
+                {/* <div style={{backgroundImage: `"url('${postingImageShow}')",`}}></div> */}
               </div>
               <div className={styles.article_footer}>
                 <div>
