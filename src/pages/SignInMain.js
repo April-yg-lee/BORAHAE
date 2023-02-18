@@ -10,7 +10,7 @@ import { db } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
-import { setUserNameShow } from "../Store";
+import { setUserNameShow, setUserCityShow, setUserCountryShow } from "../Store";
 
 export default function SignInMain() {
   let navigate = useNavigate();
@@ -62,13 +62,6 @@ export default function SignInMain() {
                 .then((result) => {
                   navigate("/mainboard");
                 });
-            }}
-            className={styles.signin_btn}
-          >
-            SIGN IN
-          </button>
-          <button
-            onClick={() => {
               // get data from firebase
               db.collection("user")
                 .get()
@@ -80,6 +73,13 @@ export default function SignInMain() {
                     dispatch(setUserCountryShow(doc.data().userInfo.country));
                   });
                 });
+            }}
+            className={styles.signin_btn}
+          >
+            SIGN IN
+          </button>
+          <button
+            onClick={() => {
               navigate("/signinquestions");
             }}
             className={styles.signup_btn}
