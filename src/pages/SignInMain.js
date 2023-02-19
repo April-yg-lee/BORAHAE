@@ -10,7 +10,7 @@ import { db } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
-import { setUserNameShow, setUserCityShow, setUserCountryShow } from "../Store";
+import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow } from "../Store";
 
 export default function SignInMain() {
   let navigate = useNavigate();
@@ -68,6 +68,7 @@ export default function SignInMain() {
                         // console.log(doc.data());
 
                         if (user.uid == doc.data().userInfo.uid) {
+                          dispatch(setUserUidShow(doc.data().userInfo.uid));
                           dispatch(setUserNameShow(doc.data().userInfo.name));
                           dispatch(setUserCityShow(doc.data().userInfo.city));
                           dispatch(setUserCountryShow(doc.data().userInfo.country));
