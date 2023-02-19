@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserNameShow,
+  setPostingContentShow,
   changeName,
   changeAge,
   addCount,
@@ -82,7 +83,9 @@ export default function PostingPage() {
                   <button
                     onClick={() => {
                       let storageRef = storage.ref();
-                      let savePath = storageRef.child("postingImage/" + file.name);
+                      let savePath = storageRef.child(
+                        "postingImage/" + file.name
+                      );
                       let upload = savePath.put(file);
 
                       // firebase code
@@ -96,22 +99,58 @@ export default function PostingPage() {
                         },
                         // 성공시 동작하는 함수
                         () => {
-                          upload.snapshot.ref.getDownloadURL().then((url) => {
-                            console.log("업로드된 경로는", url);
-                            let saveData = {
-                              content: content,
-                              date: new Date(),
-                              image: url,
-                            };
-                            db.collection("post")
-                              .add(saveData)
-                              .then(() => {
-                                navigate("/mydashboard");
-                              })
-                              .catch((err) => {
-                                console.log(err);
+                          upload.snapshot.ref
+                            .getDownloadURL()
+                            .then((postingUrl) => {
+                              firebase.auth().onAuthStateChanged((user) => {
+                                if (user) {
+                                  db.collection("user")
+                                    .get()
+                                    .then((result) => {
+                                      result.forEach((doc) => {
+                                        if (
+                                          user.uid == doc.data().userInfo.uid
+                                        ) {
+                                          console.log(
+                                            "업로드된 경로는",
+                                            postingUrl
+                                          );
+                                          let saveData = {
+                                            content: content,
+                                            date: new Date(),
+                                            postingImage: postingUrl,
+                                            likes: 0,
+                                            uid: doc.data().userInfo.uid,
+                                            userName: doc.data().userInfo.name,
+                                            profileImage:
+                                              doc.data().userInfo.profileImage,
+                                          };
+                                          console.log(saveData.content);
+                                          // dispatch(
+                                          //   setPostingContentShow(
+                                          //     saveData.content
+                                          //   )
+                                          // );
+                                          // dispatch(
+                                          //   setPostingImageShow(
+                                          //     saveData.postingImage
+                                          //   )
+                                          // );
+
+                                          db.collection("post")
+                                            .add(saveData)
+                                            .then(() => {
+                                              navigate("/mydashboard");
+                                            })
+                                            .catch((err) => {
+                                              console.log(err);
+                                            });
+                                        }
+                                      });
+                                    });
+                                }
                               });
-                          });
+                            });
                         }
                       );
                     }}

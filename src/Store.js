@@ -12,7 +12,7 @@ let userUidShow = createSlice({
 
 let userNameShow = createSlice({
   name: "userNameShow", // state 이름
-  initialState: "hey",
+  initialState: "name",
   reducers: {
     setUserNameShow(state, action) {
       return state = action.payload;
@@ -22,7 +22,7 @@ let userNameShow = createSlice({
 
 let userCityShow = createSlice({
   name: "userCityShow", // state 이름
-  initialState: "hey",
+  initialState: "city",
   reducers: {
     setUserCityShow(state, action) {
       return state = action.payload;
@@ -32,9 +32,29 @@ let userCityShow = createSlice({
 
 let userCountryShow = createSlice({
   name: "userCountryShow", // state 이름
-  initialState: "hey",
+  initialState: "country",
   reducers: {
     setUserCountryShow(state, action) {
+      return state = action.payload;
+    },
+  },
+});
+
+let postingContentShow = createSlice({
+  name: "postingContentShow", // state 이름
+  initialState: "",
+  reducers: {
+    setPostingContentShow(state, action) {
+      return state = action.payload;
+    },
+  },
+});
+
+let postingImageShow = createSlice({
+  name: "postingImageShow", // state 이름
+  initialState: "",
+  reducers: {
+    setPostingImageShow(state, action) {
       return state = action.payload;
     },
   },
@@ -77,6 +97,8 @@ export let { setUserUidShow } = userUidShow.actions;
 export let { setUserNameShow, changeName, changeAge } = userNameShow.actions;
 export let { setUserCityShow } = userCityShow.actions;
 export let { setUserCountryShow } = userCountryShow.actions;
+export let { setPostingContentShow } = postingContentShow.actions;
+export let { setPostingImageShow } = postingImageShow.actions;
 export let { addCount } = items.actions;
 export let { increaseLike } = like.actions;
 
@@ -86,6 +108,8 @@ export default configureStore({
     userNameShow: userNameShow.reducer,
     userCityShow: userCityShow.reducer,
     userCountryShow: userCountryShow.reducer,
+    postingContentShow: postingContentShow.reducer,
+    postingImageShow: postingImageShow.reducer,
     stock: stock.reducer,
     items: items.reducer,
     like: like.reducer,

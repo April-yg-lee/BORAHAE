@@ -18,6 +18,7 @@ export default function SignInRegister() {
   const [userPassword, setUserPassword] = useState("");
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
+  let [file, setFile] = useState();
 
   function signUpRg_checker(name, email, pw, city, country) {
     if (name == "" && !isNaN(name)) {
@@ -58,6 +59,20 @@ export default function SignInRegister() {
             <br></br> Quick Registration
           </h1>
           <section className={styles.input_box}>
+            <div className={styles.btn_container}>
+              <div className={styles.button_wrap}>
+                <label className={styles.button} htmlFor='upload'>
+                  + Profile Picture
+                </label>
+                <input
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                  }}
+                  id='upload'
+                  type='file'
+                ></input>
+              </div>
+            </div>
             <input
               onChange={(e) => {
                 setUserName(e.target.value);
@@ -115,34 +130,57 @@ export default function SignInRegister() {
                   userCountry
                 ) == true
               ) {
-                firebase
-                  .auth()
-                  .createUserWithEmailAndPassword(userEmail, userPassword)
-                  .then((result) => {
-                    result.user.updateProfile({ displayName: userName });
-                    let userInfo = {
-                      name: userName,
-                      email: userEmail,
-                      city: userCity,
-                      country: userCountry,
-                      uid: result.user.uid,
-                    };
-                    db.collection("user")
-                      .doc(result.user.uid)
-                      .set({ userInfo });
-                    navigate("/");
-                  });
+                let storageRef = storage.ref();
+                let savePath = storageRef.child("profileImage/" + file.name);
+                let upload = savePath.put(file);
+
+                // firebase code
+                upload.on(
+                  "state_changed",
+                  null,
+                  (error) => {
+                    console.error("실패사유는", error);
+                  },
+                  () => {
+                    upload.snapshot.ref.getDownloadURL().then((profileUrl) => {
+                      console.log(profileUrl);
+
+                      firebase
+                        .auth()
+                        .createUserWithEmailAndPassword(
+                          userEmail,
+                          userPassword
+                        )
+                        .then((result) => {
+                          result.user.updateProfile({
+                            displayName: userName,
+                          });
+                          let userInfo = {
+                            name: userName,
+                            email: userEmail,
+                            city: userCity,
+                            country: userCountry,
+                            uid: result.user.uid,
+                            profileImage: profileUrl,
+                          };
+                          db.collection("user")
+                            .doc(result.user.uid)
+                            .set({ userInfo });
+                          navigate("/");
+                        });
+
+                      // db.collection("user")
+                      //   .get()
+                      //   .then((result) => {
+                      //     result.forEach((doc) => {
+                      //       console.log("업로드된 경로는", profileUrl);
+
+                      //     });
+                      //   });
+                    });
+                  }
+                );
               }
-              // get data from firebase
-              // db.collection("user")
-              //   .get()
-              //   .then((result) => {
-              //     result.forEach((doc) => {
-              //       dispatch(setUserNameShow(doc.data().userInfo.name));
-              //       dispatch(setUserCityShow(doc.data().userInfo.city));
-              //       dispatch(setUserCountryShow(doc.data().userInfo.country));
-              //     });
-              //   });
             }}
             className={styles.confirm_btn}
           >

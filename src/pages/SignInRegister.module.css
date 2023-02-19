@@ -101,3 +101,35 @@
   line-height: 2.2;
   border-radius: 50%;
 }
+
+
+.btn_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  font-size: 17px;
+  color: #b8b8b8;
+  display: none;
+}
+.button_wrap {
+  position: relative;
+}
+.button {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+  border: 4px double #cccccc;
+  color: #7259f5;
+  text-align: center;
+  font-size: 15px;
+  padding: 5px;
+  width: 130px;
+  height: 15px;
+  transition: all 0.5s;
+  line-height: 1;
+  margin-bottom: 8px;
+}
