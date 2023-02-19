@@ -1,5 +1,15 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
+let userUidShow = createSlice({
+  name: "userUidShow", // state 이름
+  initialState: "hey",
+  reducers: {
+    setUserUidShow(state, action) {
+      return state = action.payload;
+    },
+  },
+});
+
 let userNameShow = createSlice({
   name: "userNameShow", // state 이름
   initialState: "name",
@@ -83,6 +93,7 @@ let like = createSlice({
 });
 
 // export part
+export let { setUserUidShow } = userUidShow.actions;
 export let { setUserNameShow, changeName, changeAge } = userNameShow.actions;
 export let { setUserCityShow } = userCityShow.actions;
 export let { setUserCountryShow } = userCountryShow.actions;
@@ -93,6 +104,7 @@ export let { increaseLike } = like.actions;
 
 export default configureStore({
   reducer: {
+    userUidShow: userUidShow.reducer,
     userNameShow: userNameShow.reducer,
     userCityShow: userCityShow.reducer,
     userCountryShow: userCountryShow.reducer,
