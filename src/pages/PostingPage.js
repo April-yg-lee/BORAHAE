@@ -8,10 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserNameShow,
-  setPostingContentShow,
-  changeName,
-  changeAge,
-  addCount,
   increaseLike,
 } from "../Store";
 import { db, storage } from "../index.js";
