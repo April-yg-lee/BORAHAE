@@ -7,12 +7,6 @@ import Location from "../components/Location";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setUserNameShow,
-  setUserCityShow,
-  setUserCountryShow,
-  changeName,
-  changeAge,
-  addCount,
   increaseLike,
 } from "../Store";
 import { db, storage } from "../index.js";
@@ -23,13 +17,24 @@ import "firebase/database";
 
 export default function MainBoard() {
   let test = ["h1", "h2"];
+  let tmpArray = [];
 
   // get data from firebase
-  db.collection("user")
+  let object = db.collection("post")
     .get()
     .then((result) => {
-      result.forEach((doc) => {});
+      result.forEach((doc) => {
+        tmpArray.push(doc.data());
+        console.log(tmpArray);
+        // tmpArray.map((a, i)=> {
+        //   console.log(i);
+        // })
+        // console.log(doc.data());
+      });
     });
+
+    // console.log(tmpArray[0]);
+    // console.log(tmpArray[1]);
 
   let dispatch = useDispatch();
 
