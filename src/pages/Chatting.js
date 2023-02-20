@@ -11,9 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
-import { useFirestoreQuery } from './hooks';
 // Components
-import Message from './Message';
 
 
 
@@ -21,54 +19,9 @@ import Message from './Message';
 export default function Chatting() {
 
   const db = firebase.firestore();
-  const messagesRef = db.collection('messages');
-  const messages = useFirestoreQuery(
-    messagesRef.orderBy('createdAt', 'desc').limit(100)
-  );
-
-  const [newMessage, setNewMessage] = useState('');
-
-  const inputRef = useRef();
-  const bottomListRef = useRef();
-
-  let userUidShow = useSelector((state) => state.userUidShow);
-  // userUidShow = "VQ8KcHXf9JMqOxGHDGsgTj3pfBq1";
-
-  // const { uid, displayName, photoURL } = user;
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [inputRef]);
-
-  const handleOnChange = e => {
-    setNewMessage(e.target.value);
-  };
-
-  const handleOnSubmit = e => {
-    e.preventDefault();
-
-    const trimmedMessage = newMessage.trim();
-    if (trimmedMessage) {
-      // Add new message in Firestore
-      messagesRef.add({
-        text: trimmedMessage,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        userUidShow,
-        // displayName,
-        // photoURL,
-      });
-      // Clear input field
-      setNewMessage('');
-      // Scroll down to the bottom of the list
-      bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-
 
   let navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -95,40 +48,17 @@ export default function Chatting() {
               </span>
             </li> */}
 
-            {
-              messages.map(message => (
-                <li key={message.id}>
-                  <span className={styles.chat_myAnswer}>
-                    {message.text}
-                  </span>
-                </li>
-              ))
 
-            /* {messages
-              ?.sort((first, second) =>
-                first?.createdAt?.seconds <= second?.createdAt?.seconds ? -1 : 1
-              )
-              ?.map(message => (
-                <li key={message.id}>
-                  <Message {...message} />
-                </li>
-              ))} */}
           </ul>
-          <footer ref={bottomListRef}>
-            {/* <form
-              onSubmit={handleOnSubmit}> */}
+          <footer>
             <input
-              ref={inputRef}
               className={styles.input_part}
               type='text'
               placeholder='Type here...'
-              value={newMessage}
-              onChange={handleOnChange}
             ></input>
-            <button type="submit" onClick={handleOnSubmit} disabled={!newMessage} className={styles.input_btn}>
+            <button type="submit" className={styles.input_btn}>
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
-            {/* </form> */}
           </footer>
         </div>
       </div>
