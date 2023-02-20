@@ -30,6 +30,7 @@ export default function MainBoard() {
         //   console.log(i);
         // })
         // console.log(doc.data());
+        
       });
     });
 
