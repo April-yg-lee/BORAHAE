@@ -11,20 +11,32 @@ export default function SignInQuestions() {
 
   let navigate = useNavigate();
   let userUidShow = useSelector((state) => state.userUidShow);
-  console.log(userUidShow);
 
   const [chatList, setChatList] = useState([]);
-  let tmpList = [];
+  const [trick, setTrick] = useState([]);
 
   const db = firebase.firestore();
   const call = () => {
+    let tmpList = [];
     db.collection("chatroom")
       .where('member', 'array-contains', userUidShow)
       .get()
       .then((result) => {
         result.forEach((doc) => {
           let tmp = doc.data();
-          console.log(tmp);
+
+          db.collection("user")
+            .where('userInfo.uid', '==', tmp.member[1])
+            .get()
+            .then((info) => {
+              info.forEach((infoDoc) => {
+
+                tmp.name = infoDoc.data().userInfo.name;
+                tmp.profileImage = infoDoc.data().userInfo.profileImage;
+                setTrick(tmp); // 조회 후 렌더링을 위한 꼼수
+              })
+            })
+
           tmpList.push(tmp);
         });
         setChatList(tmpList);
@@ -36,8 +48,6 @@ export default function SignInQuestions() {
     call();
 
   }, []);
-
-  console.log('data : ' + chatList);
 
   return (
     <div className={styles.container}>
@@ -71,9 +81,9 @@ export default function SignInQuestions() {
                   }}
                   className={styles.chat_each}
                 >
-                  <div className={styles.profile_img}></div>
+                  <div className={styles.profile_img} style={{ backgroundImage: `url('${list.profileImage}')` }}></div>
                   <div className={styles.chat_mes_box}>
-                    <span className={styles.chat_mes_name}>Eva</span>
+                    <span className={styles.chat_mes_name}>{list.name}</span>
                     <span className={styles.chat_mes_text}>{list.lastestMessage}</span>
                   </div>
                   <span className={styles.chat_counter}>3</span>
