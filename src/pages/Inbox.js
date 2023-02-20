@@ -1,12 +1,44 @@
 /*eslint-disable */
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import styles from "./Inbox.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faComment } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import firebase from 'firebase/app';
+import { useSelector } from "react-redux";
 
 export default function SignInQuestions() {
+
   let navigate = useNavigate();
+  let userUidShow = useSelector((state) => state.userUidShow);
+  console.log(userUidShow);
+
+  const [chatList, setChatList] = useState([]);
+  let tmpList = [];
+
+  const db = firebase.firestore();
+  const call = () => {
+    db.collection("chatroom")
+      .where('member', 'array-contains', userUidShow)
+      .get()
+      .then((result) => {
+        result.forEach((doc) => {
+          let tmp = doc.data();
+          console.log(tmp);
+          tmpList.push(tmp);
+        });
+        setChatList(tmpList);
+      });
+
+  }
+
+  useEffect(() => {
+    call();
+
+  }, []);
+
+  console.log('data : ' + chatList);
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -30,27 +62,26 @@ export default function SignInQuestions() {
             <span className={styles.option_all}>Chat</span>
           </div>
           <section className={styles.chat_section}>
-            <article
-              onClick={() => {
-                navigate("/chatting");
-              }}
-              className={styles.chat_each}
-            >
-              <div className={styles.profile_img}></div>
-              <div className={styles.chat_mes_box}>
-                <span className={styles.chat_mes_name}>Eva</span>
-                <span className={styles.chat_mes_text}>Are you ok?</span>
-              </div>
-              <span className={styles.chat_counter}>3</span>
-            </article>
-            <article className={styles.chat_each}>
-              <div className={styles.profile_img}></div>
-              <div className={styles.chat_mes_box}>
-                <span className={styles.chat_mes_name}>Eva</span>
-                <span className={styles.chat_mes_text}>Are you ok?</span>
-              </div>
-              <span className={styles.chat_counter}>3</span>
-            </article>
+
+            {
+              chatList.map((list) => (
+                <article
+                  onClick={() => {
+                    navigate("/chatting");
+                  }}
+                  className={styles.chat_each}
+                >
+                  <div className={styles.profile_img}></div>
+                  <div className={styles.chat_mes_box}>
+                    <span className={styles.chat_mes_name}>Eva</span>
+                    <span className={styles.chat_mes_text}>{list.lastestMessage}</span>
+                  </div>
+                  <span className={styles.chat_counter}>3</span>
+                </article>
+
+              ))}
+
+
           </section>
         </div>
       </div>

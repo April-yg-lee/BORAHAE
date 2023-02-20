@@ -96,17 +96,13 @@ export default function Chatting() {
             </li> */}
 
             {
-              messages
-                ?.sort((first, second) =>
-                  first?.createdAt?.seconds <= second?.createdAt?.seconds ? -1 : 1
-                )
-                ?.map(message => (
-                  <li key={message.id}>
-                    <span className={styles.chat_myAnswer}>
-                      {message.text}
-                    </span>
-                  </li>
-                ))
+              messages.map(message => (
+                <li key={message.id}>
+                  <span className={styles.chat_myAnswer}>
+                    {message.text}
+                  </span>
+                </li>
+              ))
 
             /* {messages
               ?.sort((first, second) =>

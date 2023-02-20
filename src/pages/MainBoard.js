@@ -28,7 +28,9 @@ export default function MainBoard() {
   db.collection("user")
     .get()
     .then((result) => {
-      result.forEach((doc) => {});
+      result.forEach((doc) => {
+        
+      });
     });
 
   let dispatch = useDispatch();
