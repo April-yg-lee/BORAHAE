@@ -64,12 +64,13 @@ export default function SignInQuestions() {
           <section className={styles.chat_section}>
 
             {
-              chatList.map((list) => (
+              chatList.map((list, idx) => (
                 <article
                   onClick={() => {
                     navigate("/chatting");
                   }}
                   className={styles.chat_each}
+                  key={idx}
                 >
                   <div className={styles.profile_img}></div>
                   <div className={styles.chat_mes_box}>

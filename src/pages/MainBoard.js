@@ -6,9 +6,7 @@ import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  increaseLike,
-} from "../Store";
+import { increaseLike } from "../Store";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -16,26 +14,27 @@ import "firebase/database";
 // import 'firebase/storage';
 
 export default function MainBoard() {
-  let test = ["h1", "h2"];
-  let tmpArray = [];
-
+  const [postList, setPostList] = useState([]);
+  
   // get data from firebase
-  let object = db.collection("post")
-    .get()
-    .then((result) => {
-      result.forEach((doc) => {
-        tmpArray.push(doc.data());
-        console.log(tmpArray);
-        // tmpArray.map((a, i)=> {
-        //   console.log(i);
-        // })
-        // console.log(doc.data());
-        
+  let call = () => {
+    let postArray = [];
+    db.collection("post")
+      .get()
+      .then((result) => {
+        result.forEach((doc) => {
+          postArray.push(doc.data());
+          console.log('Post Array: ' + postArray);
+        });
+        setPostList(postArray);
       });
-    });
+  };
 
-    // console.log(tmpArray[0]);
-    // console.log(tmpArray[1]);
+  useEffect(() => {
+    call();
+  }, []);
+
+  console.log("data : " + postList);
 
   let dispatch = useDispatch();
 
@@ -95,7 +94,7 @@ export default function MainBoard() {
             <span className={styles.option_nearby}>Nearby</span>
           </div>
 
-          {test.map(function (a, i) {
+          {postList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
                 <article
@@ -105,12 +104,14 @@ export default function MainBoard() {
                   className={styles.article}
                 >
                   <div className={styles.article_title}>
-                    <div className={styles.article_profile_img}></div>
-                    <span className={styles.article_profile_name}>April</span>
+                    <div className={styles.article_profile_img} style={{ backgroundImage: `url('${a.profileImage}')` }} ></div>
+                    <span className={styles.article_profile_name}>
+                      {a.userName}
+                    </span>
                   </div>
                   <div className={styles.article_content}>
-                    <h6>Everything will be fine with JK smile</h6>
-                    <div></div>
+                    <h6>{a.content}</h6>
+                    <div style={{ backgroundImage: `url('${a.postingImage}')` }}></div>
                   </div>
                   <div className={styles.article_footer}>
                     <div>
@@ -128,7 +129,7 @@ export default function MainBoard() {
                         />
                         &nbsp;
                       </span>
-                      <span className={styles.like_num}>{like}</span>
+                      <span className={styles.like_num}>{a.like}</span>
                     </div>
                     <span className={styles.post_time}>3 hours ago</span>
                   </div>
