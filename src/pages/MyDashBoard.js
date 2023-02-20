@@ -10,7 +10,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserNameShow,
-  setPostingContentShow,
   changeName,
   changeAge,
   addCount,
@@ -24,7 +23,7 @@ export default function MyDashBoard() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
-
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   return (
     <div className={styles.container}>
@@ -42,7 +41,10 @@ export default function MyDashBoard() {
             <article className={styles.article}>
               <div className={styles.title_box}>
                 <div className={styles.article_title}>
-                  <div className={styles.article_big_profile_img}></div>
+                  <div
+                    className={styles.article_big_profile_img}
+                    style={{ backgroundImage: `url('${userProfilePicShow}')` }}
+                  ></div>
                   <span className={styles.article_profile_name}>
                     {userNameShow}
                   </span>

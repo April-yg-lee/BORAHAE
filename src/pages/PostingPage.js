@@ -122,17 +122,7 @@ export default function PostingPage() {
                                               doc.data().userInfo.profileImage,
                                           };
                                           console.log(saveData.content);
-                                          // dispatch(
-                                          //   setPostingContentShow(
-                                          //     saveData.content
-                                          //   )
-                                          // );
-                                          // dispatch(
-                                          //   setPostingImageShow(
-                                          //     saveData.postingImage
-                                          //   )
-                                          // );
-
+                                 
                                           db.collection("post")
                                             .add(saveData)
                                             .then(() => {

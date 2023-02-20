@@ -40,25 +40,17 @@ let userCountryShow = createSlice({
   },
 });
 
-let postingContentShow = createSlice({
-  name: "postingContentShow", // state 이름
-  initialState: "",
+let userProfilePicShow = createSlice({
+  name: "userProfilePicShow", // state 이름
+  initialState: "country",
   reducers: {
-    setPostingContentShow(state, action) {
+    setUserProfilePicShow(state, action) {
       return state = action.payload;
     },
   },
 });
 
-let postingImageShow = createSlice({
-  name: "postingImageShow", // state 이름
-  initialState: "",
-  reducers: {
-    setPostingImageShow(state, action) {
-      return state = action.payload;
-    },
-  },
-});
+
 
 let stock = createSlice({
   name: "stock",
@@ -97,8 +89,8 @@ export let { setUserUidShow } = userUidShow.actions;
 export let { setUserNameShow, changeName, changeAge } = userNameShow.actions;
 export let { setUserCityShow } = userCityShow.actions;
 export let { setUserCountryShow } = userCountryShow.actions;
-export let { setPostingContentShow } = postingContentShow.actions;
-export let { setPostingImageShow } = postingImageShow.actions;
+export let { setUserProfilePicShow } = userProfilePicShow.actions;
+
 export let { addCount } = items.actions;
 export let { increaseLike } = like.actions;
 
@@ -108,8 +100,7 @@ export default configureStore({
     userNameShow: userNameShow.reducer,
     userCityShow: userCityShow.reducer,
     userCountryShow: userCountryShow.reducer,
-    postingContentShow: postingContentShow.reducer,
-    postingImageShow: postingImageShow.reducer,
+    userProfilePicShow: userProfilePicShow.reducer,
     stock: stock.reducer,
     items: items.reducer,
     like: like.reducer,

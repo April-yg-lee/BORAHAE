@@ -10,7 +10,7 @@ import { db } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
-import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow } from "../Store";
+import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, setUserProfilePicShow } from "../Store";
 
 export default function SignInMain() {
   let navigate = useNavigate();
@@ -72,6 +72,7 @@ export default function SignInMain() {
                           dispatch(setUserNameShow(doc.data().userInfo.name));
                           dispatch(setUserCityShow(doc.data().userInfo.city));
                           dispatch(setUserCountryShow(doc.data().userInfo.country));
+                          dispatch(setUserProfilePicShow(doc.data().userInfo.profileImage));
                         }
                       });
                     });
