@@ -82,7 +82,7 @@ export default function SignInQuestions() {
                       roomId: list.roomId
                       , name: list.name
                       , profileImage: list.profileImage
-                    } });
+                    }});
                   }}
                   className={styles.chat_each}
                   key={idx}

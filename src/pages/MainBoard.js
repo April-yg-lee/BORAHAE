@@ -107,7 +107,11 @@ export default function MainBoard() {
               <section className={styles.article_box} key={i}>
                 <article
                   onClick={() => {
-                    navigate("/personalpage");
+                    navigate("/personalpage", {
+                      state: {
+                        uid: a.uid
+                      }
+                    });
                   }}
                   className={styles.article}
                 >
