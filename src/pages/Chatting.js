@@ -42,7 +42,7 @@ export default function Chatting() {
 
     } else {
 
-      const newRoomId = Math.random().toString(36).substring(2, 22);
+      const newRoomId = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
       const newRoomData = {
         host: userUidShow
         , lastestAt: new Date()
