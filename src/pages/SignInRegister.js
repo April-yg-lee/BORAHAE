@@ -147,10 +147,7 @@ export default function SignInRegister() {
 
                       firebase
                         .auth()
-                        .createUserWithEmailAndPassword(
-                          userEmail,
-                          userPassword
-                        )
+                        .createUserWithEmailAndPassword(userEmail, userPassword)
                         .then((result) => {
                           result.user.updateProfile({
                             displayName: userName,
@@ -168,15 +165,6 @@ export default function SignInRegister() {
                             .set({ userInfo });
                           navigate("/");
                         });
-
-                      // db.collection("user")
-                      //   .get()
-                      //   .then((result) => {
-                      //     result.forEach((doc) => {
-                      //       console.log("업로드된 경로는", profileUrl);
-
-                      //     });
-                      //   });
                     });
                   }
                 );

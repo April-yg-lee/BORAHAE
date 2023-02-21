@@ -34,6 +34,11 @@
   -webkit-box-shadow: 0px -3px 9px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px -3px 9px 0px rgba(0, 0, 0, 0.5);
   overflow-y: scroll;
+
+}
+
+.slide::-webkit-scrollbar{
+  display: none;
 }
 
 @-webkit-keyframes slide {
@@ -86,7 +91,7 @@
 .subTitle {
   transform: translate(30px, 25px);
   font-weight: 400;
-  width: 200px;
+  width: 330px;
   color: rgb(85, 85, 85);
 }
 

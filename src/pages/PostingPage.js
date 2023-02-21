@@ -6,10 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserNameShow,
-  increaseLike,
-} from "../Store";
+import { setUserNameShow, increaseLike } from "../Store";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -25,6 +22,20 @@ export default function PostingPage() {
   let dispatch = useDispatch();
   let userNameShow = useSelector((state) => state.userNameShow);
   let navigate = useNavigate();
+
+  const formattedTimestamp = () => {
+    const convertDate = new Date();
+    const ISOdate = convertDate.toISOString().split("T")[0];
+    const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
+    const currentDate = dateForSubtract.toLocaleDateString("sv", {
+      timeZone: "UTC",
+    });
+    console.log(`currentDate: ${currentDate}`)
+    const currentTime = convertDate.toTimeString().split(" ")[0];
+    console.log(`currentTime: ${currentTime}`)
+    return `${currentDate} ${currentTime}`;
+  };
+
 
   return (
     <div className={styles.container}>
@@ -112,9 +123,10 @@ export default function PostingPage() {
                                             "업로드된 경로는",
                                             postingUrl
                                           );
+
                                           let saveData = {
                                             content: content,
-                                            date: new Date(),
+                                            date: formattedTimestamp(),
                                             postingImage: postingUrl,
                                             likes: 0,
                                             uid: doc.data().userInfo.uid,

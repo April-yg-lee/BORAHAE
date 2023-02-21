@@ -20,57 +20,43 @@ export default function Chatting() {
   const userUidShow = useSelector((state) => state.userUidShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
-  const [roomId, setRoomId] = useState([]);
+  const [roomId, setRoomId] = useState('');
 
   const db = firebase.firestore();
   let tmpList = [];
+  console.log('roomID 잇나? : ' + state.roomId);
 
-  if (state.roomId) {
-    setRoomId(state.roomId);
-    db.collection("messages")
-      .where('roomId', '==', roomId)
-      .orderBy('createdAt', 'asc')
-      .onSnapshot((result) => {
-        result.forEach((doc) => {
-          tmpList.push(doc.data());
+  const call = () => {
+
+    if (state.roomId) {
+      setRoomId(state.roomId);
+      db.collection("messages")
+        .where('roomId', '==', roomId)
+        .orderBy('createdAt', 'asc')
+        .onSnapshot((result) => {
+          result.forEach((doc) => {
+            tmpList.push(doc.data());
+          })
+          setMessages(tmpList);
         })
-        setMessages(tmpList);
-      })
 
-  } else {
+    } else {
 
-    const newRoomData = {
-      host: userUidShow
-      , lastestAt: new Date()
-      , lastestMessage: ''
-      , member: [userUidShow, state.uid]
-      , roomId: ''
+      const newRoomId = Math.random().toString(36).substring(2, 22);
+      const newRoomData = {
+        host: userUidShow
+        , lastestAt: new Date()
+        , lastestMessage: ''
+        , member: [userUidShow, state.uid]
+        , roomId: newRoomId
+      }
+      db.collection("chatroom").add(newRoomData);
+      setRoomId(newRoomId);
     }
-
-    const newRoom = db.collection("chatroom").add(newRoomData);
-
-    let newPostKey = firebase.database().ref().child('chatroom').push().key;
-    console.log(newPostKey);
-
-    newRoom.update(roomId : newRoom.id);
-    console.log('??');
-
-
-    // const newRoom = db.collection("chatroom").add(newRoomData);
-    // newRoom.set({
-    //   roomId: newRoom.id
-    // })
-    //   .then(() => {
-    //     console.log('what more?');
-    //   })
-
   }
 
-
-
-
   const addMessage = () => {
-
+    console.log('입력시 roomId : ' + roomId);
     let newMessage = {
       createdAt: new Date()
       , message: document.querySelector('#inputMessage').value
@@ -80,7 +66,13 @@ export default function Chatting() {
 
     db.collection("messages").add(newMessage);
     document.querySelector('#inputMessage').value = '';
+    call();
   }
+
+  useEffect(() => {
+    call();
+
+  }, []);
 
 
   return (
