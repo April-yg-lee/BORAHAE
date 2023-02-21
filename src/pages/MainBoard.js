@@ -20,13 +20,14 @@ export default function MainBoard() {
 
   // get posting time
   let currentMoment = (realTime) => {
-    return moment.utc(realTime).add(8, 'hours').startOf("seconds").fromNow();
+    return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
 
   // get Posts data from firebase
   let call = () => {
     let postArray = [];
     db.collection("post")
+      .orderBy("date", "desc")
       .get()
       .then((result) => {
         result.forEach((doc) => {
