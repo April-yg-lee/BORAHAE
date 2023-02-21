@@ -25,17 +25,19 @@ export default function PostingPage() {
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
+    // console.log(`convertDate: ${convertDate}`)
     const ISOdate = convertDate.toISOString().split("T")[0];
-    const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
-    const currentDate = dateForSubtract.toLocaleDateString("sv", {
-      timeZone: "UTC",
-    });
-    console.log(`currentDate: ${currentDate}`)
+    // console.log(`ISOdate: ${ISOdate}`)
+    // const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
+    // console.log(`dateForSubtract: ${dateForSubtract}`)
+    // const currentDate = dateForSubtract.toLocaleDateString("sv", {
+    //   timeZone: "UTC",
+    // });
+    // console.log(`currentDate: ${currentDate}`)
     const currentTime = convertDate.toTimeString().split(" ")[0];
-    console.log(`currentTime: ${currentTime}`)
-    return `${currentDate} ${currentTime}`;
+    // console.log(`currentTime: ${currentTime}`)
+    return `${ISOdate} ${currentTime}`;
   };
-
 
   return (
     <div className={styles.container}>
@@ -89,7 +91,6 @@ export default function PostingPage() {
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
-
                       let storageRef = storage.ref();
                       let savePath = storageRef.child(
                         "postingImage/" + file.name

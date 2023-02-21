@@ -23,7 +23,10 @@ export default function MyDashBoard() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
+  let userIntroShow = useSelector((state) => state.userIntroShow);
+  console.log(userIntroShow)
   let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
+
 
   return (
     <div className={styles.container}>
@@ -62,7 +65,7 @@ export default function MyDashBoard() {
                 <h4>
                   {userCityShow}, {userCountryShow}
                 </h4>
-                <h5>I'm mad for headband. Jin is my true love!!!</h5>
+                <h5>{userIntroShow}</h5>
               </div>
             </article>
           </section>

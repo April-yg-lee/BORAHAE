@@ -40,6 +40,16 @@ let userCountryShow = createSlice({
   },
 });
 
+let userIntroShow = createSlice({
+  name: "userIntroShow", // state 이름
+  initialState: "Intro",
+  reducers: {
+    setUserIntroShow(state, action) {
+      return state = action.payload;
+    },
+  },
+});
+
 let userProfilePicShow = createSlice({
   name: "userProfilePicShow", // state 이름
   initialState: "country",
@@ -86,9 +96,10 @@ let like = createSlice({
 
 // export part
 export let { setUserUidShow } = userUidShow.actions;
-export let { setUserNameShow, changeName, changeAge } = userNameShow.actions;
+export let { setUserNameShow } = userNameShow.actions;
 export let { setUserCityShow } = userCityShow.actions;
 export let { setUserCountryShow } = userCountryShow.actions;
+export let { setUserIntroShow } = userIntroShow.actions;
 export let { setUserProfilePicShow } = userProfilePicShow.actions;
 
 export let { addCount } = items.actions;
@@ -100,6 +111,7 @@ export default configureStore({
     userNameShow: userNameShow.reducer,
     userCityShow: userCityShow.reducer,
     userCountryShow: userCountryShow.reducer,
+    userIntroShow: userIntroShow.reducer,
     userProfilePicShow: userProfilePicShow.reducer,
     stock: stock.reducer,
     items: items.reducer,

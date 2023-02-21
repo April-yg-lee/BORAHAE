@@ -16,18 +16,17 @@ export default function SignInRegister() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userIntro, setUserIntro] = useState("");
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
 
-  function signUpRg_checker(name, email, pw, city, country) {
+  function signUpRg_checker(name, email, pw, city, country, intro) {
     if (name == "" && !isNaN(name)) {
-      console.log("name");
       return false;
     }
     const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
     if (!email.match(emailPattern)) {
-      console.log("email");
       return false;
       // Please enter a valid email address.
     }
@@ -35,7 +34,15 @@ export default function SignInRegister() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (pw == "" && pw.length < 6 && pw.match(passPattern)) {
-      console.log("password");
+      return false;
+    }
+    if (city == "" && !isNaN(city)) {
+      return false;
+    }
+    if (country == "" && !isNaN(country)) {
+      return false;
+    }
+    if (intro == "" && !isNaN(intro)) {
       return false;
     }
     return true;
@@ -100,6 +107,15 @@ export default function SignInRegister() {
               type='password'
               placeholder='Enter your password. (min 6 characters)'
             ></input>
+            <textarea
+              onChange={(e) => {
+                setUserIntro(e.target.value);
+              }}
+              value={userIntro}
+              className={styles.input_Q}
+              type='text'
+              placeholder='Introduce yourself...😎'
+            ></textarea>
             <input
               onChange={(e) => {
                 setUserCity(e.target.value);
@@ -127,7 +143,8 @@ export default function SignInRegister() {
                   userEmail,
                   userPassword,
                   userCity,
-                  userCountry
+                  userCountry,
+                  userIntro
                 ) == true
               ) {
                 let storageRef = storage.ref();
@@ -157,6 +174,7 @@ export default function SignInRegister() {
                             email: userEmail,
                             city: userCity,
                             country: userCountry,
+                            intro: userIntro,
                             uid: result.user.uid,
                             profileImage: profileUrl,
                           };
