@@ -1,5 +1,6 @@
 /*eslint-disable */
-import React, { Profiler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +12,17 @@ import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
+import { current } from "@reduxjs/toolkit";
 // import 'firebase/storage';
 
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
-  
+
+
+  let currentMoment = (realTime) => {
+    return moment.utc(realTime).add(8, 'hours').startOf("seconds").fromNow();
+  };
+
   // get data from firebase
   let call = () => {
     let postArray = [];
@@ -24,7 +31,7 @@ export default function MainBoard() {
       .then((result) => {
         result.forEach((doc) => {
           postArray.push(doc.data());
-          console.log('Post Array: ' + postArray);
+          console.log("Post Array: " + postArray);
         });
         setPostList(postArray);
       });
@@ -104,14 +111,19 @@ export default function MainBoard() {
                   className={styles.article}
                 >
                   <div className={styles.article_title}>
-                    <div className={styles.article_profile_img} style={{ backgroundImage: `url('${a.profileImage}')` }} ></div>
+                    <div
+                      className={styles.article_profile_img}
+                      style={{ backgroundImage: `url('${a.profileImage}')` }}
+                    ></div>
                     <span className={styles.article_profile_name}>
                       {a.userName}
                     </span>
                   </div>
                   <div className={styles.article_content}>
                     <h6>{a.content}</h6>
-                    <div style={{ backgroundImage: `url('${a.postingImage}')` }}></div>
+                    <div
+                      style={{ backgroundImage: `url('${a.postingImage}')` }}
+                    ></div>
                   </div>
                   <div className={styles.article_footer}>
                     <div>
@@ -129,9 +141,11 @@ export default function MainBoard() {
                         />
                         &nbsp;
                       </span>
-                      <span className={styles.like_num}>{a.like}</span>
+                      <span className={styles.like_num}>{a.likes}</span>
                     </div>
-                    <span className={styles.post_time}>3 hours ago</span>
+                    <span className={styles.post_time}>
+                      {currentMoment(a.date)}
+                    </span>
                   </div>
                 </article>
               </section>
