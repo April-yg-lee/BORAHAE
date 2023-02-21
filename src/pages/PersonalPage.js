@@ -1,5 +1,5 @@
 /*eslint-disable */
-import React, { Profiler } from "react";
+import React, { useState, useEffect, Profiler } from "react";
 import styles from "./PersonalPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,7 +7,7 @@ import {
   faPenToSquare,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -16,26 +16,58 @@ import "firebase/storage";
 
 export default function PersonalPage() {
   let navigate = useNavigate();
+
+  const { state } = useLocation();
+  const [userInfo, setUserInfo] = useState({});
+  const db = firebase.firestore();
+
+  const call = () => {
+    if (state.uid) {
+
+      db.collection("user")
+        .where('userInfo.uid', '==', state.uid)
+        .get()
+        .then((result) => {
+          result.forEach((doc) => {
+            setUserInfo(doc.data().userInfo);
+          })
+        })
+
+    }
+  }
+
+  useEffect(() => {
+    call();
+
+  }, []);
+
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <button onClick={() => {
-            navigate(-1);
-          }} className={styles.back_btn}>&lt; Back</button>
+          navigate(-1);
+        }} className={styles.back_btn}>&lt; Back</button>
         <div className={styles.slide}>
           <section className={styles.article_box}>
             <article className={styles.article}>
               <div className={styles.title_box}>
                 <div className={styles.article_title}>
-                  <div className={styles.article_big_profile_img}></div>
-                  <span className={styles.article_profile_name}>April</span>
+                  <div className={styles.article_big_profile_img} style={{ backgroundImage: `url('${userInfo.profileImage}')` }}></div>
+                  <span className={styles.article_profile_name}>{userInfo.name}</span>
                 </div>
                 <button onClick={() => {
-            navigate('/chatting');
-          }} className={styles.chat_btn}>Chat</button>
+                  navigate('/chatting', {
+                    state: {
+                      uid: userInfo.uid
+                      , name: userInfo.name
+                      , profileImage: userInfo.profileImage
+                    }
+                  });
+                }} className={styles.chat_btn}>Chat</button>
               </div>
               <div className={styles.introduce}>
-                <h4>Vancouver, Canada</h4>
+                <h4>{userInfo.city}, {userInfo.country}</h4>
                 <h5>
                   32. Web Developer. BTS 💜 OT7. JK Biased. <br></br>Currently
                   living in Vancouver. Let's chill!

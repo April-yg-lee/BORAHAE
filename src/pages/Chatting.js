@@ -20,13 +20,15 @@ export default function Chatting() {
   const userUidShow = useSelector((state) => state.userUidShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
+  const [roomId, setRoomId] = useState([]);
 
   const db = firebase.firestore();
   let tmpList = [];
 
   if (state.roomId) {
+    setRoomId(state.roomId);
     db.collection("messages")
-      .where('roomId', '==', state.roomId)
+      .where('roomId', '==', roomId)
       .orderBy('createdAt', 'asc')
       .onSnapshot((result) => {
         result.forEach((doc) => {
@@ -37,7 +39,34 @@ export default function Chatting() {
 
   } else {
 
+    const newRoomData = {
+      host: userUidShow
+      , lastestAt: new Date()
+      , lastestMessage: ''
+      , member: [userUidShow, state.uid]
+      , roomId: ''
+    }
+
+    const newRoom = db.collection("chatroom").add(newRoomData);
+
+    let newPostKey = firebase.database().ref().child('chatroom').push().key;
+    console.log(newPostKey);
+
+    newRoom.update(roomId : newRoom.id);
+    console.log('??');
+
+
+    // const newRoom = db.collection("chatroom").add(newRoomData);
+    // newRoom.set({
+    //   roomId: newRoom.id
+    // })
+    //   .then(() => {
+    //     console.log('what more?');
+    //   })
+
   }
+
+
 
 
   const addMessage = () => {
@@ -45,7 +74,7 @@ export default function Chatting() {
     let newMessage = {
       createdAt: new Date()
       , message: document.querySelector('#inputMessage').value
-      , roomId: state.roomId
+      , roomId: roomId
       , uid: userUidShow
     }
 

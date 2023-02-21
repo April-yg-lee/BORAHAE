@@ -15,7 +15,7 @@ import "firebase/database";
 
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
-  
+
   // get data from firebase
   let call = () => {
     let postArray = [];
@@ -99,7 +99,11 @@ export default function MainBoard() {
               <section className={styles.article_box} key={i}>
                 <article
                   onClick={() => {
-                    navigate("/personalpage");
+                    navigate("/personalpage", {
+                      state: {
+                        uid: a.uid
+                      }
+                    });
                   }}
                   className={styles.article}
                 >
