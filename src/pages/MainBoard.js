@@ -18,12 +18,12 @@ import { current } from "@reduxjs/toolkit";
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
 
-
+  // get posting time
   let currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, 'hours').startOf("seconds").fromNow();
   };
 
-  // get data from firebase
+  // get Posts data from firebase
   let call = () => {
     let postArray = [];
     db.collection("post")
