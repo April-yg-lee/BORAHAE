@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 export default function SignInQuestions() {
 
   let navigate = useNavigate();
-  let userUidShow = useSelector((state) => state.userUidShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
 
   const [chatList, setChatList] = useState([]);
   const [trick, setTrick] = useState([]);
@@ -20,13 +20,14 @@ export default function SignInQuestions() {
     let tmpList = [];
     db.collection("chatroom")
       .where('member', 'array-contains', userUidShow)
+      .orderBy('lastestAt', 'desc')
       .get()
       .then((result) => {
         result.forEach((doc) => {
           let tmp = doc.data();
 
           db.collection("user")
-            .where('userInfo.uid', '==', tmp.member[1])
+            .where('userInfo.uid', '==', userUidShow == tmp.member[0] ? tmp.member[1] : tmp.member[0])
             .get()
             .then((info) => {
               info.forEach((infoDoc) => {
@@ -77,7 +78,11 @@ export default function SignInQuestions() {
               chatList.map((list, idx) => (
                 <article
                   onClick={() => {
-                    navigate("/chatting");
+                    navigate("/chatting", { state: { 
+                      roomId: list.roomId
+                      , name: list.name
+                      , profileImage: list.profileImage
+                    } });
                   }}
                   className={styles.chat_each}
                   key={idx}

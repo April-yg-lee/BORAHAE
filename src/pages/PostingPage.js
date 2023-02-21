@@ -78,6 +78,7 @@ export default function PostingPage() {
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
+
                       let storageRef = storage.ref();
                       let savePath = storageRef.child(
                         "postingImage/" + file.name
@@ -122,7 +123,7 @@ export default function PostingPage() {
                                               doc.data().userInfo.profileImage,
                                           };
                                           console.log(saveData.content);
-                                 
+
                                           db.collection("post")
                                             .add(saveData)
                                             .then(() => {
