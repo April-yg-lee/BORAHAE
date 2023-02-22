@@ -12,7 +12,6 @@ import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
-import { current } from "@reduxjs/toolkit";
 // import 'firebase/storage';
 
 export default function MainBoard() {
@@ -32,7 +31,7 @@ export default function MainBoard() {
       .then((result) => {
         result.forEach((doc) => {
           postArray.push(doc.data());
-          console.log("Post Array: " + postArray);
+          // console.log("Post Array: " + postArray);
         });
         setPostList(postArray);
       });
@@ -42,7 +41,7 @@ export default function MainBoard() {
     call();
   }, []);
 
-  console.log("data : " + postList);
+  // console.log("data : " + postList);
 
   let dispatch = useDispatch();
 
@@ -99,7 +98,9 @@ export default function MainBoard() {
         <div className={styles.slide}>
           <div className={styles.mainBoard_option}>
             <span className={styles.option_all}>All</span>
-            <span className={styles.option_nearby}>Nearby</span>
+            <span className={styles.option_nearby}  onClick={() => {
+            navigate("/nearby");
+          }}>Nearby</span>
           </div>
 
           {postList.map(function (a, i) {

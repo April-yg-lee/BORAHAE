@@ -147,8 +147,9 @@ export default function SignInRegister() {
                   userIntro
                 ) == true
               ) {
+                let imgCreateDate = new Date();
                 let storageRef = storage.ref();
-                let savePath = storageRef.child("profileImage/" + file.name);
+                let savePath = storageRef.child("profileImage/" + 'profile' + imgCreateDate);
                 let upload = savePath.put(file);
 
                 // firebase code

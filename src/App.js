@@ -15,6 +15,7 @@ import SignOutEdit from "./pages/SignOutEdit";
 import Inbox from "./pages/Inbox";
 import Chatting from "./pages/Chatting";
 import MyDashBoard from './pages/MyDashBoard';
+import Nearby from './pages/Nearby';
 import firebase from "firebase/app";
 import "firebase/firestore";
 
@@ -37,6 +38,7 @@ function App() {
         ></Route>
         <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/mainboard' element={<MainBoard></MainBoard>}></Route>
+        <Route path='/nearby' element={<Nearby></Nearby>}></Route>
         <Route
           path='/mydashboard'
           element={<MyDashBoard></MyDashBoard>}

@@ -20,8 +20,11 @@ export default function PostingPage() {
   let [file, setFile] = useState();
 
   let dispatch = useDispatch();
-  let userNameShow = useSelector((state) => state.userNameShow);
   let navigate = useNavigate();
+
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
@@ -91,9 +94,10 @@ export default function PostingPage() {
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
+                      let imgCreateDate = new Date();
                       let storageRef = storage.ref();
                       let savePath = storageRef.child(
-                        "postingImage/" + file.name
+                        "postingImage/" + "posting" + imgCreateDate
                       );
                       let upload = savePath.put(file);
 
@@ -134,8 +138,9 @@ export default function PostingPage() {
                                             userName: doc.data().userInfo.name,
                                             profileImage:
                                               doc.data().userInfo.profileImage,
+                                            city: userCityShow,
+                                            country: userCountryShow
                                           };
-                                          console.log(saveData.content);
 
                                           db.collection("post")
                                             .add(saveData)

@@ -1,37 +1,20 @@
 /*eslint-disable */
-import React, { Profiler, useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
-import styles from "./MyDashBoard.module.css";
+import styles from "./Nearby.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faPenToSquare,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Location from "../components/Location";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserNameShow,
-  changeName,
-  changeAge,
-  addCount,
-  increaseLike,
-} from "../Store";
-import { useNavigate } from "react-router-dom";
+import { increaseLike } from "../Store";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
+// import 'firebase/storage';
 
-export default function MyDashBoard() {
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
-  let userUidShow = useSelector((state) => state.userUidShow);
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userIntroShow = useSelector((state) => state.userIntroShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
-
+export default function Nearby() {
   const [postList, setPostList] = useState([]);
 
   // get posting time
@@ -43,13 +26,14 @@ export default function MyDashBoard() {
   let call = () => {
     let postArray = [];
     db.collection("post")
-    .where('uid','==', userUidShow)
+      .where("city", "==", userCityShow)
+      .where("country", "==", userCountryShow)
       .orderBy("date", "desc")
       .get()
       .then((result) => {
         result.forEach((doc) => {
           postArray.push(doc.data());
-          // console.log("Post Array: " + postArray);
+          console.log("Post Array: " + postArray);
         });
         setPostList(postArray);
       });
@@ -59,50 +43,73 @@ export default function MyDashBoard() {
     call();
   }, []);
 
+  // console.log("data : " + postList);
+
+  let dispatch = useDispatch();
+
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+
+  let like = useSelector((state) => state.like);
+
+  let navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <button
           onClick={() => {
-            navigate("/mainboard");
+            navigate("/inbox");
           }}
-          className={styles.back_btn}
+          className={styles.chat_btn}
         >
-          &lt; Main Board
+          My Chat &gt;
         </button>
-        <div className={styles.slide}>
-          <section className={styles.article_box}>
-            <article className={styles.article}>
-              <div className={styles.title_box}>
-                <div className={styles.article_title}>
-                  <div
-                    className={styles.article_big_profile_img}
-                    style={{ backgroundImage: `url('${userProfilePicShow}')` }}
-                  ></div>
-                  <span className={styles.article_profile_name}>
-                    {userNameShow}
-                  </span>
-                </div>
-                <button
+        <div>
+          <div className={styles.name_box}>
+            <h1 className={styles.title}>
+              Hello,{" "}
+              <span className={styles.name}>
+                {userNameShow}!{" "}
+                <span
                   onClick={() => {
-                    navigate("/inbox");
+                    navigate("/myinfo");
                   }}
-                  className={styles.chat_btn}
                 >
-                  Inbox
-                </button>
-              </div>
-              <div className={styles.introduce}>
-                <h4>
-                  {userCityShow}, {userCountryShow}
-                </h4>
-                <h5>{userIntroShow}</h5>
-              </div>
-            </article>
-          </section>
-          <div className={styles.mainBoard_option}>
-            <span className={styles.option_all}>Recent</span>
+                  <FontAwesomeIcon
+                    // className={styles.heart_icon}
+                    icon={faChevronRight}
+                  />
+                </span>
+              </span>
+            </h1>
           </div>
+          <Location></Location>
+          <h3 className={styles.postYourToday}>Post Your Today</h3>
+          <button
+            onClick={() => {
+              navigate("/postingpage");
+            }}
+            className={styles.post_btn}
+          >
+            +
+          </button>
+        </div>
+
+        <div className={styles.slide}>
+          <div className={styles.mainBoard_option}>
+            <span
+              className={styles.option_all}
+              onClick={() => {
+                navigate("/mainboard");
+              }}
+            >
+              All
+            </span>
+            <span className={styles.option_nearby}>Nearby</span>
+          </div>
+
           {postList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
@@ -124,10 +131,6 @@ export default function MyDashBoard() {
                     <span className={styles.article_profile_name}>
                       {a.userName}
                     </span>
-                    <div className={styles.del_edit_btn}>
-                      <FontAwesomeIcon icon={faTrashCan} />
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </div>
                   </div>
                   <div className={styles.article_content}>
                     <h6>{a.content}</h6>
