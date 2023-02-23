@@ -1,7 +1,8 @@
-
-.eachSpinner {
-    width: 50px;
-    margin: auto;
-    transform: translateY(100px);
-    display: block;
-  }
+.spinnerBox {
+  position: relative;
+  width: 70px;
+  margin: auto;
+  transform: translateY(375px);
+  display: block;
+  z-index: 2;
+}

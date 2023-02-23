@@ -13,7 +13,7 @@ import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
 import "firebase/storage";
-import Spinner from '../components/Spinner';
+import Spinner from "../components/Spinner";
 
 export default function PostingPage() {
   // db.collection('post').doc('post3').set({content: 'Love you!'})
@@ -22,12 +22,12 @@ export default function PostingPage() {
   let [file, setFile] = useState();
   let [loading, setLoading] = useState(false);
 
-  
   let listContent;
 
-  if(loading) {
-    listContent = <div className="list-msg"><Spinner/></div>;
+  if (loading) {
+    listContent = <Spinner />;
   }
+
 
   let dispatch = useDispatch();
   let navigate = useNavigate();
@@ -35,8 +35,6 @@ export default function PostingPage() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
-
-
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
@@ -57,7 +55,7 @@ export default function PostingPage() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-       
+      {listContent}
         <button
           onClick={() => {
             navigate(-1);
@@ -72,9 +70,6 @@ export default function PostingPage() {
           </h1>
         </div>
         <div className={styles.slide}>
-        <div className="list">
-              { listContent }
-        </div>
           <section className={styles.article_box}>
             <article className={styles.article}>
               <div className={styles.title_box}>
@@ -122,7 +117,7 @@ export default function PostingPage() {
                       upload.on(
                         "state_changed",
                         null,
-                        
+
                         //에러시 동작하는 함수
                         (error) => {
                           console.error("실패사유는", error);
@@ -141,7 +136,6 @@ export default function PostingPage() {
                                         if (
                                           user.uid == doc.data().userInfo.uid
                                         ) {
-                                          
                                           console.log(
                                             "업로드된 경로는",
                                             postingUrl
@@ -157,7 +151,7 @@ export default function PostingPage() {
                                               doc.data().userInfo.profileImage,
                                             city: userCityShow,
                                             country: userCountryShow,
-                                            postID: uuidv4()
+                                            postID: uuidv4(),
                                           };
 
                                           db.collection("post")

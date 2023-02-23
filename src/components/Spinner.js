@@ -6,8 +6,8 @@ import styles from "./Spinner.module.css";
 export default function Spinner() {
 
   return (
-    <div className={styles.eachSpinner}>
-      <PacmanLoader color='#58FBDA' size={10} />
+    <div className={styles.spinnerBox}>
+      <PacmanLoader color='#7259f5' size={15} />
     </div>
   );
 }
