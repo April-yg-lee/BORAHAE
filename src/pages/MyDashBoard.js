@@ -25,6 +25,7 @@ import "firebase/database";
 export default function MyDashBoard() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
+
   let userUidShow = useSelector((state) => state.userUidShow);
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
@@ -32,7 +33,7 @@ export default function MyDashBoard() {
   let userIntroShow = useSelector((state) => state.userIntroShow);
   let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
-  const [postList, setPostList] = useState([]);
+  let [postList, setPostList] = useState([]);
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -43,7 +44,7 @@ export default function MyDashBoard() {
   let call = () => {
     let postArray = [];
     db.collection("post")
-    .where('uid','==', userUidShow)
+      .where("uid", "==", userUidShow)
       .orderBy("date", "desc")
       .get()
       .then((result) => {
@@ -106,16 +107,7 @@ export default function MyDashBoard() {
           {postList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
-                <article
-                  onClick={() => {
-                    navigate("/personalpage", {
-                      state: {
-                        uid: a.uid,
-                      },
-                    });
-                  }}
-                  className={styles.article}
-                >
+                <article className={styles.article}>
                   <div className={styles.article_title}>
                     <div
                       className={styles.article_profile_img}
@@ -125,8 +117,51 @@ export default function MyDashBoard() {
                       {a.userName}
                     </span>
                     <div className={styles.del_edit_btn}>
-                      <FontAwesomeIcon icon={faTrashCan} />
-                      <FontAwesomeIcon icon={faPenToSquare} />
+                      <FontAwesomeIcon
+                        icon={faTrashCan}
+                        onClick={() => {
+                          // let copy = [...postList];
+                          // copy.splice(i, 1); // i번째자리에서 1개 삭제
+                          // setPostList(copy);
+                          // var jobskill_ref = db.collection('job_skills').where('postID','==','50ea82d1-f176-49d9-b8d3-f000cf172d8c');
+                          // let batch = db.batch();
+                          // console.log(jobskill_ref);
+                          // console.log(batch);
+                          // jobskill_ref
+                          //   .get()
+                          //   .then(snapshot => {
+                          //     snapshot.docs.forEach(doc => {
+                          //       console.log(doc.ref);
+                          //       batch.delete(doc.ref);
+                          //     });
+                          //     return batch.commit();
+                          //   })
+                          // db.collection("post")
+                          // .where("postID", "==", '50ea82d1-f176-49d9-b8d3-f000cf172d8c')
+                          // .delete()
+                          // .then(()=>{
+                          //   console.log('deleted!')
+                          // })
+                          // .catch((err)=>{
+                          //   console.log(err);
+                          // })
+                          // db.collection("post")
+                          //   .doc('VOXAh4RrZ06LWVotNb1C')
+                          //   .delete()
+                          //   .then(() => {
+                          //     console.log("Document successfully deleted!");
+                          //   })
+                          //   .catch((error) => {
+                          //     console.error("Error removing document: ", error);
+                          //   });
+                        }}
+                      />
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        onClick={() => {
+                          navigate("/postingedit");
+                        }}
+                      />
                     </div>
                   </div>
                   <div className={styles.article_content}>

@@ -1,5 +1,6 @@
 /*eslint-disable */
 import React, { useState, useEffect, Profiler } from "react";
+import moment from "moment";
 import styles from "./PersonalPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +9,7 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -19,7 +21,20 @@ export default function PersonalPage() {
 
   const { state } = useLocation();
   const [userInfo, setUserInfo] = useState({});
+  let [postList, setPostList] = useState([]);
   const db = firebase.firestore();
+
+  // get posting time
+  let currentMoment = (realTime) => {
+    return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
+  };
+
+  let userUidShow = useSelector((state) => state.userUidShow);
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
+  let userIntroShow = useSelector((state) => state.userIntroShow);
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   const call = () => {
     if (state.uid) {
@@ -36,7 +51,26 @@ export default function PersonalPage() {
 
   useEffect(() => {
     call();
+    personalPagecall();
   }, []);
+
+  // get Posts data from firebase
+  let personalPagecall = () => {
+    let postArray = [];
+    if (state.uid) {
+    db.collection("post")
+      .where("uid", "==", state.uid)
+      .orderBy("date", "desc")
+      .get()
+      .then((result) => {
+        result.forEach((doc) => {
+          postArray.push(doc.data());
+          // console.log("Post Array: " + postArray);
+        });
+        setPostList(postArray);
+      });
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -90,34 +124,52 @@ export default function PersonalPage() {
           <div className={styles.mainBoard_option}>
             <span className={styles.option_all}>Recent</span>
           </div>
-          <section className={styles.article_box}>
-            <article className={styles.article}>
-              <div className={styles.title_box}>
-                <div className={styles.article_title}>
-                  <div className={styles.article_profile_img}></div>
-                  <span className={styles.article_profile_name}>April</span>
-                </div>
-                {/* <div className={styles.del_edit_btn}>
-                  <FontAwesomeIcon icon={faTrashCan} />
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </div> */}
-              </div>
-              <div className={styles.article_content}>
-                <h6>Everything will be fine with JK's smile</h6>
-                <div></div>
-              </div>
-              <div className={styles.article_footer}>
-                <div>
-                  <span className={styles.like_heart}>
-                    {" "}
-                    <FontAwesomeIcon icon={faHeart} />
-                  </span>
-                  <span className={styles.like_num}>18</span>
-                </div>
-                <span className={styles.post_time}>3 hours ago</span>
-              </div>
-            </article>
-          </section>
+          {postList.map(function (a, i) {
+            return (
+              <section className={styles.article_box} key={i}>
+                <article className={styles.article}>
+                  <div className={styles.article_title}>
+                    <div
+                      className={styles.article_profile_img}
+                      style={{ backgroundImage: `url('${a.profileImage}')` }}
+                    ></div>
+                    <span className={styles.article_profile_name}>
+                      {a.userName}
+                    </span>
+                    <div className={styles.del_edit_btn}></div>
+                  </div>
+                  <div className={styles.article_content}>
+                    <h6>{a.content}</h6>
+                    <div
+                      style={{ backgroundImage: `url('${a.postingImage}')` }}
+                    ></div>
+                  </div>
+                  <div className={styles.article_footer}>
+                    <div>
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(increaseLike());
+                        }}
+                        className={styles.like_heart}
+                      >
+                        {" "}
+                        <FontAwesomeIcon
+                          className={styles.heart_icon}
+                          icon={faHeart}
+                        />
+                        &nbsp;
+                      </span>
+                      <span className={styles.like_num}>{a.likes}</span>
+                    </div>
+                    <span className={styles.post_time}>
+                      {currentMoment(a.date)}
+                    </span>
+                  </div>
+                </article>
+              </section>
+            );
+          })}
         </div>
       </div>
     </div>

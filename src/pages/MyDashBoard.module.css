@@ -92,11 +92,13 @@
 }
 
 .article_content > div {
-  width: 100px;
+  width: 150px;
   height: 100px;
   border-radius: 10px;
   background-size: cover;
   background-image: url('./img/Jin.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .article_big_profile_img {

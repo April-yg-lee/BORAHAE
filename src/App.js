@@ -16,8 +16,10 @@ import Inbox from "./pages/Inbox";
 import Chatting from "./pages/Chatting";
 import MyDashBoard from './pages/MyDashBoard';
 import Nearby from './pages/Nearby';
+import PostingEdit from './pages/PostingEdit';
 import firebase from "firebase/app";
 import "firebase/firestore";
+
 
 
 
@@ -50,6 +52,10 @@ function App() {
         <Route
           path='/postingpage'
           element={<PostingPage></PostingPage>}
+        ></Route>
+        <Route
+          path='/postingedit'
+          element={<PostingEdit></PostingEdit>}
         ></Route>
         <Route path='/myinfo' element={<Myinfo></Myinfo>}></Route>
         <Route

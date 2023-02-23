@@ -15,7 +15,7 @@ import "firebase/database";
 // import 'firebase/storage';
 
 export default function Nearby() {
-  const [postList, setPostList] = useState([]);
+  const [nearbyPostList, setNearbyPostList] = useState([]);
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -32,18 +32,20 @@ export default function Nearby() {
       .get()
       .then((result) => {
         result.forEach((doc) => {
+          // console.log(doc.data());
           postArray.push(doc.data());
           console.log("Post Array: " + postArray);
         });
-        setPostList(postArray);
+        setNearbyPostList(postArray);
       });
   };
+
+  console.log(nearbyPostList)
 
   useEffect(() => {
     call();
   }, []);
 
-  // console.log("data : " + postList);
 
   let dispatch = useDispatch();
 
@@ -110,7 +112,7 @@ export default function Nearby() {
             <span className={styles.option_nearby}>Nearby</span>
           </div>
 
-          {postList.map(function (a, i) {
+          {nearbyPostList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
                 <article

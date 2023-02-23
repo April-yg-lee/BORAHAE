@@ -1,7 +1,7 @@
 /*eslint-disable */
 
 import React, { Profiler, useState } from "react";
-import styles from "./PostingPage.module.css";
+import styles from "./PostingEdit.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
