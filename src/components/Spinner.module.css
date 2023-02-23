@@ -1,0 +1,7 @@
+
+.eachSpinner {
+    width: 50px;
+    margin: auto;
+    transform: translateY(100px);
+    display: block;
+  }

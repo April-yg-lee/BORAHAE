@@ -13,12 +13,21 @@ import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
 import "firebase/storage";
+import Spinner from '../components/Spinner';
 
 export default function PostingPage() {
   // db.collection('post').doc('post3').set({content: 'Love you!'})
 
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
+  let [loading, setLoading] = useState(false);
+
+  
+  let listContent;
+
+  if(loading) {
+    listContent = <div className="list-msg"><Spinner/></div>;
+  }
 
   let dispatch = useDispatch();
   let navigate = useNavigate();
@@ -26,6 +35,8 @@ export default function PostingPage() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
+
+
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
@@ -46,6 +57,7 @@ export default function PostingPage() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+       
         <button
           onClick={() => {
             navigate(-1);
@@ -60,6 +72,9 @@ export default function PostingPage() {
           </h1>
         </div>
         <div className={styles.slide}>
+        <div className="list">
+              { listContent }
+        </div>
           <section className={styles.article_box}>
             <article className={styles.article}>
               <div className={styles.title_box}>
@@ -95,6 +110,7 @@ export default function PostingPage() {
                 <div className={styles.btn_section}>
                   <button
                     onClick={() => {
+                      setLoading(true);
                       let imgCreateDate = new Date();
                       let storageRef = storage.ref();
                       let savePath = storageRef.child(
@@ -105,8 +121,8 @@ export default function PostingPage() {
                       // firebase code
                       upload.on(
                         "state_changed",
-                        // 변화시 동작하는 함수
                         null,
+                        
                         //에러시 동작하는 함수
                         (error) => {
                           console.error("실패사유는", error);
@@ -125,6 +141,7 @@ export default function PostingPage() {
                                         if (
                                           user.uid == doc.data().userInfo.uid
                                         ) {
+                                          
                                           console.log(
                                             "업로드된 경로는",
                                             postingUrl
@@ -146,6 +163,7 @@ export default function PostingPage() {
                                           db.collection("post")
                                             .add(saveData)
                                             .then(() => {
+                                              setLoading(false);
                                               navigate("/mydashboard");
                                             })
                                             .catch((err) => {

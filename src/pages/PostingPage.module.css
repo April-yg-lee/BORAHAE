@@ -17,6 +17,7 @@
   border: 1px solid lightgray;
   background-color: #dcd8f2;
   /* overflow: scroll; */
+ 
 }
 
 .slide {
@@ -33,6 +34,7 @@
   border-top-right-radius: 40px;
   -webkit-box-shadow: 0px -3px 9px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px -3px 9px 0px rgba(0, 0, 0, 0.5);
+  
 }
 
 @-webkit-keyframes slide {
@@ -46,6 +48,8 @@
     bottom: 0;
   }
 }
+
+
 
 .back_btn {
   background: none;
