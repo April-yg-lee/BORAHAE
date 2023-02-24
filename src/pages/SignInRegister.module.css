@@ -35,7 +35,7 @@
   overflow-y: scroll;
 }
 
-.slide::-webkit-scrollbar{
+.slide::-webkit-scrollbar {
   display: none;
 }
 
@@ -107,10 +107,9 @@
   border-radius: 50%;
 }
 
-
 .btn_container {
   display: flex;
-  justify-content: center;
+  transform: translateX(28px);
   width: 100%;
 }
 input[type="file"] {
@@ -120,6 +119,12 @@ input[type="file"] {
   color: #b8b8b8;
   display: none;
 }
+
+.file_name {
+  color: gray;
+  font-size: 13px;
+}
+
 .button_wrap {
   position: relative;
 }

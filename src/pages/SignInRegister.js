@@ -21,6 +21,7 @@ export default function SignInRegister() {
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
+    let [fileNameShow, setFileNameShow] = useState('');
   let [loading, setLoading] = useState(false);
 
   let listContent;
@@ -65,7 +66,7 @@ export default function SignInRegister() {
     <>
       <div className={styles.container}>
         <div className={styles.wrapper}>
-      {listContent}
+          {listContent}
           <BackBtn></BackBtn>
           <div className={styles.slide}>
             <h1 className={styles.title}>
@@ -84,10 +85,13 @@ export default function SignInRegister() {
                   <input
                     onChange={(e) => {
                       setFile(e.target.files[0]);
+                       let hidePath = e.target.value.split('/').pop().split('\\').pop();
+                          setFileNameShow(hidePath);
                     }}
                     id='upload'
                     type='file'
                   ></input>
+                    <span className={styles.file_name}>{fileNameShow}</span>
                 </div>
               </div>
               <input

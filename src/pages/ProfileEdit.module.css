@@ -146,6 +146,12 @@ input[type="file"] {
   color: #b8b8b8;
   display: none;
 }
+
+.file_name {
+  color: gray;
+  font-size: 13px;
+}
+
 .button_wrap {
   position: relative;
 }

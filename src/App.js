@@ -17,7 +17,6 @@ import Chatting from "./pages/Chatting";
 import MyDashBoard from './pages/MyDashBoard';
 import Nearby from './pages/Nearby';
 import PostingEdit from './pages/PostingEdit';
-import Spinner from './components/Spinner';
 import firebase from "firebase/app";
 import "firebase/firestore";
 
@@ -69,7 +68,7 @@ function App() {
         ></Route>
         <Route path='/inbox' element={<Inbox></Inbox>}></Route>
         <Route path='/chatting' element={<Chatting></Chatting>}></Route>
-        <Route path='/spinner' element={<Spinner></Spinner>}></Route>
+        
       </Routes>
 
     </>

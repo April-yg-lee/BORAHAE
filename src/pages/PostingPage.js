@@ -20,6 +20,7 @@ export default function PostingPage() {
 
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
+  let [fileNameShow, setFileNameShow] = useState('');
   let [loading, setLoading] = useState(false);
 
   let listContent;
@@ -27,7 +28,6 @@ export default function PostingPage() {
   if (loading) {
     listContent = <Spinner />;
   }
-
 
   let dispatch = useDispatch();
   let navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function PostingPage() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-      {listContent}
+        {listContent}
         <button
           onClick={() => {
             navigate(-1);
@@ -95,10 +95,15 @@ export default function PostingPage() {
                     <input
                       onChange={(e) => {
                         setFile(e.target.files[0]);
+                          let hidePath = e.target.value.split('/').pop().split('\\').pop();
+                          setFileNameShow(hidePath);
+                        
                       }}
+                      name='upload'
                       id='upload'
                       type='file'
                     ></input>
+                    <span className={styles.file_name}>{fileNameShow}</span>
                   </div>
                 </div>
 

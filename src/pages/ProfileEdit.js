@@ -20,6 +20,7 @@ export default function ProfileEdit() {
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
+  let [fileNameShow, setFileNameShow] = useState("");
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
@@ -42,7 +43,7 @@ export default function ProfileEdit() {
           <section className={styles.article_box}>
             <h3>Profile</h3>
             <section className={styles.edit_section}>
-              <div className={styles.btn_container}>
+              {/* <div className={styles.btn_container}>
                 <div className={styles.button_wrap}>
                   <label className={styles.button} htmlFor='upload'>
                     + Picture
@@ -51,12 +52,24 @@ export default function ProfileEdit() {
                   <input
                     onChange={(e) => {
                       setFile(e.target.files[0]);
+                      let hidePath = e.target.value
+                        .split("/")
+                        .pop()
+                        .split("\\")
+                        .pop();
+                      setFileNameShow(hidePath);
                     }}
                     id='upload'
                     type='file'
                   ></input>
+                  <span
+                    className={styles.file_name}
+                    defaultValue={fileNameShow}
+                  >
+                    {fileNameShow}
+                  </span>
                 </div>
-              </div>
+              </div> */}
               <h6>Name</h6>
               <input
                 className={styles.edit_name}
@@ -104,8 +117,10 @@ export default function ProfileEdit() {
                     country: userCountry,
                   };
                   db.collection("user")
-                    .doc()
-                    .update(changeUserInfo);
+                    .doc("HbZkGLs2bUY3vBPc0i0t7wZrlg43")
+                    .set({
+                      changeUserInfo
+                    });
                   navigate("/mainboard");
                 }}
                 className={styles.save_btn}
