@@ -120,9 +120,9 @@ export default function MyDashBoard() {
                       <FontAwesomeIcon
                         icon={faTrashCan}
                         onClick={() => {
-                          // let copy = [...postList];
-                          // copy.splice(i, 1); // i번째자리에서 1개 삭제
-                          // setPostList(copy);
+                          let copy = [...postList];
+                          copy.splice(i, 1); // i번째자리에서 1개 삭제
+                          setPostList(copy);
                           // var jobskill_ref = db.collection('job_skills').where('postID','==','50ea82d1-f176-49d9-b8d3-f000cf172d8c');
                           // let batch = db.batch();
                           // console.log(jobskill_ref);
@@ -145,15 +145,16 @@ export default function MyDashBoard() {
                           // .catch((err)=>{
                           //   console.log(err);
                           // })
-                          // db.collection("post")
-                          //   .doc('VOXAh4RrZ06LWVotNb1C')
-                          //   .delete()
-                          //   .then(() => {
-                          //     console.log("Document successfully deleted!");
-                          //   })
-                          //   .catch((error) => {
-                          //     console.error("Error removing document: ", error);
-                          //   });
+
+                          db.collection("post")
+                            .doc('2ae4Ii4lDePKvcB8IkD8')
+                            .delete()
+                            .then(() => {
+                              console.log("Document successfully deleted!");
+                            })
+                            .catch((error) => {
+                              console.error("Error removing document: ", error);
+                            });
                         }}
                       />
                       <FontAwesomeIcon

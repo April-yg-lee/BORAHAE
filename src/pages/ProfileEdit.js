@@ -25,7 +25,6 @@ export default function ProfileEdit() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
-
   const [userName, setUserName] = useState("");
   const [userIntro, setUserIntro] = useState("");
   const [userCity, setUserCity] = useState("");
@@ -38,6 +37,13 @@ export default function ProfileEdit() {
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
   let userIntroShow = useSelector((state) => state.userIntroShow);
+
+  useEffect(() => {
+    setUserName(userNameShow);
+    setUserIntro(userIntroShow);
+    setUserCountry(userCountryShow);
+    setUserCity(userCityShow);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -55,7 +61,7 @@ export default function ProfileEdit() {
           <section className={styles.article_box}>
             <h3>Profile</h3>
             <section className={styles.edit_section}>
-              {/* <div className={styles.btn_container}>
+              <div className={styles.btn_container}>
                 <div className={styles.button_wrap}>
                   <label className={styles.button} htmlFor='upload'>
                     + Picture
@@ -81,7 +87,7 @@ export default function ProfileEdit() {
                     {fileNameShow}
                   </span>
                 </div>
-              </div> */}
+              </div>
               <h6>Name</h6>
               <input
                 className={styles.edit_name}
@@ -142,15 +148,13 @@ export default function ProfileEdit() {
                                 country: userCountry,
                                 uid: userUidShow,
                               };
-                              db.collection("user")
-                                .doc('wG7Is6vodudILjNzGc35DVOvJNc2')
-                                .set({
-                                  userInfo,
-                                });
+                              db.collection("user").doc(userUidShow).set({
+                                userInfo,
+                              });
                             }
                           });
                         });
-                      }
+                    }
                   });
                   navigate("/mainboard");
                 }}
