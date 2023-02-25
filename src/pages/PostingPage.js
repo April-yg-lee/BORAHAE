@@ -20,7 +20,7 @@ export default function PostingPage() {
 
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
-  let [fileNameShow, setFileNameShow] = useState('');
+  let [fileNameShow, setFileNameShow] = useState("");
   let [loading, setLoading] = useState(false);
 
   let listContent;
@@ -95,9 +95,12 @@ export default function PostingPage() {
                     <input
                       onChange={(e) => {
                         setFile(e.target.files[0]);
-                          let hidePath = e.target.value.split('/').pop().split('\\').pop();
-                          setFileNameShow(hidePath);
-                        
+                        let hidePath = e.target.value
+                          .split("/")
+                          .pop()
+                          .split("\\")
+                          .pop();
+                        setFileNameShow(hidePath);
                       }}
                       name='upload'
                       id='upload'

@@ -151,7 +151,6 @@ export default function SignInRegister() {
             </section>
             <div
               onClick={() => {
-                setLoading(true);
                 if (
                   signUpRg_checker(
                     userName,
@@ -160,8 +159,9 @@ export default function SignInRegister() {
                     userCity,
                     userCountry,
                     userIntro
-                  ) == true
-                ) {
+                    ) == true
+                    ) {
+                  setLoading(true);
                   let imgCreateDate = new Date();
                   let storageRef = storage.ref();
                   let savePath = storageRef.child(
@@ -194,7 +194,7 @@ export default function SignInRegister() {
                               });
                               let userInfo = {
                                 name: userName,
-                                email: userEmail,
+                                // email: userEmail,
                                 city: userCity,
                                 country: userCountry,
                                 intro: userIntro,

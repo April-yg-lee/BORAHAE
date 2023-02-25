@@ -7,6 +7,15 @@ import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import ProfileEditTop from "../components/ProfileEditTop";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setUserUidShow,
+  setUserNameShow,
+  setUserCityShow,
+  setUserCountryShow,
+  setUserIntroShow,
+  setUserProfilePicShow,
+} from "../Store";
+
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -14,6 +23,8 @@ import "firebase/database";
 
 export default function ProfileEdit() {
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+
 
   const [userName, setUserName] = useState("");
   const [userIntro, setUserIntro] = useState("");
@@ -23,6 +34,7 @@ export default function ProfileEdit() {
   let [fileNameShow, setFileNameShow] = useState("");
 
   let userNameShow = useSelector((state) => state.userNameShow);
+  let userUidShow = useSelector((state) => state.userUidShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
   let userIntroShow = useSelector((state) => state.userIntroShow);
@@ -74,7 +86,7 @@ export default function ProfileEdit() {
               <input
                 className={styles.edit_name}
                 type='text'
-                defaultValue={userNameShow || userName}
+                defaultValue={userNameShow}
                 onChange={(e) => {
                   setUserName(e.target.value);
                 }}
@@ -110,17 +122,36 @@ export default function ProfileEdit() {
             <div className={styles.btn_section}>
               <button
                 onClick={() => {
-                  let changeUserInfo = {
-                    name: userName,
-                    intro: userIntro,
-                    city: userCity,
-                    country: userCountry,
-                  };
-                  db.collection("user")
-                    .doc("HbZkGLs2bUY3vBPc0i0t7wZrlg43")
-                    .set({
-                      changeUserInfo
-                    });
+                  // user 가 로그인 되어 있는지 확인하는 코드
+                  firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                      db.collection("user")
+                        .get()
+                        .then((result) => {
+                          result.forEach((doc) => {
+                            if (user.uid == doc.data().userInfo.uid) {
+                              dispatch(setUserUidShow(doc.data().userInfo.uid));
+                              dispatch(setUserCityShow(userCity));
+                              dispatch(setUserCountryShow(userCountry));
+                              dispatch(setUserNameShow(userName));
+                              dispatch(setUserIntroShow(userIntro));
+                              let userInfo = {
+                                name: userName,
+                                intro: userIntro,
+                                city: userCity,
+                                country: userCountry,
+                                uid: userUidShow,
+                              };
+                              db.collection("user")
+                                .doc('wG7Is6vodudILjNzGc35DVOvJNc2')
+                                .set({
+                                  userInfo,
+                                });
+                            }
+                          });
+                        });
+                      }
+                  });
                   navigate("/mainboard");
                 }}
                 className={styles.save_btn}
