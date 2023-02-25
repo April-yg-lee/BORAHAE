@@ -163,7 +163,8 @@ export default function PostingPage() {
                                           };
 
                                           db.collection("post")
-                                            .add(saveData)
+                                            .doc(saveData.postID)
+                                            .set(saveData)
                                             .then(() => {
                                               setLoading(false);
                                               navigate("/mydashboard");

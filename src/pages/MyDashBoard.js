@@ -123,31 +123,9 @@ export default function MyDashBoard() {
                           let copy = [...postList];
                           copy.splice(i, 1); // i번째자리에서 1개 삭제
                           setPostList(copy);
-                          // var jobskill_ref = db.collection('job_skills').where('postID','==','50ea82d1-f176-49d9-b8d3-f000cf172d8c');
-                          // let batch = db.batch();
-                          // console.log(jobskill_ref);
-                          // console.log(batch);
-                          // jobskill_ref
-                          //   .get()
-                          //   .then(snapshot => {
-                          //     snapshot.docs.forEach(doc => {
-                          //       console.log(doc.ref);
-                          //       batch.delete(doc.ref);
-                          //     });
-                          //     return batch.commit();
-                          //   })
-                          // db.collection("post")
-                          // .where("postID", "==", '50ea82d1-f176-49d9-b8d3-f000cf172d8c')
-                          // .delete()
-                          // .then(()=>{
-                          //   console.log('deleted!')
-                          // })
-                          // .catch((err)=>{
-                          //   console.log(err);
-                          // })
-
+                          
                           db.collection("post")
-                            .doc('2ae4Ii4lDePKvcB8IkD8')
+                            .doc(a.postID)
                             .delete()
                             .then(() => {
                               console.log("Document successfully deleted!");
@@ -155,12 +133,6 @@ export default function MyDashBoard() {
                             .catch((error) => {
                               console.error("Error removing document: ", error);
                             });
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        onClick={() => {
-                          navigate("/postingedit");
                         }}
                       />
                     </div>

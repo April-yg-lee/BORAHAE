@@ -127,8 +127,7 @@
 }
 
 .del_edit_btn {
-  transform: translateX(200px);
-  width: 60px;
+  transform: translateX(240px);
   display: flex;
   justify-content: space-between;
   color: rgb(85, 85, 85);
