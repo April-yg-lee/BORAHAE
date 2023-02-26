@@ -32,7 +32,7 @@ export default function Nearby() {
       .get()
       .then((result) => {
         result.forEach((doc) => {
-          // console.log(doc.data());
+          console.log(doc.data());
           postArray.push(doc.data());
           console.log("Post Array: " + postArray);
         });
@@ -40,7 +40,7 @@ export default function Nearby() {
       });
   };
 
-  console.log(nearbyPostList)
+  // console.log(nearbyPostList)
 
   useEffect(() => {
     call();

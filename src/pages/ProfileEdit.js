@@ -37,12 +37,14 @@ export default function ProfileEdit() {
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
   let userIntroShow = useSelector((state) => state.userIntroShow);
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   useEffect(() => {
     setUserName(userNameShow);
     setUserIntro(userIntroShow);
     setUserCountry(userCountryShow);
     setUserCity(userCityShow);
+    setFile(userProfilePicShow);
   }, []);
 
   return (
@@ -128,34 +130,63 @@ export default function ProfileEdit() {
             <div className={styles.btn_section}>
               <button
                 onClick={() => {
-                  // user 가 로그인 되어 있는지 확인하는 코드
-                  firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
-                      db.collection("user")
-                        .get()
-                        .then((result) => {
-                          result.forEach((doc) => {
-                            if (user.uid == doc.data().userInfo.uid) {
-                              dispatch(setUserUidShow(doc.data().userInfo.uid));
-                              dispatch(setUserCityShow(userCity));
-                              dispatch(setUserCountryShow(userCountry));
-                              dispatch(setUserNameShow(userName));
-                              dispatch(setUserIntroShow(userIntro));
-                              let userInfo = {
-                                name: userName,
-                                intro: userIntro,
-                                city: userCity,
-                                country: userCountry,
-                                uid: userUidShow,
-                              };
-                              db.collection("user").doc(userUidShow).set({
-                                userInfo,
-                              });
+                  let imgCreateDate = new Date();
+                  let storageRef = storage.ref();
+                  let savePath = storageRef.child(
+                    "profileImage/" + "profile_" + imgCreateDate
+                  );
+                  let upload = savePath.put(file);
+
+                  // firebase code
+                  upload.on(
+                    "state_changed",
+                    null,
+
+                    //에러시 동작하는 함수
+                    (error) => {
+                      console.error("실패사유는", error);
+                    },
+                    // 성공시 동작하는 함수
+                    () => {
+                      upload.snapshot.ref
+                        .getDownloadURL()
+                        .then((profileUrl) => {
+                          firebase.auth().onAuthStateChanged((user) => {
+                            if (user) {
+                              db.collection("user")
+                                .get()
+                                .then((result) => {
+                                  result.forEach((doc) => {
+                                    if (user.uid == doc.data().userInfo.uid) {
+                                      dispatch(
+                                        setUserUidShow(doc.data().userInfo.uid)
+                                      );
+                                      dispatch(setUserCityShow(userCity));
+                                      dispatch(setUserCountryShow(userCountry));
+                                      dispatch(setUserNameShow(userName));
+                                      dispatch(setUserIntroShow(userIntro));
+                                      dispatch(setUserProfilePicShow(file));
+                                      let userInfo = {
+                                        name: userName,
+                                        intro: userIntro,
+                                        city: userCity,
+                                        country: userCountry,
+                                        uid: userUidShow,
+                                        profileImage: file,
+                                      };
+                                      db.collection("user")
+                                        .doc(userUidShow)
+                                        .set({
+                                          userInfo,
+                                        });
+                                    }
+                                  });
+                                });
                             }
                           });
                         });
                     }
-                  });
+                  );
                   navigate("/mainboard");
                 }}
                 className={styles.save_btn}
