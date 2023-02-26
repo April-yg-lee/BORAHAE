@@ -170,21 +170,20 @@ export default function ProfileEdit() {
                                       } else {
                                         profileUrl = userProfilePicShow;
                                       }
-
-                                      let userInfo = {
-                                        name: userName,
-                                        intro: userIntro,
-                                        city: userCity,
-                                        country: userCountry,
-                                        uid: userUidShow,
-                                        profileImage: profileUrl,
-                                      };
-                                      db.collection("user")
-                                        .doc(userUidShow)
-                                        .set({
-                                          userInfo,
-                                        });
                                     }
+                                    let userInfo = {
+                                      name: userName,
+                                      intro: userIntro,
+                                      city: userCity,
+                                      country: userCountry,
+                                      uid: userUidShow,
+                                      profileImage: profileUrl,
+                                    };
+                                    db.collection("user")
+                                      .doc(userUidShow)
+                                      .set({
+                                        userInfo,
+                                      });
                                   });
                                 });
                             }

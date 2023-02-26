@@ -35,6 +35,8 @@ export default function PostingPage() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
+
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
@@ -118,7 +120,7 @@ export default function PostingPage() {
                       let imgCreateDate = new Date();
                       let storageRef = storage.ref();
                       let savePath = storageRef.child(
-                        "postingImage/" + "posting" + imgCreateDate
+                        "postingImage/" + "posting_" + imgCreateDate
                       );
                       let upload = savePath.put(file);
 

@@ -17,6 +17,8 @@ import "firebase/database";
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
 
+
+
   // get posting time
   let currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
@@ -48,6 +50,7 @@ export default function MainBoard() {
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCityShow = useSelector((state) => state.userCityShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   let like = useSelector((state) => state.like);
 

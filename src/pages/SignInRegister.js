@@ -165,7 +165,7 @@ export default function SignInRegister() {
                   let imgCreateDate = new Date();
                   let storageRef = storage.ref();
                   let savePath = storageRef.child(
-                    "profileImage/" + "profile" + imgCreateDate
+                    "profileImage/" + "profile_" + imgCreateDate
                   );
                   let upload = savePath.put(file);
 
