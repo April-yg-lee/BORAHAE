@@ -170,7 +170,7 @@ export default function ProfileEdit() {
                                       } else {
                                         profileUrl = userProfilePicShow;
                                       }
-
+                                      console.log('프로파일 수정');
                                       let userInfo = {
                                         name: userName,
                                         intro: userIntro,

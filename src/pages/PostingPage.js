@@ -17,11 +17,13 @@ import Spinner from "../components/Spinner";
 
 export default function PostingPage() {
   // db.collection('post').doc('post3').set({content: 'Love you!'})
-
+  console.log('포스팅 등록 화면 들어옴');
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
   let [loading, setLoading] = useState(false);
+
+  console.log('처음 content : ' + content);
 
   let listContent;
 
@@ -33,8 +35,10 @@ export default function PostingPage() {
   let navigate = useNavigate();
 
   let userNameShow = useSelector((state) => state.userNameShow);
+  let userUidShow = useSelector((state) => state.userUidShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   const addPost = () => {
     console.log('포스팅 전 스피너 전');
@@ -45,7 +49,7 @@ export default function PostingPage() {
       "postingImage/" + "posting" + imgCreateDate
     );
     let upload = savePath.put(file);
-
+    console.log('포스팅 업로드 시작 전');
     // firebase code
     upload.on(
       "state_changed",
@@ -57,58 +61,46 @@ export default function PostingPage() {
       },
       // 성공시 동작하는 함수
       () => {
+        console.log('포스팅 업로드 성공 로직 고고 : ' + content);
         upload.snapshot.ref
           .getDownloadURL()
           .then((postingUrl) => {
-            firebase.auth().onAuthStateChanged((user) => {
-              if (user) {
-                db.collection("user")
-                  .get()
-                  .then((result) => {
-                    result.forEach((doc) => {
-                      if (
-                        user.uid == doc.data().userInfo.uid
-                      ) {
-                        console.log(
-                          "업로드된 경로는",
-                          postingUrl
-                        );
-                        let saveData = {
-                          content: content,
-                          date: formattedTimestamp(),
-                          postingImage: postingUrl,
-                          likes: 0,
-                          uid: doc.data().userInfo.uid,
-                          userName: doc.data().userInfo.name,
-                          profileImage:
-                            doc.data().userInfo.profileImage,
-                          city: userCityShow,
-                          country: userCountryShow,
-                          postID: uuidv4(),
-                        };
-                        console.log('포스팅 파일업로드 완료 디비 전');
-                        console.log('content : ' + content);
-                        db.collection("post")
-                          .doc(saveData.postID)
-                          .set(saveData)
-                          .then(() => {
-                            setLoading(false);
-                            navigate("/mydashboard");
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                          });
 
-                        setFile('');
-                        setContent('');
-                        setFileNameShow('');
-                        console.log('content : ' + content);
-                        console.log('포스팅 파일업로드 완료 디비 후');
-                      }
-                    });
-                  });
-              }
-            });
+            console.log(
+              "업로드된 경로는",
+              postingUrl
+            );
+            let saveData = {
+              content: content,
+              date: formattedTimestamp(),
+              postingImage: postingUrl,
+              likes: 0,
+              uid: userUidShow,
+              userName: userNameShow,
+              profileImage: userProfilePicShow,
+              city: userCityShow,
+              country: userCountryShow,
+              postID: uuidv4(),
+            };
+            console.log('포스팅 파일업로드 완료 디비 전');
+            console.log('업로드 후 content : ' + content);
+            db.collection("post")
+              .doc(saveData.postID)
+              .set(saveData)
+              .then(() => {
+                setLoading(false);
+                navigate("/mydashboard");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            setFile("");
+            setContent("");
+            setFileNameShow("");
+            console.log('초기화 후 content : ' + content);
+            console.log('포스팅 파일업로드 완료 디비 후');
+
           });
       }
     );
@@ -192,7 +184,7 @@ export default function PostingPage() {
 
                 <div className={styles.btn_section}>
                   <button
-                    onClick={() => addPost}
+                    onClick={addPost}
                     className={styles.submit_btn}
                   >
                     Submit
