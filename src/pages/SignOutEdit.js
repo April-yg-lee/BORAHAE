@@ -6,12 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import ProfileEditTop from "../components/ProfileEditTop";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
+import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, setUserIntroShow, setUserProfilePicShow } from "../Store";
+
 
 export default function SignOutEdit() {
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -34,6 +39,13 @@ export default function SignOutEdit() {
               <button
                 onClick={() => {
                   firebase.auth().signOut();
+
+                  dispatch(setUserUidShow(''));
+                  dispatch(setUserNameShow(''));
+                  dispatch(setUserCityShow(''));
+                  dispatch(setUserCountryShow(''));
+                  dispatch(setUserIntroShow(''));
+                  dispatch(setUserProfilePicShow(''));
                   navigate("/");
                 }}
                 className={styles.signOut_btn}

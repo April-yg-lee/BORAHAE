@@ -23,23 +23,23 @@ export default function MainBoard() {
   };
 
   // get Posts data from firebase
-  let call = () => {
-    let postArray = [];
-    db.collection("post")
-      .orderBy("date", "desc")
-      .get()
-      .then((result) => {
-        result.forEach((doc) => {
-          postArray.push(doc.data());
-          // console.log("Post Array: " + postArray);
-        });
-        setPostList(postArray);
+  // let call = () => {
+  let postArray = [];
+  db.collection("post")
+    .orderBy("date", "desc")
+    .get()
+    .then((result) => {
+      result.forEach((doc) => {
+        postArray.push(doc.data());
+        // console.log("Post Array: " + postArray);
       });
-  };
+      setPostList(postArray);
+    });
+  // };
 
-  useEffect(() => {
-    call();
-  }, []);
+  // useEffect(() => {
+  //   call();
+  // }, []);
 
   // console.log("data : " + postList);
 
@@ -98,9 +98,9 @@ export default function MainBoard() {
         <div className={styles.slide}>
           <div className={styles.mainBoard_option}>
             <span className={styles.option_all}>All</span>
-            <span className={styles.option_nearby}  onClick={() => {
-            navigate("/nearby");
-          }}>Nearby</span>
+            <span className={styles.option_nearby} onClick={() => {
+              navigate("/nearby");
+            }}>Nearby</span>
           </div>
 
           {postList.map(function (a, i) {

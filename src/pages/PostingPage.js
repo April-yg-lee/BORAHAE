@@ -112,7 +112,8 @@ export default function PostingPage() {
 
                 <div className={styles.btn_section}>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      console.log('포스팅 전 스피너 전');
                       setLoading(true);
                       let imgCreateDate = new Date();
                       let storageRef = storage.ref();
@@ -161,7 +162,8 @@ export default function PostingPage() {
                                             country: userCountryShow,
                                             postID: uuidv4(),
                                           };
-
+                                          console.log('포스팅 파일업로드 완료 디비 전');
+                                          console.log('content : ' + content);
                                           db.collection("post")
                                             .doc(saveData.postID)
                                             .set(saveData)
@@ -172,6 +174,12 @@ export default function PostingPage() {
                                             .catch((err) => {
                                               console.log(err);
                                             });
+
+                                          setFile('');
+                                          setContent('');
+                                          setFileNameShow('');
+                                          console.log('content : ' + content);
+                                          console.log('포스팅 파일업로드 완료 디비 후');
                                         }
                                       });
                                     });

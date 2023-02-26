@@ -165,14 +165,19 @@ export default function ProfileEdit() {
                                       dispatch(setUserCountryShow(userCountry));
                                       dispatch(setUserNameShow(userName));
                                       dispatch(setUserIntroShow(userIntro));
-                                      dispatch(setUserProfilePicShow(file));
+                                      if (fileNameShow) {
+                                        dispatch(setUserProfilePicShow(profileUrl));
+                                      } else {
+                                        profileUrl = userProfilePicShow;
+                                      }
+
                                       let userInfo = {
                                         name: userName,
                                         intro: userIntro,
                                         city: userCity,
                                         country: userCountry,
                                         uid: userUidShow,
-                                        profileImage: file,
+                                        profileImage: profileUrl,
                                       };
                                       db.collection("user")
                                         .doc(userUidShow)

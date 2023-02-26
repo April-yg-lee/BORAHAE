@@ -66,7 +66,6 @@ export default function Chatting() {
 
     db.collection("messages").add(newMessage);
     document.querySelector('#inputMessage').value = '';
-    call();
   }
 
   useEffect(() => {
