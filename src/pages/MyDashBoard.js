@@ -111,10 +111,10 @@ export default function MyDashBoard() {
                   <div className={styles.article_title}>
                     <div
                       className={styles.article_profile_img}
-                      style={{ backgroundImage: `url('${a.profileImage}')` }}
+                      style={{ backgroundImage: `url('${userProfilePicShow}')` }}
                     ></div>
                     <span className={styles.article_profile_name}>
-                      {a.userName}
+                      {userNameShow}
                     </span>
                     <div className={styles.del_edit_btn}>
                       <FontAwesomeIcon
@@ -123,7 +123,7 @@ export default function MyDashBoard() {
                           let copy = [...postList];
                           copy.splice(i, 1); // i번째자리에서 1개 삭제
                           setPostList(copy);
-                          
+
                           db.collection("post")
                             .doc(a.postID)
                             .delete()
