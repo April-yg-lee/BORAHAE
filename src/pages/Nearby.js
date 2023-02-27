@@ -18,6 +18,8 @@ export default function Nearby() {
   const [nearbyPostList, setNearbyPostList] = useState([]);
   const [trick, setTrick] = useState([]);
 
+  let userUidShow = useSelector((state) => state.userUidShow);
+
   // get posting time
   let currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
@@ -35,19 +37,21 @@ export default function Nearby() {
         result.forEach((doc) => {
           let postObject = doc.data();
 
-          db.collection("user")
-            .where('userInfo.uid', '==', postObject.uid)
-            .get()
-            .then((info) => {
-              info.forEach((infoDoc) => {
+          if (postObject.uid != userUidShow) {
+            db.collection("user")
+              .where('userInfo.uid', '==', postObject.uid)
+              .get()
+              .then((info) => {
+                info.forEach((infoDoc) => {
 
-                postObject.userName = infoDoc.data().userInfo.name;
-                postObject.profileImage = infoDoc.data().userInfo.profileImage;
-                setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
+                  postObject.userName = infoDoc.data().userInfo.name;
+                  postObject.profileImage = infoDoc.data().userInfo.profileImage;
+                  setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
+                })
               })
-            })
 
-          postArray.push(postObject);
+            postArray.push(postObject);
+          }
 
         });
         setNearbyPostList(postArray);
