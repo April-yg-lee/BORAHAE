@@ -22,7 +22,7 @@ export default function SignInRegister() {
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
     let [fileNameShow, setFileNameShow] = useState('');
-  let [loading, setLoading] = useState(false);
+  let [loading, setLoading] = useState(true);
 
   let listContent;
 
@@ -66,8 +66,8 @@ export default function SignInRegister() {
     <>
       <div className={styles.container}>
         <div className={styles.wrapper}>
-          {listContent}
           <BackBtn></BackBtn>
+          {listContent}
           <div className={styles.slide}>
             <h1 className={styles.title}>
               Congrats!

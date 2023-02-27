@@ -112,15 +112,15 @@ export default function PostingPage() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {listContent}
         <button
           onClick={() => {
             navigate(-1);
           }}
           className={styles.back_btn}
-        >
+          >
           &lt; Back
         </button>
+          {listContent}
         <div>
           <h1 className={styles.title}>
             Hello, <span className={styles.name}>{userNameShow}!&nbsp;</span>
