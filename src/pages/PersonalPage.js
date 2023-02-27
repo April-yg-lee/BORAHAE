@@ -58,17 +58,16 @@ export default function PersonalPage() {
   let personalPagecall = () => {
     let postArray = [];
     if (state.uid) {
-    db.collection("post")
-      .where("uid", "==", state.uid)
-      .orderBy("date", "desc")
-      .get()
-      .then((result) => {
-        result.forEach((doc) => {
-          postArray.push(doc.data());
-          // console.log("Post Array: " + postArray);
+      db.collection("post")
+        .where("uid", "==", state.uid)
+        .orderBy("date", "desc")
+        .get()
+        .then((result) => {
+          result.forEach((doc) => {
+            postArray.push(doc.data());
+          });
+          setPostList(postArray);
         });
-        setPostList(postArray);
-      });
     }
   };
 
@@ -131,10 +130,10 @@ export default function PersonalPage() {
                   <div className={styles.article_title}>
                     <div
                       className={styles.article_profile_img}
-                      style={{ backgroundImage: `url('${a.profileImage}')` }}
+                      style={{ backgroundImage: `url('${userInfo.profileImage}')` }}
                     ></div>
                     <span className={styles.article_profile_name}>
-                      {a.userName}
+                      {userInfo.name}
                     </span>
                     <div className={styles.del_edit_btn}></div>
                   </div>
