@@ -57,7 +57,6 @@ export default function ProfileEdit() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {listContent}
         <button
           onClick={() => {
             navigate(-1);
@@ -67,6 +66,7 @@ export default function ProfileEdit() {
           &lt; Back
         </button>
         <ProfileEditTop></ProfileEditTop>
+        {listContent}
         <div className={styles.slide}>
           <section className={styles.article_box}>
             <h3>Profile</h3>
