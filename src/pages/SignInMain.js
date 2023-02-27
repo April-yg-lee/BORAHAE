@@ -47,13 +47,17 @@ export default function SignInMain() {
         <section className={styles.signin_btn_box}>
           <button
             onClick={() => {
+              console.log('회원정보 일치 여부 확인 전');
               firebase
                 .auth()
                 .signInWithEmailAndPassword(userEmail, userPassword)
                 .then((result) => {
+                  console.log('result');
+                  console.log(result);
+                  console.log('메인보드로 이동 전');
                   navigate("/mainboard");
                 });
-
+              console.log('회원정보 일치 여부 확인 후');
               // user 가 로그인 되어 있는지 확인하는 코드
               firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
@@ -79,6 +83,7 @@ export default function SignInMain() {
                     });
                 }
               });
+              console.log('회원정보 담은 후');
             }}
             className={styles.signin_btn}
           >

@@ -14,12 +14,12 @@ require('firebase/auth');
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCjhIkrWABOdXIMq9qkLLhZbJ1NR0B7I9c",
-  authDomain: "borahae-59bba.firebaseapp.com",
-  projectId: "borahae-59bba",
-  storageBucket: "borahae-59bba.appspot.com",
-  messagingSenderId: "826104112881",
-  appId: "1:826104112881:web:1a8bf4525cf0dbf83d6b50"
+  apiKey: "AIzaSyAl7ZMMevtk7zw3jUjszxBe_H1OrlhXLzM",
+  authDomain: "bts-borahae.firebaseapp.com",
+  projectId: "bts-borahae",
+  storageBucket: "bts-borahae.appspot.com",
+  messagingSenderId: "563118760751",
+  appId: "1:563118760751:web:d3a0c29e909db30b8f77da"
 };
 
 firebase.initializeApp(firebaseConfig);
