@@ -93,19 +93,19 @@ export default function PostingPage() {
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
-    // console.log(`convertDate: ${convertDate}`)
+    console.log(`convertDate: ${convertDate}`)
     const ISOdate = convertDate.toISOString().split("T")[0];
     console.log(`ISOdate: ${ISOdate}`)
-    const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
-    console.log(`dateForSubtract: ${dateForSubtract}`)
-    const currentDate = dateForSubtract.toLocaleDateString("sv", {
-      timeZone: "UTC",
-    });
-    console.log(`currentDate: ${currentDate}`)
+    // const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
+    // console.log(`dateForSubtract: ${dateForSubtract}`)
+    // const currentDate = dateForSubtract.toLocaleDateString("sv", {
+    //   timeZone: "UTC",
+    // });
+    // console.log(`currentDate: ${currentDate}`)
     const currentTime = convertDate.toTimeString().split(" ")[0];
-    // console.log(`currentTime: ${currentTime}`)
+    console.log(`currentTime: ${currentTime}`)
 
-    return `${currentDate} ${currentTime}`;
+    return `${ISOdate} ${currentTime}`;
   };
 
 

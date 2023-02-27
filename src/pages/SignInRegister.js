@@ -21,8 +21,8 @@ export default function SignInRegister() {
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
-    let [fileNameShow, setFileNameShow] = useState('');
-  let [loading, setLoading] = useState(true);
+  let [fileNameShow, setFileNameShow] = useState('');
+  let [loading, setLoading] = useState(false);
 
   let listContent;
 
