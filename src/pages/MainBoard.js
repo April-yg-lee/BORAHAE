@@ -17,7 +17,7 @@ import "firebase/database";
 export default function MainBoard() {
   console.log('메인보드 들어옴');
   const [postList, setPostList] = useState([]);
-
+  const [trick, setTrick] = useState([]);
 
 
   // get posting time
@@ -28,17 +28,31 @@ export default function MainBoard() {
   // get Posts data from firebase
   const call = () => {
     console.log('포스팅 목록 조회 전');
-  let postArray = [];
-  db.collection("post")
-    .orderBy("date", "desc")
-    .get()
-    .then((result) => {
-      result.forEach((doc) => {
-        postArray.push(doc.data());
-        // console.log("Post Array: " + postArray);
+    let postArray = [];
+    db.collection("post")
+      .orderBy("date", "desc")
+      .get()
+      .then((result) => {
+        result.forEach((doc) => {
+          let postObject = doc.data();
+
+          db.collection("user")
+            .where('userInfo.uid', '==', postObject.uid)
+            .get()
+            .then((info) => {
+              info.forEach((infoDoc) => {
+
+                postObject.userName = infoDoc.data().userInfo.name;
+                postObject.profileImage = infoDoc.data().userInfo.profileImage;
+                setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
+              })
+            })
+
+          postArray.push(postObject);
+          // console.log("Post Array: " + postArray);
+        });
+        setPostList(postArray);
       });
-      setPostList(postArray);
-    });
     console.log('포스팅 목록 조회 후');
   };
 

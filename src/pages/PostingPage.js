@@ -38,7 +38,6 @@ export default function PostingPage() {
   let userUidShow = useSelector((state) => state.userUidShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
 
   const addPost = () => {
@@ -77,8 +76,6 @@ export default function PostingPage() {
               postingImage: postingUrl,
               likes: 0,
               uid: userUidShow,
-              userName: userNameShow,
-              profileImage: userProfilePicShow,
               city: userCityShow,
               country: userCountryShow,
               postID: uuidv4(),
@@ -107,8 +104,6 @@ export default function PostingPage() {
     );
   }
 
-
-  const stopRendering = useMemo(() => addPost(), []);
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
@@ -188,7 +183,7 @@ export default function PostingPage() {
 
                 <div className={styles.btn_section}>
                   <button
-                    onClick={stopRendering}
+                    onClick={addPost}
                     className={styles.submit_btn}
                   >
                     Submit

@@ -16,6 +16,7 @@ import "firebase/database";
 
 export default function Nearby() {
   const [nearbyPostList, setNearbyPostList] = useState([]);
+  const [trick, setTrick] = useState([]);
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -32,9 +33,22 @@ export default function Nearby() {
       .get()
       .then((result) => {
         result.forEach((doc) => {
-          console.log(doc.data());
-          postArray.push(doc.data());
-          console.log("Post Array: " + postArray);
+          let postObject = doc.data();
+
+          db.collection("user")
+            .where('userInfo.uid', '==', postObject.uid)
+            .get()
+            .then((info) => {
+              info.forEach((infoDoc) => {
+
+                postObject.userName = infoDoc.data().userInfo.name;
+                postObject.profileImage = infoDoc.data().userInfo.profileImage;
+                setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
+              })
+            })
+
+          postArray.push(postObject);
+
         });
         setNearbyPostList(postArray);
       });
