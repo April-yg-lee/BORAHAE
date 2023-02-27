@@ -22,7 +22,6 @@ export default function PersonalPage() {
   const { state } = useLocation();
   const [userInfo, setUserInfo] = useState({});
   let [postList, setPostList] = useState([]);
-  const [trick, setTrick] = useState([]);
   const db = firebase.firestore();
 
   // get posting time
@@ -65,21 +64,7 @@ export default function PersonalPage() {
         .get()
         .then((result) => {
           result.forEach((doc) => {
-            let postObject = doc.data();
-
-            db.collection("user")
-              .where('userInfo.uid', '==', postObject.uid)
-              .get()
-              .then((info) => {
-                info.forEach((infoDoc) => {
-
-                  postObject.userName = infoDoc.data().userInfo.name;
-                  postObject.profileImage = infoDoc.data().userInfo.profileImage;
-                  setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
-                })
-              })
-
-            postArray.push(postObject);
+            postArray.push(doc.data());
           });
           setPostList(postArray);
         });
@@ -145,10 +130,10 @@ export default function PersonalPage() {
                   <div className={styles.article_title}>
                     <div
                       className={styles.article_profile_img}
-                      style={{ backgroundImage: `url('${a.profileImage}')` }}
+                      style={{ backgroundImage: `url('${userInfo.profileImage}')` }}
                     ></div>
                     <span className={styles.article_profile_name}>
-                      {a.userName}
+                      {userInfo.name}
                     </span>
                     <div className={styles.del_edit_btn}></div>
                   </div>
