@@ -47,7 +47,7 @@ export default function PostingPage() {
     let imgCreateDate = new Date();
     let storageRef = storage.ref();
     let savePath = storageRef.child(
-      "postingImage/" + "posting" + imgCreateDate
+      "postingImage/" + "posting_" + imgCreateDate
     );
     let upload = savePath.put(file);
     console.log('포스팅 업로드 시작 전');
