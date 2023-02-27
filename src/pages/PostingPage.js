@@ -42,7 +42,7 @@ export default function PostingPage() {
 
 
   const addPost = () => {
-    console.log('포스팅 전 스피너 전');
+    console.log('포스팅 전 스피너 전 for TEST');
     setLoading(true);
     let imgCreateDate = new Date();
     let storageRef = storage.ref();
@@ -107,9 +107,9 @@ export default function PostingPage() {
     );
   }
 
-  
-  const stopRendering = useMemo(()=> addPost(), []);
-  
+
+  const stopRendering = useMemo(() => addPost(), []);
+
   const formattedTimestamp = () => {
     const convertDate = new Date();
     // console.log(`convertDate: ${convertDate}`)
