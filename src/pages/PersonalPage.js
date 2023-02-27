@@ -9,7 +9,6 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -22,19 +21,11 @@ export default function PersonalPage() {
   const { state } = useLocation();
   const [userInfo, setUserInfo] = useState({});
   let [postList, setPostList] = useState([]);
-  const db = firebase.firestore();
 
   // get posting time
   let currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
-
-  let userUidShow = useSelector((state) => state.userUidShow);
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userIntroShow = useSelector((state) => state.userIntroShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   const call = () => {
     if (state.uid) {

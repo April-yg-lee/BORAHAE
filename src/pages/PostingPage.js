@@ -17,13 +17,10 @@ import Spinner from "../components/Spinner";
 
 export default function PostingPage() {
   // db.collection('post').doc('post3').set({content: 'Love you!'})
-  console.log('포스팅 등록 화면 들어옴');
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
   let [loading, setLoading] = useState(false);
-
-  console.log('처음 content : ' + content);
 
   let listContent;
 
@@ -41,7 +38,6 @@ export default function PostingPage() {
 
 
   const addPost = () => {
-    console.log('포스팅 전 스피너 전 for TEST');
     setLoading(true);
     let imgCreateDate = new Date();
     let storageRef = storage.ref();
@@ -49,7 +45,6 @@ export default function PostingPage() {
       "postingImage/" + "posting_" + imgCreateDate
     );
     let upload = savePath.put(file);
-    console.log('포스팅 업로드 시작 전');
     // firebase code
     upload.on(
       "state_changed",
@@ -61,7 +56,6 @@ export default function PostingPage() {
       },
       // 성공시 동작하는 함수
       () => {
-        console.log('포스팅 업로드 성공 로직 고고 : ' + content);
         upload.snapshot.ref
           .getDownloadURL()
           .then((postingUrl) => {
@@ -80,8 +74,6 @@ export default function PostingPage() {
               country: userCountryShow,
               postID: uuidv4(),
             };
-            console.log('포스팅 파일업로드 완료 디비 전');
-            console.log('업로드 후 content : ' + content);
             db.collection("post")
               .doc(saveData.postID)
               .set(saveData)
@@ -93,12 +85,6 @@ export default function PostingPage() {
                 console.log(err);
               });
 
-            setFile("");
-            setContent("");
-            setFileNameShow("");
-            console.log('초기화 후 content : ' + content);
-            console.log('포스팅 파일업로드 완료 디비 후');
-
           });
       }
     );
@@ -109,17 +95,17 @@ export default function PostingPage() {
     const convertDate = new Date();
     // console.log(`convertDate: ${convertDate}`)
     const ISOdate = convertDate.toISOString().split("T")[0];
-    // console.log(`ISOdate: ${ISOdate}`)
-    // const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
-    // console.log(`dateForSubtract: ${dateForSubtract}`)
-    // const currentDate = dateForSubtract.toLocaleDateString("sv", {
-    //   timeZone: "UTC",
-    // });
-    // console.log(`currentDate: ${currentDate}`)
+    console.log(`ISOdate: ${ISOdate}`)
+    const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
+    console.log(`dateForSubtract: ${dateForSubtract}`)
+    const currentDate = dateForSubtract.toLocaleDateString("sv", {
+      timeZone: "UTC",
+    });
+    console.log(`currentDate: ${currentDate}`)
     const currentTime = convertDate.toTimeString().split(" ")[0];
     // console.log(`currentTime: ${currentTime}`)
 
-    return `${ISOdate} ${currentTime}`;
+    return `${currentDate} ${currentTime}`;
   };
 
 

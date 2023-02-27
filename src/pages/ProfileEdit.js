@@ -20,6 +20,7 @@ import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
+import Spinner from "../components/Spinner";
 
 export default function ProfileEdit() {
   let navigate = useNavigate();
@@ -31,6 +32,12 @@ export default function ProfileEdit() {
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
+  let [loading, setLoading] = useState(false);
+
+  let listContent;
+  if (loading) {
+    listContent = <Spinner />;
+  }
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
@@ -59,6 +66,7 @@ export default function ProfileEdit() {
           &lt; Back
         </button>
         <ProfileEditTop></ProfileEditTop>
+        {listContent}
         <div className={styles.slide}>
           <section className={styles.article_box}>
             <h3>Profile</h3>
@@ -130,6 +138,7 @@ export default function ProfileEdit() {
             <div className={styles.btn_section}>
               <button
                 onClick={() => {
+                  setLoading(true);
                   let imgCreateDate = new Date();
                   let storageRef = storage.ref();
                   let savePath = storageRef.child(
@@ -154,45 +163,46 @@ export default function ProfileEdit() {
                           firebase.auth().onAuthStateChanged((user) => {
                             if (user) {
                               db.collection("user")
+                                .where("userInfo.uid", "==", userUidShow)
                                 .get()
                                 .then((result) => {
                                   result.forEach((doc) => {
-                                    if (user.uid == doc.data().userInfo.uid) {
-                                      dispatch(
-                                        setUserUidShow(doc.data().userInfo.uid)
-                                      );
-                                      dispatch(setUserCityShow(userCity));
-                                      dispatch(setUserCountryShow(userCountry));
-                                      dispatch(setUserNameShow(userName));
-                                      dispatch(setUserIntroShow(userIntro));
-                                      if (fileNameShow) {
-                                        dispatch(setUserProfilePicShow(profileUrl));
-                                      } else {
-                                        profileUrl = userProfilePicShow;
-                                      }
-                                      console.log('프로파일 수정');
-                                      let userInfo = {
-                                        name: userName,
-                                        intro: userIntro,
-                                        city: userCity,
-                                        country: userCountry,
-                                        uid: userUidShow,
-                                        profileImage: profileUrl,
-                                      };
-                                      db.collection("user")
-                                        .doc(userUidShow)
-                                        .set({
-                                          userInfo,
-                                        });
+                                    dispatch(
+                                      setUserUidShow(doc.data().userInfo.uid)
+                                    );
+                                    dispatch(setUserCityShow(userCity));
+                                    dispatch(setUserCountryShow(userCountry));
+                                    dispatch(setUserNameShow(userName));
+                                    dispatch(setUserIntroShow(userIntro));
+                                    if (fileNameShow) {
+                                      dispatch(setUserProfilePicShow(profileUrl));
+                                    } else {
+                                      profileUrl = userProfilePicShow;
                                     }
+
+                                    let userInfo = {
+                                      name: userName,
+                                      intro: userIntro,
+                                      city: userCity,
+                                      country: userCountry,
+                                      uid: userUidShow,
+                                      profileImage: profileUrl,
+                                    };
+                                    db.collection("user")
+                                      .doc(userUidShow)
+                                      .set({
+                                        userInfo,
+                                      });
+
                                   });
+                                  setLoading(false);
+                                  navigate("/mainboard");
                                 });
                             }
                           });
                         });
                     }
                   );
-                  navigate("/mainboard");
                 }}
                 className={styles.save_btn}
               >
