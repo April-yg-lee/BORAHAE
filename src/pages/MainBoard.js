@@ -15,7 +15,6 @@ import "firebase/database";
 // import 'firebase/storage';
 
 export default function MainBoard() {
-  console.log('메인보드 들어옴');
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
 
@@ -27,7 +26,6 @@ export default function MainBoard() {
 
   // get Posts data from firebase
   const call = () => {
-    console.log('포스팅 목록 조회 전');
     let postArray = [];
     db.collection("post")
       .orderBy("date", "desc")
@@ -53,7 +51,6 @@ export default function MainBoard() {
         });
         setPostList(postArray);
       });
-    console.log('포스팅 목록 조회 후');
   };
 
   useEffect(() => {

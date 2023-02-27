@@ -61,19 +61,17 @@ export default function SignInMain() {
                   dispatch(setUserNameShow(user.displayName));
                   // get data from firebase
                   db.collection("user")
+                    .where('userInfo.uid', '==', user.uid)
                     .get()
                     .then((result) => {
                       result.forEach((doc) => {
                         // console.log(doc.data());
-
-                        if (user.uid == doc.data().userInfo.uid) {
-                          dispatch(setUserUidShow(doc.data().userInfo.uid));
-                          dispatch(setUserNameShow(doc.data().userInfo.name));
-                          dispatch(setUserCityShow(doc.data().userInfo.city));
-                          dispatch(setUserCountryShow(doc.data().userInfo.country));
-                          dispatch(setUserIntroShow(doc.data().userInfo.intro));
-                          dispatch(setUserProfilePicShow(doc.data().userInfo.profileImage));
-                        }
+                        dispatch(setUserUidShow(doc.data().userInfo.uid));
+                        dispatch(setUserNameShow(doc.data().userInfo.name));
+                        dispatch(setUserCityShow(doc.data().userInfo.city));
+                        dispatch(setUserCountryShow(doc.data().userInfo.country));
+                        dispatch(setUserIntroShow(doc.data().userInfo.intro));
+                        dispatch(setUserProfilePicShow(doc.data().userInfo.profileImage));
                       });
                     });
                 }
