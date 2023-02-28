@@ -94,8 +94,12 @@ export default function PostingPage() {
   const formattedTimestamp = () => {
     const convertDate = new Date();
     console.log(`convertDate: ${convertDate}`)
-    const ISOdate = convertDate.toISOString().split("T")[0];
-    console.log(`ISOdate: ${ISOdate}`)
+    const ISOdate1 = convertDate.toISOString();
+    const ISOdate2 = convertDate.toISOString().split("T");
+    const ISOdate3 = convertDate.toISOString().split("T")[0];
+    console.log(`ISOdate1: ${ISOdate1}`)
+    console.log(`ISOdate2: ${ISOdate2}`)
+    console.log(`ISOdate3: ${ISOdate3}`)
     // const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
     // console.log(`dateForSubtract: ${dateForSubtract}`)
     // const currentDate = dateForSubtract.toLocaleDateString("sv", {
@@ -105,7 +109,7 @@ export default function PostingPage() {
     const currentTime = convertDate.toTimeString().split(" ")[0];
     console.log(`currentTime: ${currentTime}`)
 
-    return `${ISOdate} ${currentTime}`;
+    return `${ISOdate3} ${currentTime}`;
   };
 
 
