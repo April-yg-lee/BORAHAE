@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faChevronRight, faHeartCircleBolt, faHSquare } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { increaseLike } from "../Store";
 import { db, storage } from "../index.js";
 import firebase from "firebase";
@@ -17,6 +18,18 @@ import "firebase/database";
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
+
+  let dispatch = useDispatch();
+
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userUidShow = useSelector((state) => state.userUidShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
+
+  let like = useSelector((state) => state.like);
+
+  let navigate = useNavigate();
 
 
   // get posting time
@@ -46,6 +59,12 @@ export default function MainBoard() {
               })
             })
 
+          db.collection("post").doc(postObject.postID).collection("likes")
+            .get()
+            .then((counts) => {
+              postObject.likes = counts.size;
+            })
+
           postArray.push(postObject);
           // console.log("Post Array: " + postArray);
         });
@@ -53,23 +72,52 @@ export default function MainBoard() {
       });
   };
 
+  const toggleLikes = (postId) => {
+    db.collection("post").doc(postId).collection("likes")
+      .where('uid', '==', userUidShow)
+      .get()
+      .then((result) => {
+
+        if (result.empty) {
+          let likesData = {
+            uid: userUidShow,
+            likeId: uuidv4()
+          }
+          db.collection("post").doc(postId).collection("likes")
+            .doc(likesData.likeId)
+            .set(likesData)
+            .then(() => {
+              console.log('like 추가함');
+              call();
+            })
+
+        } else {
+
+          result.forEach((doc) => {
+            let dataUid = doc.data().uid;
+            let dataLikeId = doc.data().likeId;
+
+            if (dataUid) {
+              db.collection("post").doc(postId).collection("likes")
+                .doc(dataLikeId)
+                .delete()
+                .then(() => {
+                  console.log('like 제거함');
+                  call();
+                })
+            }
+          })
+        }
+
+      })
+
+  }
+
   useEffect(() => {
     call();
   }, []);
 
   // console.log("data : " + postList);
-
-  let dispatch = useDispatch();
-
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
-
-  let like = useSelector((state) => state.like);
-
-  let navigate = useNavigate();
-
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -153,7 +201,7 @@ export default function MainBoard() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(increaseLike());
+                          toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
                       >
@@ -161,6 +209,10 @@ export default function MainBoard() {
                         <FontAwesomeIcon
                           className={styles.heart_icon}
                           icon={faHeart}
+                        />
+                        <FontAwesomeIcon
+                          className={styles.heart_icon}
+                          icon={faHSquare}
                         />
                         &nbsp;
                       </span>
