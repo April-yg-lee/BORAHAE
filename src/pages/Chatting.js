@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 // Components
@@ -30,7 +31,7 @@ export default function Chatting() {
 
     if (state.roomId) {
       setRoomId(state.roomId);
-      db.collection("messages")
+      db.collection("chatroom").doc(state.roomId).collection("messages")
         .where('roomId', '==', roomId)
         .orderBy('createdAt', 'asc')
         .onSnapshot((result) => {
@@ -42,7 +43,7 @@ export default function Chatting() {
 
     } else {
 
-      const newRoomId = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+      const newRoomId = uuidv4();
       const newRoomData = {
         host: userUidShow
         , lastestAt: new Date()
@@ -50,8 +51,12 @@ export default function Chatting() {
         , member: [userUidShow, state.uid]
         , roomId: newRoomId
       }
-      db.collection("chatroom").add(newRoomData);
-      setRoomId(newRoomId);
+      db.collection("chatroom").doc(newRoomId)
+        .set(newRoomData)
+        .then(() => {
+          setRoomId(newRoomId);
+
+        });
     }
   }
 
@@ -64,7 +69,10 @@ export default function Chatting() {
       , uid: userUidShow
     }
 
-    db.collection("messages").add(newMessage);
+    db.collection("chatroom").doc(roomId).collection("messages").add(newMessage);
+
+    
+
     document.querySelector('#inputMessage').value = '';
   }
 
