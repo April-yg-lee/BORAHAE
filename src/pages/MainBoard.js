@@ -20,7 +20,7 @@ export default function MainBoard() {
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
   let [loading, setLoading] = useState(false);
-  let [heartShow, setHeartShow] = useState(false);
+  // let [heartShow, setHeartShow] = useState(false);
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
@@ -34,13 +34,35 @@ export default function MainBoard() {
     heartPosition = <HeartSpinner />;
   }
 
-  const heartOnAndOff = () => {
-    if (heartShow == true) {
-      setHeartShow(false);
-    } else {
-      setHeartShow(true);
-    }
-  };
+  // const heartOnAndOff = () => {
+  //   if (heartShow == true) {
+  //     setHeartShow(false);
+  //   } else {
+  //     setHeartShow(true);
+  //   }
+  // };
+
+  // const heartOnAndOff = (postID) => {
+  //   db.collection("post")
+  //     .doc(postID)
+  //     .collection("likes")
+  //     .where("uid", "==", userUidShow)
+  //     .get()
+  //     .then((result) => {
+  //       if (result.empty) {
+  //         setHeartShow(false);
+  //       } else {
+  //         result.forEach((doc) => {
+  //           let dataUid = doc.data().uid;
+  //           let dataLikeId = doc.data().likeId;
+
+  //           if (dataUid) {
+  //             setHeartShow(false);
+  //           }
+  //         });
+  //       }
+  //     });
+  // };
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -103,8 +125,8 @@ export default function MainBoard() {
             .set(likesData)
             .then(() => {
               console.log("like 추가함");
-              call();
               setLoading(false);
+              call();
             });
         } else {
           result.forEach((doc) => {
@@ -119,8 +141,8 @@ export default function MainBoard() {
                 .delete()
                 .then(() => {
                   console.log("like 제거함");
-                  call();
                   setLoading(false);
+                  call();
                 });
             }
           });
@@ -222,12 +244,16 @@ export default function MainBoard() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
-                          heartOnAndOff();
+                          // heartOnAndOff(a.postID);
                           toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
                       >
-                        {heartShow == true ? (
+                        <FontAwesomeIcon
+                          className={styles.heart_icon}
+                          icon={faHeart}
+                        />
+                        {/* {heartShow == true ? (
                           <FontAwesomeIcon
                             className={styles.heart_icon}
                             icon={farHeart}
@@ -237,7 +263,7 @@ export default function MainBoard() {
                             className={styles.heart_icon}
                             icon={faHeart}
                           />
-                        )}
+                        )} */}
                         &nbsp;
                       </span>
                       <span className={styles.like_num}>{a.likes}</span>

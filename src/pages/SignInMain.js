@@ -1,7 +1,5 @@
 /*eslint-disable */
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
@@ -14,11 +12,11 @@ import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, s
 
 export default function SignInMain() {
   let navigate = useNavigate();
+  let dispatch = useDispatch();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
-  let dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
