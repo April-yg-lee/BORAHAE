@@ -32,7 +32,7 @@ export default function ProfileEdit() {
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
-  let [loading, setLoading] = useState(false);
+  let [loading, setLoading] = useState(true);
 
   let listContent;
   if (loading) {

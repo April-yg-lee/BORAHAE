@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faChevronRight, faHeartCircleBolt, faHSquare } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import Location from "../components/Location";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,24 +14,33 @@ import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
-// import 'firebase/storage';
+import HeartSpinner from "../components/HeartSpinner";
 
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
-
-  let dispatch = useDispatch();
+  let [loading, setLoading] = useState(false);
+  let [heartShow, setHeartShow] = useState(false);
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
-
   let like = useSelector((state) => state.like);
 
+  let dispatch = useDispatch();
   let navigate = useNavigate();
 
+  let heartPosition;
+  if (loading) {
+    heartPosition = <HeartSpinner />;
+  }
+
+  const heartOnAndOff = () => {
+    if (heartShow == true) {
+      setHeartShow(false);
+    } else {
+      setHeartShow(true);
+    }
+  };
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -48,22 +58,23 @@ export default function MainBoard() {
           let postObject = doc.data();
 
           db.collection("user")
-            .where('userInfo.uid', '==', postObject.uid)
+            .where("userInfo.uid", "==", postObject.uid)
             .get()
             .then((info) => {
               info.forEach((infoDoc) => {
-
                 postObject.userName = infoDoc.data().userInfo.name;
                 postObject.profileImage = infoDoc.data().userInfo.profileImage;
                 setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
-              })
-            })
+              });
+            });
 
-          db.collection("post").doc(postObject.postID).collection("likes")
+          db.collection("post")
+            .doc(postObject.postID)
+            .collection("likes")
             .get()
             .then((counts) => {
               postObject.likes = counts.size;
-            })
+            });
 
           postArray.push(postObject);
           // console.log("Post Array: " + postArray);
@@ -73,45 +84,49 @@ export default function MainBoard() {
   };
 
   const toggleLikes = (postId) => {
-    db.collection("post").doc(postId).collection("likes")
-      .where('uid', '==', userUidShow)
+    setLoading(true);
+    db.collection("post")
+      .doc(postId)
+      .collection("likes")
+      .where("uid", "==", userUidShow)
       .get()
       .then((result) => {
-
         if (result.empty) {
           let likesData = {
             uid: userUidShow,
-            likeId: uuidv4()
-          }
-          db.collection("post").doc(postId).collection("likes")
+            likeId: uuidv4(),
+          };
+          db.collection("post")
+            .doc(postId)
+            .collection("likes")
             .doc(likesData.likeId)
             .set(likesData)
             .then(() => {
-              console.log('like 추가함');
+              console.log("like 추가함");
               call();
-            })
-
+              setLoading(false);
+            });
         } else {
-
           result.forEach((doc) => {
             let dataUid = doc.data().uid;
             let dataLikeId = doc.data().likeId;
 
             if (dataUid) {
-              db.collection("post").doc(postId).collection("likes")
+              db.collection("post")
+                .doc(postId)
+                .collection("likes")
                 .doc(dataLikeId)
                 .delete()
                 .then(() => {
-                  console.log('like 제거함');
+                  console.log("like 제거함");
                   call();
-                })
+                  setLoading(false);
+                });
             }
-          })
+          });
         }
-
-      })
-
-  }
+      });
+  };
 
   useEffect(() => {
     call();
@@ -163,10 +178,16 @@ export default function MainBoard() {
         <div className={styles.slide}>
           <div className={styles.mainBoard_option}>
             <span className={styles.option_all}>All</span>
-            <span className={styles.option_nearby} onClick={() => {
-              navigate("/nearby");
-            }}>Nearby</span>
+            <span
+              className={styles.option_nearby}
+              onClick={() => {
+                navigate("/nearby");
+              }}
+            >
+              Nearby
+            </span>
           </div>
+          {heartPosition}
 
           {postList.map(function (a, i) {
             return (
@@ -175,8 +196,8 @@ export default function MainBoard() {
                   onClick={() => {
                     navigate("/personalpage", {
                       state: {
-                        uid: a.uid
-                      }
+                        uid: a.uid,
+                      },
                     });
                   }}
                   className={styles.article}
@@ -201,19 +222,22 @@ export default function MainBoard() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
+                          heartOnAndOff();
                           toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
                       >
-                        {" "}
-                        <FontAwesomeIcon
-                          className={styles.heart_icon}
-                          icon={faHeart}
-                        />
-                        <FontAwesomeIcon
-                          className={styles.heart_icon}
-                          icon={faHSquare}
-                        />
+                        {heartShow == true ? (
+                          <FontAwesomeIcon
+                            className={styles.heart_icon}
+                            icon={farHeart}
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            className={styles.heart_icon}
+                            icon={faHeart}
+                          />
+                        )}
                         &nbsp;
                       </span>
                       <span className={styles.like_num}>{a.likes}</span>
