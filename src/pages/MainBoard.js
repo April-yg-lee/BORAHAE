@@ -21,6 +21,7 @@ export default function MainBoard() {
   const [trick, setTrick] = useState([]);
   let [loading, setLoading] = useState(false);
   // let [heartShow, setHeartShow] = useState(false);
+  const [trickLikes, setTrickLikes] = useState('');
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
@@ -125,9 +126,12 @@ export default function MainBoard() {
             .set(likesData)
             .then(() => {
               console.log("like 추가함");
+              setTrickLikes('add');
               setLoading(false);
-              call();
+              
             });
+           
+
         } else {
           result.forEach((doc) => {
             let dataUid = doc.data().uid;
@@ -142,7 +146,8 @@ export default function MainBoard() {
                 .then(() => {
                   console.log("like 제거함");
                   setLoading(false);
-                  call();
+                  setTrickLikes('remove');
+                  
                 });
             }
           });
@@ -152,7 +157,7 @@ export default function MainBoard() {
 
   useEffect(() => {
     call();
-  }, []);
+  }, [trickLikes]);
 
   // console.log("data : " + postList);
   return (
