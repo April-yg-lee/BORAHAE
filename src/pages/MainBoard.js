@@ -18,6 +18,7 @@ import "firebase/database";
 export default function MainBoard() {
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
+  const [trickLikes, setTrickLikes] = useState('');
 
   let dispatch = useDispatch();
 
@@ -63,6 +64,7 @@ export default function MainBoard() {
             .get()
             .then((counts) => {
               postObject.likes = counts.size;
+
             })
 
           postArray.push(postObject);
@@ -88,7 +90,7 @@ export default function MainBoard() {
             .set(likesData)
             .then(() => {
               console.log('like 추가함');
-              call();
+              setTrickLikes('add');
             })
 
         } else {
@@ -103,7 +105,7 @@ export default function MainBoard() {
                 .delete()
                 .then(() => {
                   console.log('like 제거함');
-                  call();
+                  setTrickLikes('remove');
                 })
             }
           })
@@ -115,7 +117,7 @@ export default function MainBoard() {
 
   useEffect(() => {
     call();
-  }, []);
+  }, [trickLikes]);
 
   // console.log("data : " + postList);
   return (
