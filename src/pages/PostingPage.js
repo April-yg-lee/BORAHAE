@@ -68,7 +68,6 @@ export default function PostingPage() {
               content: content,
               date: formattedTimestamp(),
               postingImage: postingUrl,
-              likes: 0,
               uid: userUidShow,
               city: userCityShow,
               country: userCountryShow,
@@ -80,10 +79,13 @@ export default function PostingPage() {
               .then(() => {
                 setLoading(false);
                 navigate("/mydashboard");
+
               })
               .catch((err) => {
                 console.log(err);
               });
+
+
 
           });
       }
@@ -121,10 +123,10 @@ export default function PostingPage() {
             navigate(-1);
           }}
           className={styles.back_btn}
-          >
+        >
           &lt; Back
         </button>
-          {listContent}
+        {listContent}
         <div>
           <h1 className={styles.title}>
             Hello, <span className={styles.name}>{userNameShow}!&nbsp;</span>
