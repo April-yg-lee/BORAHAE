@@ -1,52 +1,53 @@
 /*eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import styles from "./Inbox.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faComment } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 import { useSelector } from "react-redux";
 
 export default function SignInQuestions() {
-
   let navigate = useNavigate();
-  const userUidShow = useSelector((state) => state.userUidShow);
 
   const [chatList, setChatList] = useState([]);
   const [trick, setTrick] = useState([]);
 
+  const userUidShow = useSelector((state) => state.userUidShow);
+
   const db = firebase.firestore();
   const call = () => {
     db.collection("chatroom")
-    .where('member', 'array-contains', userUidShow)
-    .orderBy('lastestAt', 'desc')
-    .onSnapshot((result) => {
-      let tmpList = [];
-      result.forEach((doc) => {
+      .where("member", "array-contains", userUidShow)
+      .orderBy("lastestAt", "desc")
+      .onSnapshot((result) => {
+        let tmpList = [];
+        result.forEach((doc) => {
           let tmp = doc.data();
 
           db.collection("user")
-            .where('userInfo.uid', '==', userUidShow == tmp.member[0] ? tmp.member[1] : tmp.member[0])
+            .where(
+              "userInfo.uid",
+              "==",
+              userUidShow == tmp.member[0] ? tmp.member[1] : tmp.member[0]
+            )
             .get()
             .then((info) => {
               info.forEach((infoDoc) => {
-
                 tmp.name = infoDoc.data().userInfo.name;
                 tmp.profileImage = infoDoc.data().userInfo.profileImage;
                 setTrick(tmp); // 조회 후 렌더링을 위한 꼼수
-              })
-            })
+              });
+            });
 
           tmpList.push(tmp);
         });
         setChatList(tmpList);
       });
-
-  }
+  };
 
   useEffect(() => {
     call();
-
   }, []);
 
   return (
@@ -72,33 +73,33 @@ export default function SignInQuestions() {
             <span className={styles.option_all}>Chat</span>
           </div>
           <section className={styles.chat_section}>
-
-            {
-              chatList.map((list, idx) => (
-                <article
-                  onClick={() => {
-                    navigate("/chatting", {
-                      state: {
-                        roomId: list.roomId
-                        , name: list.name
-                        , profileImage: list.profileImage
-                      }
-                    });
-                  }}
-                  className={styles.chat_each}
-                  key={idx}
-                >
-                  <div className={styles.profile_img} style={{ backgroundImage: `url('${list.profileImage}')` }}></div>
-                  <div className={styles.chat_mes_box}>
-                    <span className={styles.chat_mes_name}>{list.name}</span>
-                    <span className={styles.chat_mes_text}>{list.lastestMessage}</span>
-                  </div>
-                  <span className={styles.chat_counter}>3</span>
-                </article>
-
-              ))}
-
-
+            {chatList.map((list, idx) => (
+              <article
+                onClick={() => {
+                  navigate("/chatting", {
+                    state: {
+                      roomId: list.roomId,
+                      name: list.name,
+                      profileImage: list.profileImage,
+                    },
+                  });
+                }}
+                className={styles.chat_each}
+                key={idx}
+              >
+                <div
+                  className={styles.profile_img}
+                  style={{ backgroundImage: `url('${list.profileImage}')` }}
+                ></div>
+                <div className={styles.chat_mes_box}>
+                  <span className={styles.chat_mes_name}>{list.name}</span>
+                  <span className={styles.chat_mes_text}>
+                    {list.lastestMessage}
+                  </span>
+                </div>
+                <span className={styles.chat_counter}>3</span>
+              </article>
+            ))}
           </section>
         </div>
       </div>

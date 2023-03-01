@@ -2,18 +2,18 @@
 import React, { useState } from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import BackBtn from "../components/BackBtn";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../index.js";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserNameShow, setUserCountryShow, setUserCityShow } from "../Store";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
 import Spinner from "../components/Spinner";
 
 export default function SignInRegister() {
+  let navigate = useNavigate();
+
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -21,7 +21,7 @@ export default function SignInRegister() {
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
-  let [fileNameShow, setFileNameShow] = useState('');
+  let [fileNameShow, setFileNameShow] = useState("");
   let [loading, setLoading] = useState(false);
 
   let listContent;
@@ -57,11 +57,6 @@ export default function SignInRegister() {
     return true;
   }
 
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-
   return (
     <>
       <div className={styles.container}>
@@ -85,13 +80,17 @@ export default function SignInRegister() {
                   <input
                     onChange={(e) => {
                       setFile(e.target.files[0]);
-                       let hidePath = e.target.value.split('/').pop().split('\\').pop();
-                          setFileNameShow(hidePath);
+                      let hidePath = e.target.value
+                        .split("/")
+                        .pop()
+                        .split("\\")
+                        .pop();
+                      setFileNameShow(hidePath);
                     }}
                     id='upload'
                     type='file'
                   ></input>
-                    <span className={styles.file_name}>{fileNameShow}</span>
+                  <span className={styles.file_name}>{fileNameShow}</span>
                 </div>
               </div>
               <input
@@ -159,8 +158,8 @@ export default function SignInRegister() {
                     userCity,
                     userCountry,
                     userIntro
-                    ) == true
-                    ) {
+                  ) == true
+                ) {
                   setLoading(true);
                   let imgCreateDate = new Date();
                   let storageRef = storage.ref();

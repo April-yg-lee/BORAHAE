@@ -2,24 +2,13 @@
 
 import React, { Profiler } from "react";
 import styles from "./Myinfo.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFile,
-  faPenToSquare,
-  faRightFromBracket,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserNameShow, changeName, changeAge, addCount, increaseLike } from "../Store";
 import ProfileEditTop from "../components/ProfileEditTop";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 export default function Myinfo() {
   let navigate = useNavigate();
-
-  let dispatch = useDispatch();
-  let userNameShow = useSelector((state) => state.userNameShow);
-
 
   return (
     <div className={styles.container}>

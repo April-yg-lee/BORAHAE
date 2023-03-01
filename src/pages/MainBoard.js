@@ -4,31 +4,27 @@ import moment from "moment";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import Location from "../components/Location";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import HeartSpinner from "../components/HeartSpinner";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { increaseLike } from "../Store";
-import { db, storage } from "../index.js";
-import firebase from "firebase";
+import { db } from "../index.js";
 import "firebase/firestore";
 import "firebase/database";
-import HeartSpinner from "../components/HeartSpinner";
 
 export default function MainBoard() {
+  let navigate = useNavigate();
+
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
   let [loading, setLoading] = useState(false);
   // let [heartShow, setHeartShow] = useState(false);
-  const [trickLikes, setTrickLikes] = useState('');
+  const [trickLikes, setTrickLikes] = useState("");
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
   let like = useSelector((state) => state.like);
-
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
 
   let heartPosition;
   if (loading) {
@@ -126,12 +122,9 @@ export default function MainBoard() {
             .set(likesData)
             .then(() => {
               console.log("like 추가함");
-              setTrickLikes('add');
+              setTrickLikes("add");
               setLoading(false);
-              
             });
-           
-
         } else {
           result.forEach((doc) => {
             let dataUid = doc.data().uid;
@@ -146,8 +139,7 @@ export default function MainBoard() {
                 .then(() => {
                   console.log("like 제거함");
                   setLoading(false);
-                  setTrickLikes('remove');
-                  
+                  setTrickLikes("remove");
                 });
             }
           });

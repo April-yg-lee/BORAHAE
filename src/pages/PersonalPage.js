@@ -1,24 +1,19 @@
 /*eslint-disable */
-import React, { useState, useEffect, Profiler } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import styles from "./PersonalPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faPenToSquare,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import { db, storage } from "../index.js";
-import firebase from "firebase";
+import { db } from "../index.js";
 import "firebase/firestore";
 import "firebase/database";
 import "firebase/storage";
 
 export default function PersonalPage() {
   let navigate = useNavigate();
-
   const { state } = useLocation();
+
   const [userInfo, setUserInfo] = useState({});
   let [postList, setPostList] = useState([]);
 
@@ -121,7 +116,9 @@ export default function PersonalPage() {
                   <div className={styles.article_title}>
                     <div
                       className={styles.article_profile_img}
-                      style={{ backgroundImage: `url('${userInfo.profileImage}')` }}
+                      style={{
+                        backgroundImage: `url('${userInfo.profileImage}')`,
+                      }}
                     ></div>
                     <span className={styles.article_profile_name}>
                       {userInfo.name}

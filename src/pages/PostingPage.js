@@ -1,41 +1,34 @@
 /*eslint-disable */
 
-import React, { Profiler, useMemo, useState } from "react";
+import React, { useState } from "react";
 import styles from "./PostingPage.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { setUserNameShow, increaseLike } from "../Store";
 import { db, storage } from "../index.js";
-import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
 import "firebase/storage";
 import Spinner from "../components/Spinner";
 
 export default function PostingPage() {
-  // db.collection('post').doc('post3').set({content: 'Love you!'})
+  let navigate = useNavigate();
+
   let [content, setContent] = useState("");
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
   let [loading, setLoading] = useState(false);
-
-  let listContent;
-
-  if (loading) {
-    listContent = <Spinner />;
-  }
-
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
   let userCityShow = useSelector((state) => state.userCityShow);
 
+  let listContent;
+
+  if (loading) {
+    listContent = <Spinner />;
+  }
 
   const addPost = () => {
     setLoading(true);
@@ -56,52 +49,41 @@ export default function PostingPage() {
       },
       // 성공시 동작하는 함수
       () => {
-        upload.snapshot.ref
-          .getDownloadURL()
-          .then((postingUrl) => {
-
-            console.log(
-              "업로드된 경로는",
-              postingUrl
-            );
-            let saveData = {
-              content: content,
-              date: formattedTimestamp(),
-              postingImage: postingUrl,
-              uid: userUidShow,
-              city: userCityShow,
-              country: userCountryShow,
-              postID: uuidv4(),
-            };
-            db.collection("post")
-              .doc(saveData.postID)
-              .set(saveData)
-              .then(() => {
-                setLoading(false);
-                navigate("/mydashboard");
-
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-
-
-
-          });
+        upload.snapshot.ref.getDownloadURL().then((postingUrl) => {
+          console.log("업로드된 경로는", postingUrl);
+          let saveData = {
+            content: content,
+            date: formattedTimestamp(),
+            postingImage: postingUrl,
+            uid: userUidShow,
+            city: userCityShow,
+            country: userCountryShow,
+            postID: uuidv4(),
+          };
+          db.collection("post")
+            .doc(saveData.postID)
+            .set(saveData)
+            .then(() => {
+              setLoading(false);
+              navigate("/mydashboard");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
       }
     );
-  }
-
+  };
 
   const formattedTimestamp = () => {
     const convertDate = new Date();
-    console.log(`convertDate: ${convertDate}`)
+    console.log(`convertDate: ${convertDate}`);
     const ISOdate1 = convertDate.toISOString();
     const ISOdate2 = convertDate.toISOString().split("T");
     const ISOdate3 = convertDate.toISOString().split("T")[0];
-    console.log(`ISOdate1: ${ISOdate1}`)
-    console.log(`ISOdate2: ${ISOdate2}`)
-    console.log(`ISOdate3: ${ISOdate3}`)
+    console.log(`ISOdate1: ${ISOdate1}`);
+    console.log(`ISOdate2: ${ISOdate2}`);
+    console.log(`ISOdate3: ${ISOdate3}`);
     // const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
     // console.log(`dateForSubtract: ${dateForSubtract}`)
     // const currentDate = dateForSubtract.toLocaleDateString("sv", {
@@ -109,11 +91,10 @@ export default function PostingPage() {
     // });
     // console.log(`currentDate: ${currentDate}`)
     const currentTime = convertDate.toTimeString().split(" ")[0];
-    console.log(`currentTime: ${currentTime}`)
+    console.log(`currentTime: ${currentTime}`);
 
     return `${ISOdate3} ${currentTime}`;
   };
-
 
   return (
     <div className={styles.container}>
@@ -174,10 +155,7 @@ export default function PostingPage() {
                 </div>
 
                 <div className={styles.btn_section}>
-                  <button
-                    onClick={addPost}
-                    className={styles.submit_btn}
-                  >
+                  <button onClick={addPost} className={styles.submit_btn}>
                     Submit
                   </button>
                 </div>

@@ -1,91 +1,81 @@
 /*eslint-disable */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from "react";
 import styles from "./Chatting.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faBell,
-  faComment,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import PropTypes from 'prop-types';
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 // Components
 
-
 export default function Chatting() {
-
   let navigate = useNavigate();
   const userUidShow = useSelector((state) => state.userUidShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
-  const [roomId, setRoomId] = useState('');
-  const [chatHost, setChatHost] = useState('');
+  const [roomId, setRoomId] = useState("");
+  const [chatHost, setChatHost] = useState("");
   const [chatMember, setChatMember] = useState([]);
-
 
   const db = firebase.firestore();
   let tmpList = [];
 
   const call = () => {
-
     if (state.roomId) {
       setRoomId(state.roomId);
-      db.collection("chatroom").doc(state.roomId).collection("messages")
-        .where('roomId', '==', roomId)
-        .orderBy('createdAt', 'asc')
+      db.collection("chatroom")
+        .doc(state.roomId)
+        .collection("messages")
+        .where("roomId", "==", roomId)
+        .orderBy("createdAt", "asc")
         .onSnapshot((result) => {
           result.forEach((doc) => {
             tmpList.push(doc.data());
-          })
+          });
           setMessages(tmpList);
-        })
+        });
 
       getChatRoomInfo(roomId);
-
     } else {
-
       db.collection("chatroom")
-        .where('member', "array-contains", userUidShow)
+        .where("member", "array-contains", userUidShow)
         .get()
         .then((result) => {
-
           if (result.empty) {
             createNewChatRoom();
           }
 
           result.forEach((doc) => {
-
             let member = doc.data().member;
             if (member.includes(userUidShow) && member.includes(state.uid)) {
-              console.log('이미 방 잇음');
-              console.log('로직 추가 해야 됨');
+              console.log("이미 방 잇음");
+              console.log("로직 추가 해야 됨");
             } else {
               createNewChatRoom();
             }
-          })
-        })
+          });
+        });
     }
-  }
+  };
 
   const createNewChatRoom = () => {
     const newRoomId = uuidv4();
     const newRoomData = {
-      host: userUidShow
-      , lastestAt: new Date()
-      , lastestMessage: ''
-      , member: [userUidShow, state.uid]
-      , roomId: newRoomId
-    }
-    db.collection("chatroom").doc(newRoomId)
+      host: userUidShow,
+      lastestAt: new Date(),
+      lastestMessage: "",
+      member: [userUidShow, state.uid],
+      roomId: newRoomId,
+    };
+    db.collection("chatroom")
+      .doc(newRoomId)
       .set(newRoomData)
       .then(() => {
         setRoomId(newRoomId);
         getChatRoomInfo(newRoomId);
       });
-  }
+  };
 
   const getChatRoomInfo = (roomId) => {
     db.collection("chatroom")
@@ -95,52 +85,59 @@ export default function Chatting() {
         result.forEach((doc) => {
           setChatHost(doc.data().host);
           setChatMember(doc.data().member);
-        })
-      })
-  }
+        });
+      });
+  };
 
   const addMessage = () => {
     let newMessage = {
-      createdAt: new Date()
-      , message: document.querySelector('#inputMessage').value
-      , roomId: roomId
-      , uid: userUidShow
-    }
+      createdAt: new Date(),
+      message: document.querySelector("#inputMessage").value,
+      roomId: roomId,
+      uid: userUidShow,
+    };
 
-    db.collection("chatroom").doc(roomId).collection("messages").add(newMessage);
+    db.collection("chatroom")
+      .doc(roomId)
+      .collection("messages")
+      .add(newMessage);
 
     let latestInfo = {
-      host: chatHost
-      , lastestAt: newMessage.createdAt
-      , lastestMessage: newMessage.message
-      , member: chatMember
-      , roomId: roomId
-    }
+      host: chatHost,
+      lastestAt: newMessage.createdAt,
+      lastestMessage: newMessage.message,
+      member: chatMember,
+      roomId: roomId,
+    };
 
     db.collection("chatroom")
       .doc(roomId)
       .set(latestInfo)
-      .then(() => {
+      .then(() => {});
 
-      })
-
-    document.querySelector('#inputMessage').value = '';
-  }
+    document.querySelector("#inputMessage").value = "";
+  };
 
   useEffect(() => {
     call();
-
   }, [messages]);
-
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <header className={styles.chat_header}>
-          <button onClick={() => {
-            navigate(-1);
-          }} className={styles.back_btn}>&lt;&nbsp;&nbsp;</button>
-          <div className={styles.profile_img} style={{ backgroundImage: `url('${state.profileImage}')` }}></div>
+          <button
+            onClick={() => {
+              navigate(-1);
+            }}
+            className={styles.back_btn}
+          >
+            &lt;&nbsp;&nbsp;
+          </button>
+          <div
+            className={styles.profile_img}
+            style={{ backgroundImage: `url('${state.profileImage}')` }}
+          ></div>
           <span className={styles.chatting_name}>{state.name}</span>
         </header>
         <div className={styles.slide}>
@@ -148,15 +145,19 @@ export default function Chatting() {
             <li className={styles.date_box}>
               <span className={styles.date}>11.01</span>
             </li>
-            {
-              messages.map((list, idx) => (
-                <li key={idx}>
-                  <span className={list.uid == userUidShow ? styles.chat_myAnswer : styles.chat_yourAnswer}>
-                    {list.message}
-                  </span>
-                </li>
-              ))
-            }
+            {messages.map((list, idx) => (
+              <li key={idx}>
+                <span
+                  className={
+                    list.uid == userUidShow
+                      ? styles.chat_myAnswer
+                      : styles.chat_yourAnswer
+                  }
+                >
+                  {list.message}
+                </span>
+              </li>
+            ))}
           </ul>
           <footer>
             <input
@@ -165,7 +166,11 @@ export default function Chatting() {
               id='inputMessage'
               placeholder='Type here...'
             ></input>
-            <button type="submit" onClick={addMessage} className={styles.input_btn}>
+            <button
+              type='submit'
+              onClick={addMessage}
+              className={styles.input_btn}
+            >
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
           </footer>

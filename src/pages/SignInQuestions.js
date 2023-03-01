@@ -3,16 +3,13 @@ import React, { useState } from "react";
 import BackBtn from "../components/BackBtn";
 import styles from "./SignInQuestions.module.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 export default function SignInQuestions() {
   let navigate = useNavigate();
-  let dispatch = useDispatch();
 
   let [Q1_input, setQ1_input] = useState("");
   let [Q2_input, setQ2_input] = useState("");
   let [Q3_input, setQ3_input] = useState("");
-
 
   function signUpQ_checker(Q1, Q2, Q3) {
     if (Q1 == "20130613") {
@@ -68,7 +65,7 @@ export default function SignInQuestions() {
             onClick={() => {
               if (signUpQ_checker(Q1_input, Q2_input, Q3_input) == true) {
                 navigate("/signinregister");
-              } 
+              }
             }}
             className={styles.confirm_btn}
           >

@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./ProfileEdit.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import ProfileEditTop from "../components/ProfileEditTop";
+import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,7 +19,6 @@ import { db, storage } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/database";
-import Spinner from "../components/Spinner";
 
 export default function ProfileEdit() {
   let navigate = useNavigate();
@@ -39,6 +37,7 @@ export default function ProfileEdit() {
     listContent = <Spinner />;
   }
 
+  // state from redux
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
@@ -175,7 +174,9 @@ export default function ProfileEdit() {
                                     dispatch(setUserNameShow(userName));
                                     dispatch(setUserIntroShow(userIntro));
                                     if (fileNameShow) {
-                                      dispatch(setUserProfilePicShow(profileUrl));
+                                      dispatch(
+                                        setUserProfilePicShow(profileUrl)
+                                      );
                                     } else {
                                       profileUrl = userProfilePicShow;
                                     }
@@ -188,12 +189,9 @@ export default function ProfileEdit() {
                                       uid: userUidShow,
                                       profileImage: profileUrl,
                                     };
-                                    db.collection("user")
-                                      .doc(userUidShow)
-                                      .set({
-                                        userInfo,
-                                      });
-
+                                    db.collection("user").doc(userUidShow).set({
+                                      userInfo,
+                                    });
                                   });
                                   setLoading(false);
                                   navigate("/mainboard");

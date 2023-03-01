@@ -2,16 +2,20 @@
 
 import React, { Profiler } from "react";
 import styles from "./SignOutEdit.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import ProfileEditTop from "../components/ProfileEditTop";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import firebase from "firebase";
+import {
+  setUserUidShow,
+  setUserNameShow,
+  setUserCityShow,
+  setUserCountryShow,
+  setUserIntroShow,
+  setUserProfilePicShow,
+} from "../Store";
 import "firebase/firestore";
 import "firebase/auth";
-import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, setUserIntroShow, setUserProfilePicShow } from "../Store";
-
 
 export default function SignOutEdit() {
   let navigate = useNavigate();
@@ -40,12 +44,12 @@ export default function SignOutEdit() {
                 onClick={() => {
                   firebase.auth().signOut();
 
-                  dispatch(setUserUidShow(''));
-                  dispatch(setUserNameShow(''));
-                  dispatch(setUserCityShow(''));
-                  dispatch(setUserCountryShow(''));
-                  dispatch(setUserIntroShow(''));
-                  dispatch(setUserProfilePicShow(''));
+                  dispatch(setUserUidShow(""));
+                  dispatch(setUserNameShow(""));
+                  dispatch(setUserCityShow(""));
+                  dispatch(setUserCountryShow(""));
+                  dispatch(setUserIntroShow(""));
+                  dispatch(setUserProfilePicShow(""));
                   navigate("/");
                 }}
                 className={styles.signOut_btn}

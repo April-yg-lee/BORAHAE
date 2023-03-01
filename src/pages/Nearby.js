@@ -5,20 +5,25 @@ import styles from "./Nearby.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { increaseLike } from "../Store";
-import { db, storage } from "../index.js";
-import firebase from "firebase";
+import { db } from "../index.js";
 import "firebase/firestore";
 import "firebase/database";
-// import 'firebase/storage';
 
 export default function Nearby() {
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
+
   const [nearbyPostList, setNearbyPostList] = useState([]);
   const [trick, setTrick] = useState([]);
 
   let userUidShow = useSelector((state) => state.userUidShow);
+
+  let userNameShow = useSelector((state) => state.userNameShow);
+  let userCityShow = useSelector((state) => state.userCityShow);
+  let userCountryShow = useSelector((state) => state.userCountryShow);
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -39,20 +44,19 @@ export default function Nearby() {
 
           if (postObject.uid != userUidShow) {
             db.collection("user")
-              .where('userInfo.uid', '==', postObject.uid)
+              .where("userInfo.uid", "==", postObject.uid)
               .get()
               .then((info) => {
                 info.forEach((infoDoc) => {
-
                   postObject.userName = infoDoc.data().userInfo.name;
-                  postObject.profileImage = infoDoc.data().userInfo.profileImage;
+                  postObject.profileImage =
+                    infoDoc.data().userInfo.profileImage;
                   setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
-                })
-              })
+                });
+              });
 
             postArray.push(postObject);
           }
-
         });
         setNearbyPostList(postArray);
       });
@@ -63,17 +67,6 @@ export default function Nearby() {
   useEffect(() => {
     call();
   }, []);
-
-
-  let dispatch = useDispatch();
-
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-
-  let like = useSelector((state) => state.like);
-
-  let navigate = useNavigate();
 
   return (
     <div className={styles.container}>

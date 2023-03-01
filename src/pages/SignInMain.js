@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, setUserIntroShow, setUserProfilePicShow } from "../Store";
 import { db } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
-import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, setUserIntroShow, setUserProfilePicShow } from "../Store";
 
 export default function SignInMain() {
   let navigate = useNavigate();

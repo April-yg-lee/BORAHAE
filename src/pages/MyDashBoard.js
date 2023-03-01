@@ -1,30 +1,21 @@
 /*eslint-disable */
-import React, { Profiler, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import styles from "./MyDashBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faPenToSquare,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserNameShow,
-  changeName,
-  changeAge,
-  addCount,
-  increaseLike,
-} from "../Store";
+import { increaseLike } from "../Store";
 import { useNavigate } from "react-router-dom";
-import { db, storage } from "../index.js";
-import firebase from "firebase";
+import { db } from "../index.js";
 import "firebase/firestore";
 import "firebase/database";
 
 export default function MyDashBoard() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
+  
+  let [postList, setPostList] = useState([]);
 
   let userUidShow = useSelector((state) => state.userUidShow);
   let userNameShow = useSelector((state) => state.userNameShow);
@@ -33,7 +24,6 @@ export default function MyDashBoard() {
   let userIntroShow = useSelector((state) => state.userIntroShow);
   let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
-  let [postList, setPostList] = useState([]);
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -111,7 +101,9 @@ export default function MyDashBoard() {
                   <div className={styles.article_title}>
                     <div
                       className={styles.article_profile_img}
-                      style={{ backgroundImage: `url('${userProfilePicShow}')` }}
+                      style={{
+                        backgroundImage: `url('${userProfilePicShow}')`,
+                      }}
                     ></div>
                     <span className={styles.article_profile_name}>
                       {userNameShow}

@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "../pages/Myinfo.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function ProfileEditTop() {
-  let dispatch = useDispatch();
   let userNameShow = useSelector((state) => state.userNameShow);
   let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
