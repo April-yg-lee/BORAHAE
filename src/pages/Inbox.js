@@ -17,13 +17,12 @@ export default function SignInQuestions() {
 
   const db = firebase.firestore();
   const call = () => {
-    let tmpList = [];
     db.collection("chatroom")
-      .where('member', 'array-contains', userUidShow)
-      .orderBy('lastestAt', 'desc')
-      .get()
-      .then((result) => {
-        result.forEach((doc) => {
+    .where('member', 'array-contains', userUidShow)
+    .orderBy('lastestAt', 'desc')
+    .onSnapshot((result) => {
+      let tmpList = [];
+      result.forEach((doc) => {
           let tmp = doc.data();
 
           db.collection("user")
@@ -78,11 +77,13 @@ export default function SignInQuestions() {
               chatList.map((list, idx) => (
                 <article
                   onClick={() => {
-                    navigate("/chatting", { state: { 
-                      roomId: list.roomId
-                      , name: list.name
-                      , profileImage: list.profileImage
-                    }});
+                    navigate("/chatting", {
+                      state: {
+                        roomId: list.roomId
+                        , name: list.name
+                        , profileImage: list.profileImage
+                      }
+                    });
                   }}
                   className={styles.chat_each}
                   key={idx}

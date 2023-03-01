@@ -22,10 +22,12 @@ export default function Chatting() {
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
   const [roomId, setRoomId] = useState('');
+  const [chatHost, setChatHost] = useState('');
+  const [chatMember, setChatMember] = useState([]);
+
 
   const db = firebase.firestore();
   let tmpList = [];
-  console.log('roomID 잇나? : ' + state.roomId);
 
   const call = () => {
 
@@ -41,27 +43,63 @@ export default function Chatting() {
           setMessages(tmpList);
         })
 
+      getChatRoomInfo(roomId);
+
     } else {
 
-      const newRoomId = uuidv4();
-      const newRoomData = {
-        host: userUidShow
-        , lastestAt: new Date()
-        , lastestMessage: ''
-        , member: [userUidShow, state.uid]
-        , roomId: newRoomId
-      }
-      db.collection("chatroom").doc(newRoomId)
-        .set(newRoomData)
-        .then(() => {
-          setRoomId(newRoomId);
+      db.collection("chatroom")
+        .where('member', "array-contains", userUidShow)
+        .get()
+        .then((result) => {
 
-        });
+          if (result.empty) {
+            createNewChatRoom();
+          }
+
+          result.forEach((doc) => {
+
+            let member = doc.data().member;
+            if (member.includes(userUidShow) && member.includes(state.uid)) {
+              console.log('이미 방 잇음');
+              console.log('로직 추가 해야 됨');
+            } else {
+              createNewChatRoom();
+            }
+          })
+        })
     }
   }
 
+  const createNewChatRoom = () => {
+    const newRoomId = uuidv4();
+    const newRoomData = {
+      host: userUidShow
+      , lastestAt: new Date()
+      , lastestMessage: ''
+      , member: [userUidShow, state.uid]
+      , roomId: newRoomId
+    }
+    db.collection("chatroom").doc(newRoomId)
+      .set(newRoomData)
+      .then(() => {
+        setRoomId(newRoomId);
+        getChatRoomInfo(newRoomId);
+      });
+  }
+
+  const getChatRoomInfo = (roomId) => {
+    db.collection("chatroom")
+      .where("roomId", "==", roomId)
+      .get()
+      .then((result) => {
+        result.forEach((doc) => {
+          setChatHost(doc.data().host);
+          setChatMember(doc.data().member);
+        })
+      })
+  }
+
   const addMessage = () => {
-    console.log('입력시 roomId : ' + roomId);
     let newMessage = {
       createdAt: new Date()
       , message: document.querySelector('#inputMessage').value
@@ -71,7 +109,20 @@ export default function Chatting() {
 
     db.collection("chatroom").doc(roomId).collection("messages").add(newMessage);
 
-    
+    let latestInfo = {
+      host: chatHost
+      , lastestAt: newMessage.createdAt
+      , lastestMessage: newMessage.message
+      , member: chatMember
+      , roomId: roomId
+    }
+
+    db.collection("chatroom")
+      .doc(roomId)
+      .set(latestInfo)
+      .then(() => {
+
+      })
 
     document.querySelector('#inputMessage').value = '';
   }
@@ -79,7 +130,7 @@ export default function Chatting() {
   useEffect(() => {
     call();
 
-  }, []);
+  }, [messages]);
 
 
   return (
