@@ -96,7 +96,6 @@ export default function MainBoard() {
             });
 
           postArray.push(postObject);
-          // console.log("Post Array: " + postArray);
         });
         setPostList(postArray);
       });
@@ -151,7 +150,6 @@ export default function MainBoard() {
     call();
   }, [trickLikes]);
 
-  // console.log("data : " + postList);
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

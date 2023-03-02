@@ -62,7 +62,6 @@ export default function Nearby() {
       });
   };
 
-  // console.log(nearbyPostList)
 
   useEffect(() => {
     call();

@@ -11,7 +11,7 @@ export default function SignInQuestions() {
   let [Q2_input, setQ2_input] = useState("");
   let [Q3_input, setQ3_input] = useState("");
 
-  function signUpQ_checker(Q1, Q2, Q3) {
+  let signUpQ_checker = (Q1, Q2, Q3) => {
     if (Q1 == "20130613") {
       if (Q2 == "RM" || Q2 == "Rap Monster") {
         if (Q3 == "7") {

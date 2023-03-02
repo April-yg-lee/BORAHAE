@@ -11,6 +11,7 @@ import firebase from "firebase/app";
 
 export default function Chatting() {
   let navigate = useNavigate();
+  
   const userUidShow = useSelector((state) => state.userUidShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);

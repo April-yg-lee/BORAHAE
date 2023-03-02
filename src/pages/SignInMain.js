@@ -4,7 +4,14 @@ import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserUidShow, setUserNameShow, setUserCityShow, setUserCountryShow, setUserIntroShow, setUserProfilePicShow } from "../Store";
+import {
+  setUserUidShow,
+  setUserNameShow,
+  setUserCityShow,
+  setUserCountryShow,
+  setUserIntroShow,
+  setUserProfilePicShow,
+} from "../Store";
 import { db } from "../index.js";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -16,7 +23,6 @@ export default function SignInMain() {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
 
   return (
     <div className={styles.container}>
@@ -54,22 +60,26 @@ export default function SignInMain() {
               // user 가 로그인 되어 있는지 확인하는 코드
               firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
-                  // console.log(user.uid);
-                  // console.log(user.displayName);
+                  
                   dispatch(setUserNameShow(user.displayName));
                   // get data from firebase
                   db.collection("user")
-                    .where('userInfo.uid', '==', user.uid)
+                    .where("userInfo.uid", "==", user.uid)
                     .get()
                     .then((result) => {
                       result.forEach((doc) => {
-                        // console.log(doc.data());
                         dispatch(setUserUidShow(doc.data().userInfo.uid));
                         dispatch(setUserNameShow(doc.data().userInfo.name));
                         dispatch(setUserCityShow(doc.data().userInfo.city));
-                        dispatch(setUserCountryShow(doc.data().userInfo.country));
+                        dispatch(
+                          setUserCountryShow(doc.data().userInfo.country)
+                        );
                         dispatch(setUserIntroShow(doc.data().userInfo.intro));
-                        dispatch(setUserProfilePicShow(doc.data().userInfo.profileImage));
+                        dispatch(
+                          setUserProfilePicShow(
+                            doc.data().userInfo.profileImage
+                          )
+                        );
                       });
                     });
                 }

@@ -30,7 +30,7 @@ export default function SignInRegister() {
     listContent = <Spinner />;
   }
 
-  function signUpRg_checker(name, email, pw, city, country, intro) {
+  let signUpRg_checker = (name, email, pw, city, country, intro) => {
     if (name == "" && !isNaN(name)) {
       return false;
     }
@@ -55,6 +55,47 @@ export default function SignInRegister() {
       return false;
     }
     return true;
+  }
+
+  let uploadUserInfoForSignUp = () => {
+    let imgCreateDate = new Date();
+    let storageRef = storage.ref();
+    let savePath = storageRef.child(
+      "profileImage/" + "profile_" + imgCreateDate
+    );
+    let upload = savePath.put(file);
+
+    // firebase code
+    upload.on(
+      "state_changed",
+      null,
+      (error) => {
+        console.error("실패사유는", error);
+      },
+      () => {
+        upload.snapshot.ref.getDownloadURL().then((profileUrl) => {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(userEmail, userPassword)
+            .then((result) => {
+              result.user.updateProfile({
+                displayName: userName,
+              });
+              let userInfo = {
+                name: userName,
+                city: userCity,
+                country: userCountry,
+                intro: userIntro,
+                uid: result.user.uid,
+                profileImage: profileUrl,
+              };
+              db.collection("user").doc(result.user.uid).set({ userInfo });
+              setLoading(false);
+              navigate("/");
+            });
+        });
+      }
+    );
   }
 
   return (
@@ -161,54 +202,7 @@ export default function SignInRegister() {
                   ) == true
                 ) {
                   setLoading(true);
-                  let imgCreateDate = new Date();
-                  let storageRef = storage.ref();
-                  let savePath = storageRef.child(
-                    "profileImage/" + "profile_" + imgCreateDate
-                  );
-                  let upload = savePath.put(file);
-
-                  // firebase code
-                  upload.on(
-                    "state_changed",
-                    null,
-                    (error) => {
-                      console.error("실패사유는", error);
-                    },
-                    () => {
-                      upload.snapshot.ref
-                        .getDownloadURL()
-                        .then((profileUrl) => {
-                          console.log(profileUrl);
-
-                          firebase
-                            .auth()
-                            .createUserWithEmailAndPassword(
-                              userEmail,
-                              userPassword
-                            )
-                            .then((result) => {
-                              result.user.updateProfile({
-                                displayName: userName,
-                              });
-                              let userInfo = {
-                                name: userName,
-                                // email: userEmail,
-                                city: userCity,
-                                country: userCountry,
-                                intro: userIntro,
-                                uid: result.user.uid,
-                                profileImage: profileUrl,
-                              };
-                              db.collection("user")
-                                .doc(result.user.uid)
-                                .set({ userInfo });
-                              setLoading(false);
-                              navigate("/");
-                            });
-                        });
-                    }
-                  );
+                  uploadUserInfoForSignUp();
                 }
               }}
               className={styles.confirm_btn}

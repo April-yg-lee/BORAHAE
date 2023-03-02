@@ -40,7 +40,6 @@ export default function MyDashBoard() {
       .then((result) => {
         result.forEach((doc) => {
           postArray.push(doc.data());
-          // console.log("Post Array: " + postArray);
         });
         setPostList(postArray);
       });

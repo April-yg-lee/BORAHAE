@@ -30,7 +30,7 @@ export default function ProfileEdit() {
   const [userCountry, setUserCountry] = useState("");
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
-  let [loading, setLoading] = useState(true);
+  let [loading, setLoading] = useState(false);
 
   let listContent;
   if (loading) {
@@ -52,6 +52,66 @@ export default function ProfileEdit() {
     setUserCity(userCityShow);
     setFile(userProfilePicShow);
   }, []);
+
+  let updateUserInfo = () => {
+    let imgCreateDate = new Date();
+    let storageRef = storage.ref();
+    let savePath = storageRef.child(
+      "profileImage/" + "profile_" + imgCreateDate
+    );
+    let upload = savePath.put(file);
+
+    // firebase code
+    upload.on(
+      "state_changed",
+      null,
+
+      //에러시 동작하는 함수
+      (error) => {
+        console.error("실패사유는", error);
+      },
+      // 성공시 동작하는 함수
+      () => {
+        upload.snapshot.ref.getDownloadURL().then((profileUrl) => {
+          firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              db.collection("user")
+                .where("userInfo.uid", "==", userUidShow)
+                .get()
+                .then((result) => {
+                  result.forEach((doc) => {
+                    dispatch(setUserUidShow(doc.data().userInfo.uid));
+                    dispatch(setUserCityShow(userCity));
+                    dispatch(setUserCountryShow(userCountry));
+                    dispatch(setUserNameShow(userName));
+                    dispatch(setUserIntroShow(userIntro));
+                    if (fileNameShow) {
+                      dispatch(setUserProfilePicShow(profileUrl));
+                    } else {
+                      profileUrl = userProfilePicShow;
+                    }
+
+                    let userInfo = {
+                      name: userName,
+                      intro: userIntro,
+                      city: userCity,
+                      country: userCountry,
+                      uid: userUidShow,
+                      profileImage: profileUrl,
+                    };
+                    db.collection("user").doc(userUidShow).set({
+                      userInfo,
+                    });
+                  });
+                  setLoading(false);
+                  navigate("/mainboard");
+                });
+            }
+          });
+        });
+      }
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -138,69 +198,7 @@ export default function ProfileEdit() {
               <button
                 onClick={() => {
                   setLoading(true);
-                  let imgCreateDate = new Date();
-                  let storageRef = storage.ref();
-                  let savePath = storageRef.child(
-                    "profileImage/" + "profile_" + imgCreateDate
-                  );
-                  let upload = savePath.put(file);
-
-                  // firebase code
-                  upload.on(
-                    "state_changed",
-                    null,
-
-                    //에러시 동작하는 함수
-                    (error) => {
-                      console.error("실패사유는", error);
-                    },
-                    // 성공시 동작하는 함수
-                    () => {
-                      upload.snapshot.ref
-                        .getDownloadURL()
-                        .then((profileUrl) => {
-                          firebase.auth().onAuthStateChanged((user) => {
-                            if (user) {
-                              db.collection("user")
-                                .where("userInfo.uid", "==", userUidShow)
-                                .get()
-                                .then((result) => {
-                                  result.forEach((doc) => {
-                                    dispatch(
-                                      setUserUidShow(doc.data().userInfo.uid)
-                                    );
-                                    dispatch(setUserCityShow(userCity));
-                                    dispatch(setUserCountryShow(userCountry));
-                                    dispatch(setUserNameShow(userName));
-                                    dispatch(setUserIntroShow(userIntro));
-                                    if (fileNameShow) {
-                                      dispatch(
-                                        setUserProfilePicShow(profileUrl)
-                                      );
-                                    } else {
-                                      profileUrl = userProfilePicShow;
-                                    }
-
-                                    let userInfo = {
-                                      name: userName,
-                                      intro: userIntro,
-                                      city: userCity,
-                                      country: userCountry,
-                                      uid: userUidShow,
-                                      profileImage: profileUrl,
-                                    };
-                                    db.collection("user").doc(userUidShow).set({
-                                      userInfo,
-                                    });
-                                  });
-                                  setLoading(false);
-                                  navigate("/mainboard");
-                                });
-                            }
-                          });
-                        });
-                    }
-                  );
+                  updateUserInfo();
                 }}
                 className={styles.save_btn}
               >

@@ -1,7 +1,7 @@
 /*eslint-disable */
 import React from "react";
 import "./App.css";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignInMain from "./pages/SignInMain";
 import SignInQuestions from "./pages/SignInQuestions";
 import SignInRegister from "./pages/SignInRegister";
@@ -23,7 +23,6 @@ import "firebase/firestore";
 
 
 function App() {
-  let navigate = useNavigate();
 
   return (
     <>

@@ -76,24 +76,13 @@ export default function PostingPage() {
   };
 
   const formattedTimestamp = () => {
-    const convertDate = new Date();
-    console.log(`convertDate: ${convertDate}`);
-    const ISOdate1 = convertDate.toISOString();
-    const ISOdate2 = convertDate.toISOString().split("T");
-    const ISOdate3 = convertDate.toISOString().split("T")[0];
-    console.log(`ISOdate1: ${ISOdate1}`);
-    console.log(`ISOdate2: ${ISOdate2}`);
-    console.log(`ISOdate3: ${ISOdate3}`);
-    // const dateForSubtract = new Date(Date.parse(ISOdate) - 24 * 60 * 60 * 1000);
-    // console.log(`dateForSubtract: ${dateForSubtract}`)
-    // const currentDate = dateForSubtract.toLocaleDateString("sv", {
-    //   timeZone: "UTC",
-    // });
-    // console.log(`currentDate: ${currentDate}`)
-    const currentTime = convertDate.toTimeString().split(" ")[0];
-    console.log(`currentTime: ${currentTime}`);
-
-    return `${ISOdate3} ${currentTime}`;
+    const dateObj = new Date();
+    const month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
+    const date = ('0' + dateObj.getDate()).slice(-2);
+    const year = dateObj.getFullYear();
+    const currentDate = year + '-' + month + '-' + date;
+    const currentTime = dateObj.toTimeString().split(" ")[0];
+    return `${currentDate} ${currentTime}`;
   };
 
   return (
