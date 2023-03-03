@@ -50,7 +50,7 @@ export default function SignInMain() {
         </section>
         <section className={styles.signin_btn_box}>
           <button
-            onClick={() => {
+            onClick={() => { 
               firebase
                 .auth()
                 .signInWithEmailAndPassword(userEmail, userPassword)

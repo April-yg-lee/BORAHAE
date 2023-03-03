@@ -1,4 +1,6 @@
 /*eslint-disable */
+
+
 import React, { useState } from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +32,7 @@ export default function SignInRegister() {
     listContent = <Spinner />;
   }
 
+  
   let signUpRg_checker = (name, email, pw, city, country, intro) => {
     if (name == "" && !isNaN(name)) {
       return false;
@@ -55,7 +58,7 @@ export default function SignInRegister() {
       return false;
     }
     return true;
-  }
+  };
 
   let uploadUserInfoForSignUp = () => {
     let imgCreateDate = new Date();
@@ -96,7 +99,7 @@ export default function SignInRegister() {
         });
       }
     );
-  }
+  };
 
   return (
     <>
