@@ -18,7 +18,7 @@ import MyDashBoard from './pages/MyDashBoard';
 import Nearby from './pages/Nearby';
 import firebase from "firebase/app";
 import "firebase/firestore";
-import 'react-notifications/lib/notifications.css';
+
 
 
 function App() {

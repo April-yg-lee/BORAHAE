@@ -88,7 +88,7 @@
   font-weight: 300;
 }
 
-.post_section > input {
+.post_section > textarea {
   margin: 0% 5%;
   padding: 3%;
   width: 325px;

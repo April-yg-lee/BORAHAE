@@ -30,6 +30,7 @@ export default function PostingPage() {
     listContent = <Spinner />;
   }
 
+
   const addPost = () => {
     setLoading(true);
     let imgCreateDate = new Date();
@@ -112,13 +113,13 @@ export default function PostingPage() {
               </div>
               <section className={styles.post_section}>
                 <h4>Post your today :&#41; </h4>
-                <input
+                <textarea
                   type='text'
                   placeholder='Type here...'
                   onChange={(e) => {
                     setContent(e.target.value);
                   }}
-                ></input>
+                ></textarea>
                 <div className={styles.btn_container}>
                   <div className={styles.button_wrap}>
                     <label className={styles.button} htmlFor='upload'>

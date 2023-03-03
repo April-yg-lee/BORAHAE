@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .container {
@@ -99,28 +100,33 @@
 .chat_myAnswer {
   width: 70%;
   height: 5%;
-  line-height: 20px;
   border-radius: 20px 20px 0px 20px;
   background-color: rgba(81, 51, 245, 1);
   text-align: center;
   line-height: 2;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 2%;
+  margin-bottom: 1%;
   color: white;
   float: right;
   transform: translate(-20px, 0px);
+  font-family: 'Caveat Brush', cursive;
+
 }
 
 .chat_yourAnswer {
   width: 70%;
   height: 5%;
-  line-height: 20px;
   border-radius: 20px 20px 20px 0px;
   text-align: center;
   border: 1px solid rgba(81, 51, 245, 1);
   line-height: 2;
   float: left;
+  margin-top: 2%;
+  margin-bottom: 1%;
   transform: translate(20px, 0px);
+  font-family: 'Caveat Brush', cursive;
+
+  
 }
 
 .date_box {
@@ -158,6 +164,8 @@ footer {
   text-align: center;
   font-family: Arial;
   border: none;
+  font-family: 'Caveat Brush', cursive;
+
 }
 
 .input_btn {

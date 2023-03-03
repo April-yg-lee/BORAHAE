@@ -19,7 +19,7 @@ export default function SignInQuestions() {
         }
       }
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
