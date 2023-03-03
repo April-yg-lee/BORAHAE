@@ -5,8 +5,10 @@ import styles from "./Nearby.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
+import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { increaseLike } from "../Store";
 import { db } from "../index.js";
 import "firebase/firestore";
@@ -18,12 +20,19 @@ export default function Nearby() {
 
   const [nearbyPostList, setNearbyPostList] = useState([]);
   const [trick, setTrick] = useState([]);
+  const [trickLikes, setTrickLikes] = useState("");
+  let [loading, setLoading] = useState(false);
 
   let userUidShow = useSelector((state) => state.userUidShow);
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userCityShow = useSelector((state) => state.userCityShow);
   let userCountryShow = useSelector((state) => state.userCountryShow);
+
+  let heartPosition;
+  if (loading) {
+    heartPosition = <HeartSpinner />;
+  }
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -55,6 +64,14 @@ export default function Nearby() {
                 });
               });
 
+            db.collection("post")
+              .doc(postObject.postID)
+              .collection("likes")
+              .get()
+              .then((counts) => {
+                postObject.likes = counts.size;
+              });
+
             postArray.push(postObject);
           }
         });
@@ -62,10 +79,53 @@ export default function Nearby() {
       });
   };
 
+  const toggleLikes = (postId) => {
+    setLoading(true);
+    db.collection("post")
+      .doc(postId)
+      .collection("likes")
+      .where("uid", "==", userUidShow)
+      .get()
+      .then((result) => {
+        if (result.empty) {
+          let likesData = {
+            uid: userUidShow,
+            likeId: uuidv4(),
+          };
+          db.collection("post")
+            .doc(postId)
+            .collection("likes")
+            .doc(likesData.likeId)
+            .set(likesData)
+            .then(() => {
+              setTrickLikes(`${postId}add`);
+              setLoading(false);
+            });
+        } else {
+          result.forEach((doc) => {
+            let dataUid = doc.data().uid;
+            let dataLikeId = doc.data().likeId;
+
+            if (dataUid) {
+              db.collection("post")
+                .doc(postId)
+                .collection("likes")
+                .doc(dataLikeId)
+                .delete()
+                .then(() => {
+                  setLoading(false);
+                  setTrickLikes(`${postId}remove`);
+                });
+            }
+          });
+        }
+      });
+  };
+
 
   useEffect(() => {
     call();
-  }, []);
+  }, [trickLikes]);
 
   return (
     <div className={styles.container}>
@@ -121,6 +181,7 @@ export default function Nearby() {
             </span>
             <span className={styles.option_nearby}>Nearby</span>
           </div>
+          {heartPosition}
 
           {nearbyPostList.map(function (a, i) {
             return (
@@ -155,7 +216,7 @@ export default function Nearby() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(increaseLike());
+                          toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
                       >

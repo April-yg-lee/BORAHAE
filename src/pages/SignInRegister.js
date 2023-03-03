@@ -32,7 +32,7 @@ export default function SignInRegister() {
     listContent = <Spinner />;
   }
 
-  
+
   let signUpRg_checker = (name, email, pw, city, country, intro) => {
     if (name == "" && !isNaN(name)) {
       return false;
@@ -92,9 +92,11 @@ export default function SignInRegister() {
                 uid: result.user.uid,
                 profileImage: profileUrl,
               };
-              db.collection("user").doc(result.user.uid).set({ userInfo });
-              setLoading(false);
-              navigate("/");
+              db.collection("user").doc(result.user.uid).set({ userInfo })
+                .then(() => {
+                  setLoading(false);
+                  navigate("/");
+                });
             });
         });
       }
