@@ -1,5 +1,5 @@
 /*eslint-disable */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
@@ -23,12 +23,22 @@ export default function SignInMain() {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [warning, setWarning] = useState(false);
+
+  function WarningBox() {
+    return (
+      <div className={styles.warning}>
+        <h4>Invalid useremail or Password</h4>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.signin_contents}>
         <LogoTitle></LogoTitle>
         <section className={styles.input_box}>
+          {warning == true ? <WarningBox></WarningBox> : null}
           <input
             onChange={(e) => {
               setUserEmail(e.target.value);
@@ -50,17 +60,19 @@ export default function SignInMain() {
         </section>
         <section className={styles.signin_btn_box}>
           <button
-            onClick={() => { 
+            onClick={() => {
               firebase
                 .auth()
                 .signInWithEmailAndPassword(userEmail, userPassword)
                 .then((result) => {
-                  navigate("/mainboard");
+                  setWarning(false);
+                })
+                .catch((err) => {
+                  setWarning(true);
                 });
               // user 가 로그인 되어 있는지 확인하는 코드
               firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
-                  
                   dispatch(setUserNameShow(user.displayName));
                   // get data from firebase
                   db.collection("user")
@@ -80,6 +92,7 @@ export default function SignInMain() {
                             doc.data().userInfo.profileImage
                           )
                         );
+                        navigate("/mainboard");
                       });
                     });
                 }
@@ -99,7 +112,7 @@ export default function SignInMain() {
           </button>
         </section>
         <section className={styles.othermode_box}>
-          <h4>Other modes</h4>
+          <h4>BORAHAE &copy; 2023</h4>
         </section>
       </div>
     </div>
