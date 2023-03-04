@@ -7,6 +7,8 @@ import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { increaseLike } from "../Store";
 import { useNavigate } from "react-router-dom";
+import HeartSpinner from "../components/HeartSpinner";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../index.js";
 import "firebase/firestore";
 import "firebase/database";
@@ -14,7 +16,10 @@ import "firebase/database";
 export default function MyDashBoard() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
-  
+  let [loading, setLoading] = useState(false);
+  const [trick, setTrick] = useState([]);
+  const [trickLikes, setTrickLikes] = useState("");
+
   let [postList, setPostList] = useState([]);
 
   let userUidShow = useSelector((state) => state.userUidShow);
@@ -24,6 +29,10 @@ export default function MyDashBoard() {
   let userIntroShow = useSelector((state) => state.userIntroShow);
   let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
+  let heartPosition;
+  if (loading) {
+    heartPosition = <HeartSpinner />;
+  }
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -39,15 +48,69 @@ export default function MyDashBoard() {
       .get()
       .then((result) => {
         result.forEach((doc) => {
-          postArray.push(doc.data());
+          let postObject = doc.data();
+
+          db.collection("post")
+            .doc(postObject.postID)
+            .collection("likes")
+            .get()
+            .then((counts) => {
+              postObject.likes = counts.size;
+              setTrick(postObject);
+            });
+
+          postArray.push(postObject);
         });
         setPostList(postArray);
       });
   };
 
+  const toggleLikes = (postId) => {
+    setLoading(true);
+    db.collection("post")
+      .doc(postId)
+      .collection("likes")
+      .where("uid", "==", userUidShow)
+      .get()
+      .then((result) => {
+        if (result.empty) {
+          let likesData = {
+            uid: userUidShow,
+            likeId: uuidv4(),
+          };
+          db.collection("post")
+            .doc(postId)
+            .collection("likes")
+            .doc(likesData.likeId)
+            .set(likesData)
+            .then(() => {
+              setTrickLikes(`${postId}add`);
+              setLoading(false);
+            });
+        } else {
+          result.forEach((doc) => {
+            let dataUid = doc.data().uid;
+            let dataLikeId = doc.data().likeId;
+
+            if (dataUid) {
+              db.collection("post")
+                .doc(postId)
+                .collection("likes")
+                .doc(dataLikeId)
+                .delete()
+                .then(() => {
+                  setLoading(false);
+                  setTrickLikes(`${postId}remove`);
+                });
+            }
+          });
+        }
+      });
+  };
+
   useEffect(() => {
     call();
-  }, []);
+  }, [trickLikes]);
 
   return (
     <div className={styles.container}>
@@ -93,6 +156,8 @@ export default function MyDashBoard() {
           <div className={styles.mainBoard_option}>
             <span className={styles.option_all}>Recent</span>
           </div>
+          {heartPosition}
+
           {postList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
@@ -139,7 +204,7 @@ export default function MyDashBoard() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(increaseLike());
+                          toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
                       >

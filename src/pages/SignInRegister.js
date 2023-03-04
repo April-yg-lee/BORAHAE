@@ -106,9 +106,11 @@ export default function SignInRegister() {
                 uid: result.user.uid,
                 profileImage: profileUrl,
               };
-              db.collection("user").doc(result.user.uid).set({ userInfo });
-              setLoading(false);
-              navigate("/");
+              db.collection("user").doc(result.user.uid).set({ userInfo })
+                .then(() => {
+                  setLoading(false);
+                  navigate("/");
+                });
             });
         });
       }

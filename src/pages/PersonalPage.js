@@ -5,7 +5,10 @@ import styles from "./PersonalPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { db } from "../index.js";
+import HeartSpinner from "../components/HeartSpinner";
+import { v4 as uuidv4 } from "uuid";
 import "firebase/firestore";
 import "firebase/database";
 import "firebase/storage";
@@ -16,6 +19,16 @@ export default function PersonalPage() {
 
   const [userInfo, setUserInfo] = useState({});
   let [postList, setPostList] = useState([]);
+  const [trick, setTrick] = useState([]);
+  const [trickLikes, setTrickLikes] = useState("");
+  let [loading, setLoading] = useState(false);
+
+  let userUidShow = useSelector((state) => state.userUidShow);
+
+  let heartPosition;
+  if (loading) {
+    heartPosition = <HeartSpinner />;
+  }
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -35,11 +48,6 @@ export default function PersonalPage() {
     }
   };
 
-  useEffect(() => {
-    call();
-    personalPagecall();
-  }, []);
-
   // get Posts data from firebase
   let personalPagecall = () => {
     let postArray = [];
@@ -50,12 +58,71 @@ export default function PersonalPage() {
         .get()
         .then((result) => {
           result.forEach((doc) => {
-            postArray.push(doc.data());
+            let postObject = doc.data();
+
+            db.collection("post")
+              .doc(postObject.postID)
+              .collection("likes")
+              .get()
+              .then((counts) => {
+                postObject.likes = counts.size;
+                setTrick(postObject);
+              });
+
+            postArray.push(postObject);
           });
           setPostList(postArray);
         });
     }
   };
+
+  const toggleLikes = (postId) => {
+    setLoading(true);
+    db.collection("post")
+      .doc(postId)
+      .collection("likes")
+      .where("uid", "==", userUidShow)
+      .get()
+      .then((result) => {
+        if (result.empty) {
+          let likesData = {
+            uid: userUidShow,
+            likeId: uuidv4(),
+          };
+          db.collection("post")
+            .doc(postId)
+            .collection("likes")
+            .doc(likesData.likeId)
+            .set(likesData)
+            .then(() => {
+              setTrickLikes(`${postId}add`);
+              setLoading(false);
+            });
+        } else {
+          result.forEach((doc) => {
+            let dataUid = doc.data().uid;
+            let dataLikeId = doc.data().likeId;
+
+            if (dataUid) {
+              db.collection("post")
+                .doc(postId)
+                .collection("likes")
+                .doc(dataLikeId)
+                .delete()
+                .then(() => {
+                  setLoading(false);
+                  setTrickLikes(`${postId}remove`);
+                });
+            }
+          });
+        }
+      });
+  };
+
+  useEffect(() => {
+    call();
+    personalPagecall();
+  }, [trickLikes]);
 
   return (
     <div className={styles.container}>
@@ -109,6 +176,8 @@ export default function PersonalPage() {
           <div className={styles.mainBoard_option}>
             <span className={styles.option_all}>Recent</span>
           </div>
+          {heartPosition}
+
           {postList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>
@@ -136,7 +205,7 @@ export default function PersonalPage() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(increaseLike());
+                          toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
                       >

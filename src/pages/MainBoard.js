@@ -7,7 +7,7 @@ import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../index.js";
 import "firebase/firestore";
@@ -24,7 +24,6 @@ export default function MainBoard() {
 
   let userNameShow = useSelector((state) => state.userNameShow);
   let userUidShow = useSelector((state) => state.userUidShow);
-  let like = useSelector((state) => state.like);
 
   let heartPosition;
   if (loading) {
@@ -120,8 +119,7 @@ export default function MainBoard() {
             .doc(likesData.likeId)
             .set(likesData)
             .then(() => {
-              console.log("like 추가함");
-              setTrickLikes("add");
+              setTrickLikes(`${postId}add`);
               setLoading(false);
             });
         } else {
@@ -136,9 +134,8 @@ export default function MainBoard() {
                 .doc(dataLikeId)
                 .delete()
                 .then(() => {
-                  console.log("like 제거함");
                   setLoading(false);
-                  setTrickLikes("remove");
+                  setTrickLikes(`${postId}remove`);
                 });
             }
           });
