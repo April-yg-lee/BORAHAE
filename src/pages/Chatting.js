@@ -11,7 +11,7 @@ import firebase from "firebase/app";
 
 export default function Chatting() {
   let navigate = useNavigate();
-  
+
   const userUidShow = useSelector((state) => state.userUidShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
@@ -20,17 +20,22 @@ export default function Chatting() {
   const [chatMember, setChatMember] = useState([]);
 
   const db = firebase.firestore();
-  let tmpList = [];
+
+  if (state.roomId) {
+    setRoomId(state.roomId);
+    state.roomId = "";
+  }
 
   const call = () => {
-    if (state.roomId) {
-      setRoomId(state.roomId);
+
+    if (roomId) {
       db.collection("chatroom")
-        .doc(state.roomId)
+        .doc(roomId)
         .collection("messages")
         .where("roomId", "==", roomId)
         .orderBy("createdAt", "asc")
         .onSnapshot((result) => {
+          let tmpList = [];
           result.forEach((doc) => {
             tmpList.push(doc.data());
           });
@@ -40,22 +45,18 @@ export default function Chatting() {
       getChatRoomInfo(roomId);
     } else {
       db.collection("chatroom")
-        .where("member", "array-contains", userUidShow)
+        .where("member", "array-contains", userUidShow && state.uid)
         .get()
         .then((result) => {
           if (result.empty) {
             createNewChatRoom();
+          } else {
+
+            result.forEach((doc) => {
+              setRoomId(doc.data().roomId);
+            });
           }
 
-          result.forEach((doc) => {
-            let member = doc.data().member;
-            if (member.includes(userUidShow) && member.includes(state.uid)) {
-              console.log("이미 방 잇음");
-              console.log("로직 추가 해야 됨");
-            } else {
-              createNewChatRoom();
-            }
-          });
         });
     }
   };
@@ -114,14 +115,14 @@ export default function Chatting() {
     db.collection("chatroom")
       .doc(roomId)
       .set(latestInfo)
-      .then(() => {});
+      .then(() => { });
 
     document.querySelector("#inputMessage").value = "";
   };
 
   useEffect(() => {
     call();
-  }, [messages]);
+  }, [roomId]);
 
   return (
     <div className={styles.container}>
