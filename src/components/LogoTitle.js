@@ -7,7 +7,7 @@ export default function LogoTitle() {
   return (
     <>
       <FontAwesomeIcon icon={faHeart} className={styles.b_logo} />
-      <h2 className={styles.b_title}>BORAHAE</h2>
+      <h2 className={styles.b_title}>BORAHEY</h2>
     </>
   );
 }
