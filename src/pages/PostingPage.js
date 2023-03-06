@@ -51,7 +51,6 @@ export default function PostingPage() {
       // 성공시 동작하는 함수
       () => {
         upload.snapshot.ref.getDownloadURL().then((postingUrl) => {
-          console.log("업로드된 경로는", postingUrl);
           let saveData = {
             content: content,
             date: formattedTimestamp(),

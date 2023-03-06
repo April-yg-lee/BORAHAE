@@ -112,7 +112,7 @@ export default function SignInMain() {
           </button>
         </section>
         <section className={styles.othermode_box}>
-          <h4>BORAHAE &copy; 2023</h4>
+          <h4>BORAHEY &copy; 2023</h4>
         </section>
       </div>
     </div>
