@@ -124,7 +124,7 @@ export default function Chatting() {
       .then(() => { });
 
 
-    new Notification(userNameShow, { body: newMessage.message });
+    // new Notification(userNameShow, { body: newMessage.message });
     document.querySelector("#inputMessage").value = "";
 
   };
