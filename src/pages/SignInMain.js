@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setUserUidShow,
   setUserNameShow,
@@ -24,8 +24,6 @@ export default function SignInMain() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [warning, setWarning] = useState(false);
-
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   function WarningBox() {
     return (
