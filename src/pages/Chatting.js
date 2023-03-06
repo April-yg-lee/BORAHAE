@@ -13,6 +13,7 @@ export default function Chatting() {
   let navigate = useNavigate();
 
   const userUidShow = useSelector((state) => state.userUidShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
   const [roomId, setRoomId] = useState("");
@@ -44,20 +45,25 @@ export default function Chatting() {
 
       getChatRoomInfo(roomId);
     } else {
+
       db.collection("chatroom")
-        .where("member", "array-contains", userUidShow && state.uid)
+        .where("member", "array-contains", (userUidShow || state.uid) || (state.uid || userUidShow))
         .get()
         .then((result) => {
+
           if (result.empty) {
             createNewChatRoom();
           } else {
-
             result.forEach((doc) => {
-              setRoomId(doc.data().roomId);
+              const data = doc.data();
+              if (data.member.includes(userUidShow) && data.member.includes(state.uid)) {
+                setRoomId(data.roomId);
+              }
+
             });
           }
 
-        });
+        })
     }
   };
 
@@ -117,12 +123,29 @@ export default function Chatting() {
       .set(latestInfo)
       .then(() => { });
 
+
+    new Notification(userNameShow, { body: newMessage.message });
     document.querySelector("#inputMessage").value = "";
+
   };
 
+  const refreshScroll = () => {
+    const objArea = document.querySelector("#chattingArea");
+
+    if (objArea) {
+      objArea.scrollTop = objArea.scrollHeight;
+    }
+
+  }
+
+  refreshScroll();
   useEffect(() => {
     call();
   }, [roomId]);
+
+  useEffect(() => {
+    refreshScroll();
+  }, [messages]);
 
   return (
     <div className={styles.container}>
@@ -143,10 +166,10 @@ export default function Chatting() {
           <span className={styles.chatting_name}>{state.name}</span>
         </header>
         <div className={styles.slide}>
-          <ul className={styles.chat_section}>
-            <li className={styles.date_box}>
+          <ul id="chattingArea" className={styles.chat_section}>
+            {/* <li className={styles.date_box}>
               <span className={styles.date}>11.01</span>
-            </li>
+            </li> */}
             {messages.map((list, idx) => (
               <li key={idx}>
                 <span
