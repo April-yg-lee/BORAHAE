@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import {
   setUserUidShow,
   setUserNameShow,
@@ -24,6 +24,8 @@ export default function SignInMain() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [warning, setWarning] = useState(false);
+
+  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   function WarningBox() {
     return (
@@ -112,7 +114,7 @@ export default function SignInMain() {
           </button>
         </section>
         <section className={styles.othermode_box}>
-          <h4>BORAHAE &copy; 2023</h4>
+          <h4>BORAHEY &copy; 2023</h4>
         </section>
       </div>
     </div>
