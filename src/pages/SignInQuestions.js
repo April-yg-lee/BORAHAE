@@ -10,15 +10,26 @@ export default function SignInQuestions() {
   let [Q1_input, setQ1_input] = useState("");
   let [Q2_input, setQ2_input] = useState("");
   let [Q3_input, setQ3_input] = useState("");
+  const [warning, setWarning] = useState(false);
+
+  function WarningBox() {
+    return (
+      <div className={styles.warning}>
+        <h4>Aren't you army? Try again😥💜</h4>
+      </div>
+    );
+  }
 
   let signUpQ_checker = (Q1, Q2, Q3) => {
     if (Q1 == "20130613") {
       if (Q2 == "RM" || Q2 == "Rap Monster") {
         if (Q3 == "7") {
+          setWarning(false);
           return true;
         }
       }
     }
+    setWarning(true);
   };
 
   return (
@@ -33,6 +44,7 @@ export default function SignInQuestions() {
             These are simple questions for sign up.
           </h4>
           <section className={styles.input_box}>
+            {warning == true ? <WarningBox></WarningBox> : null}
             <input
               onChange={(e) => {
                 setQ1_input(e.target.value);

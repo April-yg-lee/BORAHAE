@@ -78,6 +78,11 @@
   position: relative;
 }
 
+.warning {
+  color: #a493ff;
+  font-size: 20px;
+}
+
 .input_Q {
   width: 319px;
   height: 45px;

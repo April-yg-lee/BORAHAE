@@ -1,6 +1,5 @@
 /*eslint-disable */
 
-
 import React, { useState } from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +24,15 @@ export default function SignInRegister() {
   let [file, setFile] = useState();
   let [fileNameShow, setFileNameShow] = useState("");
   let [loading, setLoading] = useState(false);
+  const [warning, setWarning] = useState(false);
+
+  function WarningBox() {
+    return (
+      <div className={styles.warning}>
+        <h4>Please enter valid information.😍</h4>
+      </div>
+    );
+  }
 
   let listContent;
 
@@ -32,13 +40,14 @@ export default function SignInRegister() {
     listContent = <Spinner />;
   }
 
-
   let signUpRg_checker = (name, email, pw, city, country, intro) => {
     if (name == "" && !isNaN(name)) {
+      setWarning(true);
       return false;
     }
     const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
     if (!email.match(emailPattern)) {
+      setWarning(true);
       return false;
       // Please enter a valid email address.
     }
@@ -46,17 +55,22 @@ export default function SignInRegister() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (pw == "" && pw.length < 6 && pw.match(passPattern)) {
+      setWarning(true);
       return false;
     }
     if (city == "" && !isNaN(city)) {
+      setWarning(true);
       return false;
     }
     if (country == "" && !isNaN(country)) {
+      setWarning(true);
       return false;
     }
     if (intro == "" && !isNaN(intro)) {
+      setWarning(true);
       return false;
     }
+    setWarning(false);
     return true;
   };
 
@@ -118,6 +132,7 @@ export default function SignInRegister() {
               <br></br> Quick Registration
             </h1>
             <section className={styles.input_box}>
+              {warning == true ? <WarningBox></WarningBox> : null}
               <div className={styles.btn_container}>
                 <div className={styles.button_wrap}>
                   <label className={styles.button} htmlFor='upload'>

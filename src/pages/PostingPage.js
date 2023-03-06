@@ -25,7 +25,7 @@ export default function PostingPage() {
   let userCityShow = useSelector((state) => state.userCityShow);
 
   let listContent;
-
+  
   if (loading) {
     listContent = <Spinner />;
   }
