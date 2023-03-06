@@ -36,15 +36,48 @@ export default function SignInQuestions() {
               info.forEach((infoDoc) => {
                 tmp.name = infoDoc.data().userInfo.name;
                 tmp.profileImage = infoDoc.data().userInfo.profileImage;
-                setTrick(tmp); // 조회 후 렌더링을 위한 꼼수
               });
             });
+
+          db.collection("chatroom").doc(tmp.roomId).collection("isRead")
+            .where("uid", "==", userUidShow)
+            .get()
+            .then((result) => {
+              result.forEach((doc) => {
+                const date = doc.data().readAt;
+
+                db.collection("chatroom").doc(tmp.roomId).collection("messages")
+                  .where("createdAt", ">", date)
+                  .get()
+                  .then((result) => {
+                    if (result.size > 99) {
+                      tmp.newMessageCount = '100+';
+                    } else {
+                      tmp.newMessageCount = result.size;
+                    }
+                    setTrick(tmp); // 조회 후 렌더링을 위한 꼼수
+                  })
+
+              })
+            })
 
           tmpList.push(tmp);
         });
         setChatList(tmpList);
       });
   };
+
+  const countArea = (cnt) => {
+    if (cnt > 0) {
+      return (
+        <span className={styles.chat_counter}>{cnt}</span>
+      );
+    } else {
+      return (
+        <span></span>
+      )
+    }
+  }
 
   //알림 권한 요청
   const getNotificationPermission = () => {
@@ -117,7 +150,7 @@ export default function SignInQuestions() {
                     {list.lastestMessage}
                   </span>
                 </div>
-                <span className={styles.chat_counter}>3</span>
+                {countArea(list.newMessageCount)}
               </article>
             ))}
           </section>

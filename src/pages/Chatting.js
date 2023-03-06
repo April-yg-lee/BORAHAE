@@ -51,9 +51,12 @@ export default function Chatting() {
         .get()
         .then((result) => {
 
+          console.log(result);
           if (result.empty) {
+            console.log('생성하러 감');
             createNewChatRoom();
           } else {
+            console.log('존재한느 방');
             result.forEach((doc) => {
               const data = doc.data();
               if (data.member.includes(userUidShow) && data.member.includes(state.uid)) {
@@ -83,6 +86,17 @@ export default function Chatting() {
         setRoomId(newRoomId);
         getChatRoomInfo(newRoomId);
       });
+    console.log('방 생성 완료');
+    const hostRead = { readAt: newRoomData.lastestAt };
+    db.collection("chatroom").doc(newRoomId).collection("isRead")
+      .doc(newRoomData.member[0])
+      .set(hostRead);
+    console.log('호스트 등록 완료');
+    const guestRead = { readAt: newRoomData.lastestAt };
+    db.collection("chatroom").doc(newRoomId).collection("isRead")
+      .doc(newRoomData.member[1])
+      .set(guestRead);
+    console.log('게스트 등록 완료');
   };
 
   const getChatRoomInfo = (roomId) => {
@@ -120,14 +134,22 @@ export default function Chatting() {
 
     db.collection("chatroom")
       .doc(roomId)
-      .set(latestInfo)
-      .then(() => { });
-
+      .set(latestInfo);
 
     // new Notification(userNameShow, { body: newMessage.message });
     document.querySelector("#inputMessage").value = "";
 
   };
+
+  const readAt = () => {
+    const isRead = {
+      uid: userUidShow,
+      readAt: new Date()
+    };
+    db.collection("chatroom").doc(roomId).collection("isRead")
+      .doc(userUidShow)
+      .set(isRead);
+  }
 
   const refreshScroll = () => {
     const objArea = document.querySelector("#chattingArea");
@@ -145,6 +167,7 @@ export default function Chatting() {
 
   useEffect(() => {
     refreshScroll();
+    readAt();
   }, [messages]);
 
   return (
