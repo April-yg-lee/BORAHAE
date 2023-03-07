@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./MainBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faChevronRight,
+  faCommentDots,
+} from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
@@ -147,7 +151,6 @@ export default function MainBoard() {
     call();
   }, [trickLikes]);
 
-
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -157,7 +160,7 @@ export default function MainBoard() {
           }}
           className={styles.chat_btn}
         >
-          My Chat &gt;
+          <FontAwesomeIcon icon={faCommentDots} />
         </button>
         <div>
           <div className={styles.name_box}>

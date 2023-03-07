@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
+import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -24,6 +25,12 @@ export default function SignInMain() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [warning, setWarning] = useState(false);
+  let [loading, setLoading] = useState(false);
+
+  let heartPosition;
+  if (loading) {
+    heartPosition = <HeartSpinner />;
+  }
 
   function WarningBox() {
     return (
@@ -37,6 +44,7 @@ export default function SignInMain() {
     <div className={styles.container}>
       <div className={styles.signin_contents}>
         <LogoTitle></LogoTitle>
+        {heartPosition}
         <section className={styles.input_box}>
           {warning == true ? <WarningBox></WarningBox> : null}
           <input
@@ -73,6 +81,7 @@ export default function SignInMain() {
               // user 가 로그인 되어 있는지 확인하는 코드
               firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
+                  setLoading(true);
                   dispatch(setUserNameShow(user.displayName));
                   // get data from firebase
                   db.collection("user")
@@ -93,6 +102,7 @@ export default function SignInMain() {
                           )
                         );
                         navigate("/mainboard");
+                        setLoading(false);
                       });
                     });
                 }

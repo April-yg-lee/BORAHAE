@@ -98,13 +98,13 @@
   padding: 5%;
 }
 
+.edit_section > h4 {
+  font-weight: 400;
+}
+
 .btn_section {
   display: flex;
   justify-content: center;
-}
-
-.edit_section > h5 {
-  font-weight: 400;
 }
 
 .signOut_btn {
@@ -114,4 +114,5 @@
   border: none;
   color: white;
   border-radius: 10px;
+  font-size: 15px;
 }

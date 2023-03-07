@@ -37,7 +37,7 @@ export default function SignOutEdit() {
           <section className={styles.article_box}>
             <h3>Sign Out</h3>
             <section className={styles.edit_section}>
-              <h5>Do you really want to sign out?</h5>
+              <h4>Do you really want to sign out?</h4>
             </section>
             <div className={styles.btn_section}>
               <button

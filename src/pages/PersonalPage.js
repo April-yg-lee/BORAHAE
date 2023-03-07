@@ -143,9 +143,7 @@ export default function PersonalPage() {
                   <div
                     className={styles.article_big_profile_img}
                     style={{
-                      backgroundImage: `url('${userInfo.profileImage}')`,
-                      width: '50px',
-                      height: '50px'
+                      backgroundImage: `url('${userInfo.profileImage}')`
                     }}
                   ></div>
                   <span className={styles.article_profile_name}>
