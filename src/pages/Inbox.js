@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Inbox.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCheckDouble, faComment } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import firebase from "firebase/app";
 import { useSelector } from "react-redux";
@@ -39,27 +39,30 @@ export default function SignInQuestions() {
               });
             });
 
-          db.collection("chatroom").doc(tmp.roomId).collection("isRead")
+          db.collection("chatroom")
+            .doc(tmp.roomId)
+            .collection("isRead")
             .where("uid", "==", userUidShow)
             .get()
             .then((result) => {
               result.forEach((doc) => {
                 const date = doc.data().readAt;
 
-                db.collection("chatroom").doc(tmp.roomId).collection("messages")
+                db.collection("chatroom")
+                  .doc(tmp.roomId)
+                  .collection("messages")
                   .where("createdAt", ">", date)
                   .get()
                   .then((result) => {
                     if (result.size > 99) {
-                      tmp.newMessageCount = '100+';
+                      tmp.newMessageCount = "100+";
                     } else {
                       tmp.newMessageCount = result.size;
                     }
                     setTrick(tmp); // 조회 후 렌더링을 위한 꼼수
-                  })
-
-              })
-            })
+                  });
+              });
+            });
 
           tmpList.push(tmp);
         });
@@ -69,15 +72,16 @@ export default function SignInQuestions() {
 
   const countArea = (cnt) => {
     if (cnt > 0) {
-      return (
-        <span className={styles.chat_counter}>{cnt}</span>
-      );
+      return <span className={styles.chat_counter}>{cnt}</span>;
     } else {
       return (
-        <span></span>
-      )
+        <span>
+          {" "}
+          <FontAwesomeIcon icon={faCheckDouble} className={styles.chat_check} />
+        </span>
+      );
     }
-  }
+  };
 
   //알림 권한 요청
   const getNotificationPermission = () => {
@@ -88,16 +92,17 @@ export default function SignInQuestions() {
     // 데스크탑 알림 권한 요청
     Notification.requestPermission(function (result) {
       // 권한 거절
-      if (result == 'denied') {
+      if (result == "denied") {
         Notification.requestPermission();
-        console.log('알림을 차단하셨습니다.\n브라우저의 사이트 설정에서 변경하실 수 있습니다.');
+        console.log(
+          "알림을 차단하셨습니다.\n브라우저의 사이트 설정에서 변경하실 수 있습니다."
+        );
         return false;
-      }
-      else if (result == 'granted') {
-        console.log('알림을 허용하셨습니다.');
+      } else if (result == "granted") {
+        console.log("알림을 허용하셨습니다.");
       }
     });
-  }
+  };
 
   useEffect(() => {
     call();
@@ -119,7 +124,11 @@ export default function SignInQuestions() {
             <FontAwesomeIcon icon={faComment} />
             <span>INBOX</span>
           </div>
-          <FontAwesomeIcon onClick={getNotificationPermission} className={styles.bell_icon} icon={faBell} />
+          <FontAwesomeIcon
+            onClick={getNotificationPermission}
+            className={styles.bell_icon}
+            icon={faBell}
+          />
         </header>
         <div className={styles.slide}>
           <div className={styles.mainBoard_option}>

@@ -101,7 +101,7 @@
 .chat_mes_box {
   display: flex;
   flex-direction: column;
-  width: 225px;  
+  width: 225px;
 }
 
 .chat_mes_name {
@@ -109,22 +109,19 @@
 }
 
 .chat_mes_text {
-  font-size:13px;
+  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: "Caveat Brush", cursive;
   padding-top: 3%;
-
 }
-
 
 .profile_img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
   border: 1px solid white;
-  background-image: url("./img/aboutme-pic.jpg");
   background-size: cover;
 }
 
@@ -135,6 +132,10 @@
   text-align: center;
   line-height: 1.9;
   font-size: 10px;
-  background-color: red;
+  background-color:rgba(81, 51, 245, 1) ;
   color: white;
+}
+
+.chat_check {
+  color: #a493ff;
 }
