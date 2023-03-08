@@ -146,7 +146,7 @@ export default function PersonalPage() {
                       backgroundImage: `url('${userInfo.profileImage}')`
                     }}
                   ></div>
-                  <span className={styles.article_profile_name}>
+                  <span className={styles.article_big_profile_name}>
                     {userInfo.name}
                   </span>
                 </div>
