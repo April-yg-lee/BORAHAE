@@ -55,7 +55,7 @@ const userProfilePicShow = createSlice({
   initialState: "country",
   reducers: {
     setUserProfilePicShow(state, action) {
-      return (state = action.payload);
+      return state = action.payload;
     },
   },
 });

@@ -1,6 +1,6 @@
 /**
 * @author Noah
-* @purpose  
+* @purpose user끼리 채팅하기 위한 화면 구현
 * @date 2023.03.11 
 * @update
 */
@@ -14,13 +14,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase/app";
-// Components
+
 
 export default function Chatting() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const userUidShow = useSelector((state) => state.userUidShow);
-  const userNameShow = useSelector((state) => state.userNameShow);
   const { state } = useLocation();
   const [messages, setMessages] = useState([]);
   const [roomId, setRoomId] = useState("");
@@ -120,7 +119,7 @@ export default function Chatting() {
   };
 
   const addMessage = () => {
-    let newMessage = {
+    const newMessage = {
       createdAt: new Date(),
       message: document.querySelector("#inputMessage").value,
       roomId: roomId,
@@ -132,7 +131,7 @@ export default function Chatting() {
       .collection("messages")
       .add(newMessage);
 
-    let latestInfo = {
+    const latestInfo = {
       host: chatHost,
       lastestAt: newMessage.createdAt,
       lastestMessage: newMessage.message,
