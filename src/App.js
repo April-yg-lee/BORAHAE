@@ -5,7 +5,6 @@ import { Routes, Route } from "react-router-dom";
 import SignInMain from "./pages/SignInMain";
 import SignInQuestions from "./pages/SignInQuestions";
 import SignInRegister from "./pages/SignInRegister";
-import Loading from "./pages/Loading";
 import MainBoard from "./pages/MainBoard";
 import PersonalPage from "./pages/PersonalPage";
 import PostingPage from "./pages/PostingPage";
@@ -16,7 +15,6 @@ import Inbox from "./pages/Inbox";
 import Chatting from "./pages/Chatting";
 import MyDashBoard from './pages/MyDashBoard';
 import Nearby from './pages/Nearby';
-import firebase from "firebase/app";
 import "firebase/firestore";
 
 
@@ -35,7 +33,6 @@ function App() {
           path='/signinregister'
           element={<SignInRegister></SignInRegister>}
         ></Route>
-        <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/mainboard' element={<MainBoard></MainBoard>}></Route>
         <Route path='/nearby' element={<Nearby></Nearby>}></Route>
         <Route

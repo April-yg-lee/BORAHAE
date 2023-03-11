@@ -1,3 +1,10 @@
+/**
+* @author April
+* @purpose 메인 데쉬보드를 보여줌 / 디테일하게 
+* @date 2023.03.11 
+* @update
+*/
+
 /*eslint-disable */
 import React, { useEffect, useState } from "react";
 import moment from "moment";
@@ -23,7 +30,6 @@ export default function MainBoard() {
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
   let [loading, setLoading] = useState(false);
-  // let [heartShow, setHeartShow] = useState(false);
   const [trickLikes, setTrickLikes] = useState("");
 
   let userNameShow = useSelector((state) => state.userNameShow);
@@ -33,36 +39,6 @@ export default function MainBoard() {
   if (loading) {
     heartPosition = <HeartSpinner />;
   }
-
-  // const heartOnAndOff = () => {
-  //   if (heartShow == true) {
-  //     setHeartShow(false);
-  //   } else {
-  //     setHeartShow(true);
-  //   }
-  // };
-
-  // const heartOnAndOff = (postID) => {
-  //   db.collection("post")
-  //     .doc(postID)
-  //     .collection("likes")
-  //     .where("uid", "==", userUidShow)
-  //     .get()
-  //     .then((result) => {
-  //       if (result.empty) {
-  //         setHeartShow(false);
-  //       } else {
-  //         result.forEach((doc) => {
-  //           let dataUid = doc.data().uid;
-  //           let dataLikeId = doc.data().likeId;
-
-  //           if (dataUid) {
-  //             setHeartShow(false);
-  //           }
-  //         });
-  //       }
-  //     });
-  // };
 
   // get posting time
   let currentMoment = (realTime) => {
@@ -173,10 +149,7 @@ export default function MainBoard() {
                     navigate("/myinfo");
                   }}
                 >
-                  <FontAwesomeIcon
-                    // className={styles.heart_icon}
-                    icon={faChevronRight}
-                  />
+                  <FontAwesomeIcon icon={faChevronRight} />
                 </span>
               </span>
             </h1>
@@ -205,7 +178,6 @@ export default function MainBoard() {
               Nearby
             </span>
           </div>
-          {heartPosition}
 
           {postList.map(function (a, i) {
             return (
@@ -240,7 +212,6 @@ export default function MainBoard() {
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
-                          // heartOnAndOff(a.postID);
                           toggleLikes(a.postID);
                         }}
                         className={styles.like_heart}
@@ -249,17 +220,6 @@ export default function MainBoard() {
                           className={styles.heart_icon}
                           icon={faHeart}
                         />
-                        {/* {heartShow == true ? (
-                          <FontAwesomeIcon
-                            className={styles.heart_icon}
-                            icon={farHeart}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            className={styles.heart_icon}
-                            icon={faHeart}
-                          />
-                        )} */}
                         &nbsp;
                       </span>
                       <span className={styles.like_num}>{a.likes}</span>
@@ -273,6 +233,7 @@ export default function MainBoard() {
             );
           })}
         </div>
+        {heartPosition}
       </div>
     </div>
   );

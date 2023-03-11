@@ -1,3 +1,10 @@
+/**
+* @author April
+* @purpose user 의 도시, 나라 정보 보여주도록 구현
+* @date 2023.03.11 
+* @update
+*/
+
 /*eslint-disable */
 import React, { Profiler } from "react";
 import styles from "../pages/MainBoard.module.css";

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./Nearby.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faChevronRight, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
@@ -136,7 +136,7 @@ export default function Nearby() {
           }}
           className={styles.chat_btn}
         >
-          My Chat &gt;
+          <FontAwesomeIcon icon={faCommentDots} />
         </button>
         <div>
           <div className={styles.name_box}>

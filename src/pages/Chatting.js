@@ -1,3 +1,10 @@
+/**
+* @author Noah
+* @purpose  
+* @date 2023.03.11 
+* @update
+*/
+
 /*eslint-disable */
 import React, { useEffect, useState } from "react";
 import styles from "./Chatting.module.css";

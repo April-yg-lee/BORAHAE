@@ -1,3 +1,10 @@
+/**
+* @author April
+* @purpose Profile 이미지와 이름을 보여줄 수 있도록 구현
+* @date 2023.03.11 
+* @update
+*/
+
 import React from "react";
 import styles from "../pages/Myinfo.module.css";
 import { useSelector } from "react-redux";
