@@ -10,7 +10,7 @@ import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setUserUidShow,
   setUserNameShow,
