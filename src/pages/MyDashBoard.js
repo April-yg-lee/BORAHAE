@@ -82,7 +82,7 @@ export default function MyDashBoard() {
       .get()
       .then((result) => {
         if (result.empty) {
-          let likesData = {
+          const likesData = {
             uid: userUidShow,
             likeId: uuidv4(),
           };
@@ -191,9 +191,6 @@ export default function MyDashBoard() {
                           db.collection("post")
                             .doc(a.postID)
                             .delete()
-                            .then(() => {
-                              console.log("Document successfully deleted!");
-                            })
                             .catch((error) => {
                               console.error("Error removing document: ", error);
                             });

@@ -96,7 +96,7 @@ export default function PersonalPage() {
       .get()
       .then((result) => {
         if (result.empty) {
-          let likesData = {
+          const likesData = {
             uid: userUidShow,
             likeId: uuidv4(),
           };
