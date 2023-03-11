@@ -14,12 +14,12 @@ require('firebase/auth');
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAl7ZMMevtk7zw3jUjszxBe_H1OrlhXLzM",
-  authDomain: "bts-borahae.firebaseapp.com",
-  projectId: "bts-borahae",
-  storageBucket: "bts-borahae.appspot.com",
-  messagingSenderId: "563118760751",
-  appId: "1:563118760751:web:d3a0c29e909db30b8f77da"
+    apiKey: "AIzaSyAl7ZMMevtk7zw3jUjszxBe_H1OrlhXLzM",
+    authDomain: "bts-borahae.firebaseapp.com",
+    projectId: "bts-borahae",
+    storageBucket: "bts-borahae.appspot.com",
+    messagingSenderId: "563118760751",
+    appId: "1:563118760751:web:d3a0c29e909db30b8f77da"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -29,13 +29,13 @@ export const storage = firebase.storage();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
+    // <React.StrictMode>
     <Provider store={Store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>
-  // </React.StrictMode>
+    // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
