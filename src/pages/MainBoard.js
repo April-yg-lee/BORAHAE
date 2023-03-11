@@ -1,6 +1,8 @@
 /**
-* @author April
-* @purpose 메인 데쉬보드를 보여줌 / 디테일하게 
+* @author April & Noah 
+* @purpose Sign-in 후 제일 먼저 보여지는 Main Dashboard / 
+상단에는 inbox 로 이동, 포스팅을 쓰는 버튼, myinfo 등으로 이동할 수 있음
+하단의 All 카테고리에서는 모든 user들의 포스트가 보여지고, Nearby 카테고리에서는 나랑 동일한 도시, 나라의 user 의 포스트만 보여짐 
 * @date 2023.03.11 
 * @update
 */
@@ -46,8 +48,9 @@ export default function MainBoard() {
   };
 
   // get Posts data from firebase
-  const call = () => {
+  const postCall = () => {
     let postArray = [];
+    // to sort the data by latest date 
     db.collection("post")
       .orderBy("date", "desc")
       .get()
@@ -62,7 +65,7 @@ export default function MainBoard() {
               info.forEach((infoDoc) => {
                 postObject.userName = infoDoc.data().userInfo.name;
                 postObject.profileImage = infoDoc.data().userInfo.profileImage;
-                setTrick(postObject); // 조회 후 렌더링을 위한 꼼수
+                setTrick(postObject); 
               });
             });
 
@@ -80,6 +83,8 @@ export default function MainBoard() {
       });
   };
 
+  // code by Noah 
+  // toggle the number of likes by clicking 
   const toggleLikes = (postId) => {
     setLoading(true);
     db.collection("post")
@@ -124,7 +129,7 @@ export default function MainBoard() {
   };
 
   useEffect(() => {
-    call();
+    postCall();
   }, [trickLikes]);
 
   return (
@@ -179,6 +184,7 @@ export default function MainBoard() {
             </span>
           </div>
 
+          {/* mapping every posts */}
           {postList.map(function (a, i) {
             return (
               <section className={styles.article_box} key={i}>

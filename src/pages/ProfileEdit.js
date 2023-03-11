@@ -1,5 +1,10 @@
+/**
+ * @author April
+ * @purpose 원하는 내용으로 프로필 사진 포함 user information update 기능 구현 
+ * @date 2023.03.11
+ * @update
+ */
 /*eslint-disable */
-
 import React, { useState, useEffect } from "react";
 import styles from "./ProfileEdit.module.css";
 import ProfileEditTop from "../components/ProfileEditTop";
@@ -45,6 +50,7 @@ export default function ProfileEdit() {
   let userIntroShow = useSelector((state) => state.userIntroShow);
   let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
+  // set original user information after loading first 
   useEffect(() => {
     setUserName(userNameShow);
     setUserIntro(userIntroShow);
@@ -53,6 +59,7 @@ export default function ProfileEdit() {
     setFile(userProfilePicShow);
   }, []);
 
+  // update(edit) user information into firebase  
   let updateUserInfo = () => {
     let imgCreateDate = new Date();
     let storageRef = storage.ref();
@@ -65,8 +72,6 @@ export default function ProfileEdit() {
     upload.on(
       "state_changed",
       null,
-
-      //에러시 동작하는 함수
       (error) => {
         console.error("실패사유는", error);
       },
@@ -111,7 +116,7 @@ export default function ProfileEdit() {
         });
       }
     );
-  }
+  };
 
   return (
     <div className={styles.container}>

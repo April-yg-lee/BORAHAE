@@ -1,11 +1,18 @@
+/**
+* @author April & Noah 
+* @purpose Sign in 한 user의 개인페이지 구현 
+ user 본인의 소개글, user본인의 포스팅한 글만 보여짐, user본인 글 delete 기능 구현 
+* @date 2023.03.11 
+* @update
+*/
+
 /*eslint-disable */
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import styles from "./MyDashBoard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { increaseLike } from "../Store";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import HeartSpinner from "../components/HeartSpinner";
 import { v4 as uuidv4 } from "uuid";
@@ -15,7 +22,6 @@ import "firebase/database";
 
 export default function MyDashBoard() {
   let navigate = useNavigate();
-  let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
   const [trick, setTrick] = useState([]);
   const [trickLikes, setTrickLikes] = useState("");
@@ -40,7 +46,7 @@ export default function MyDashBoard() {
   };
 
   // get Posts data from firebase
-  let call = () => {
+  let postCall = () => {
     let postArray = [];
     db.collection("post")
       .where("uid", "==", userUidShow)
@@ -65,6 +71,8 @@ export default function MyDashBoard() {
       });
   };
 
+  // code by Noah
+  // toggle the number of likes by clicking
   const toggleLikes = (postId) => {
     setLoading(true);
     db.collection("post")
@@ -109,7 +117,7 @@ export default function MyDashBoard() {
   };
 
   useEffect(() => {
-    call();
+    postCall();
   }, [trickLikes]);
 
   return (

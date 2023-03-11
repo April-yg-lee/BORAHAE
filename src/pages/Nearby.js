@@ -1,21 +1,30 @@
+/**
+ * @author April & Noah
+ * @purpose Main Dashboard에서 Nearby 카테코리 클릭하면  나랑 동일한 도시, 나라의 user 의 포스트만 보여짐
+ * @date 2023.03.11
+ * @update
+ */
+
 /*eslint-disable */
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./Nearby.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faChevronRight, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faChevronRight,
+  faCommentDots,
+} from "@fortawesome/free-solid-svg-icons";
 import Location from "../components/Location";
 import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { increaseLike } from "../Store";
 import { db } from "../index.js";
 import "firebase/firestore";
 import "firebase/database";
 
 export default function Nearby() {
-  let dispatch = useDispatch();
   let navigate = useNavigate();
 
   const [nearbyPostList, setNearbyPostList] = useState([]);
@@ -40,7 +49,7 @@ export default function Nearby() {
   };
 
   // get Posts data from firebase
-  let call = () => {
+  let postCall = () => {
     let postArray = [];
     db.collection("post")
       .where("city", "==", userCityShow)
@@ -79,6 +88,8 @@ export default function Nearby() {
       });
   };
 
+  // code by Noah
+  // toggle the number of likes by clicking
   const toggleLikes = (postId) => {
     setLoading(true);
     db.collection("post")
@@ -122,9 +133,8 @@ export default function Nearby() {
       });
   };
 
-
   useEffect(() => {
-    call();
+    postCall();
   }, [trickLikes]);
 
   return (

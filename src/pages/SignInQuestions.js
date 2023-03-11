@@ -1,3 +1,9 @@
+/**
+ * @author April
+ * @purpose sign-up 을 위한 questions , BTS fan (army) 인지 확인하는 단계 구현
+ * @date 2023.03.11
+ * @update
+ */
 /*eslint-disable */
 import React, { useState } from "react";
 import BackBtn from "../components/BackBtn";
@@ -12,6 +18,7 @@ export default function SignInQuestions() {
   let [Q3_input, setQ3_input] = useState("");
   const [warning, setWarning] = useState(false);
 
+  // component for warning
   function WarningBox() {
     return (
       <div className={styles.warning}>
@@ -20,6 +27,7 @@ export default function SignInQuestions() {
     );
   }
 
+  // check if answers are correct
   let signUpQ_checker = (Q1, Q2, Q3) => {
     if (Q1 == "20130613") {
       if (Q2 == "RM" || Q2 == "Rap Monster") {
