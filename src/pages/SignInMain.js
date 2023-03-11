@@ -1,3 +1,9 @@
+/**
+ * @author April
+ * @purpose 제일 처음 user 에게 보여지는 Sign-in Page 구현
+ * @date 2023.03.11
+ * @update
+ */
 /*eslint-disable */
 import React, { useState, useEffect } from "react";
 import styles from "./SignInMain.module.css";
@@ -69,6 +75,7 @@ export default function SignInMain() {
         <section className={styles.signin_btn_box}>
           <button
             onClick={() => {
+              // check if email and password are matched with firebase auth
               firebase
                 .auth()
                 .signInWithEmailAndPassword(userEmail, userPassword)
@@ -78,12 +85,12 @@ export default function SignInMain() {
                 .catch((err) => {
                   setWarning(true);
                 });
-              // user 가 로그인 되어 있는지 확인하는 코드
+              // check if user sign-in or not | Setting user's information on app after sign-in
               firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
                   setLoading(true);
                   dispatch(setUserNameShow(user.displayName));
-                  // get data from firebase
+                  // get user information data from firebase
                   db.collection("user")
                     .where("userInfo.uid", "==", user.uid)
                     .get()

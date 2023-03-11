@@ -1,6 +1,11 @@
+/**
+* @author April
+* @purpose Sign-out 하기 전 마지막단계 confirm page 구현 
+* @date 2023.03.11 
+* @update
+*/
 /*eslint-disable */
-
-import React, { Profiler } from "react";
+import React from "react";
 import styles from "./SignOutEdit.module.css";
 import ProfileEditTop from "../components/ProfileEditTop";
 import { useNavigate } from "react-router-dom";

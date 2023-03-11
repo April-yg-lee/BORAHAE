@@ -1,3 +1,11 @@
+/**
+ * @author April & Noah
+ * @purpose Main Dashboard에서 Any user 의 포스트를 클릭하면 해당 user 의 personal page 로 이동함
+ * post 한 해당 user 의 소개글, 포스트 들이 보이고 chat 을 걸 수 있음
+ * @date 2023.03.11
+ * @update
+ */
+
 /*eslint-disable */
 import React, { useState, useEffect } from "react";
 import moment from "moment";
@@ -35,7 +43,8 @@ export default function PersonalPage() {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
 
-  const call = () => {
+  // get user's information by clicking on the post in the mainBoard
+  const getUserInfoFromMainBoard = () => {
     if (state.uid) {
       db.collection("user")
         .where("userInfo.uid", "==", state.uid)
@@ -49,7 +58,7 @@ export default function PersonalPage() {
   };
 
   // get Posts data from firebase
-  let personalPagecall = () => {
+  let postCall = () => {
     let postArray = [];
     if (state.uid) {
       db.collection("post")
@@ -76,6 +85,8 @@ export default function PersonalPage() {
     }
   };
 
+  // code by Noah
+  // toggle the number of likes by clicking
   const toggleLikes = (postId) => {
     setLoading(true);
     db.collection("post")
@@ -120,8 +131,8 @@ export default function PersonalPage() {
   };
 
   useEffect(() => {
-    call();
-    personalPagecall();
+    getUserInfoFromMainBoard();
+    postCall();
   }, [trickLikes]);
 
   return (
@@ -143,7 +154,7 @@ export default function PersonalPage() {
                   <div
                     className={styles.article_big_profile_img}
                     style={{
-                      backgroundImage: `url('${userInfo.profileImage}')`
+                      backgroundImage: `url('${userInfo.profileImage}')`,
                     }}
                   ></div>
                   <span className={styles.article_big_profile_name}>

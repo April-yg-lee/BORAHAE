@@ -1,5 +1,12 @@
-/*eslint-disable */
+/**
+* @author April
+* @purpose Mainboard 에서 user 이름 > 클릭시 보이는 화면 구현
+Dashboard, profile, sign-out 으로 이동시킬 수 있는 페이지  
+* @date 2023.03.11 
+* @update
+*/
 
+/*eslint-disable */
 import React, { Profiler } from "react";
 import styles from "./Myinfo.module.css";
 import ProfileEditTop from "../components/ProfileEditTop";

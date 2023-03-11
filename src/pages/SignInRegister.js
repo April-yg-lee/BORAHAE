@@ -1,5 +1,10 @@
+/**
+ * @author April
+ * @purpose userInfo 등록을 위한 sign-up 최종단계 구현
+ * @date 2023.03.11
+ * @update
+ */
 /*eslint-disable */
-
 import React, { useState } from "react";
 import styles from "./SignInRegister.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,6 +31,7 @@ export default function SignInRegister() {
   let [loading, setLoading] = useState(false);
   const [warning, setWarning] = useState(false);
 
+  // component for warning
   function WarningBox() {
     return (
       <div className={styles.warning}>
@@ -40,6 +46,7 @@ export default function SignInRegister() {
     listContent = <Spinner />;
   }
 
+  // check if input user information are valid or not
   let signUpRg_checker = (name, email, pw, city, country, intro) => {
     if (name == "" && !isNaN(name)) {
       setWarning(true);
@@ -74,6 +81,7 @@ export default function SignInRegister() {
     return true;
   };
 
+  // add user information on firebase and show on app using dispatch
   let uploadUserInfoForSignUp = () => {
     let imgCreateDate = new Date();
     let storageRef = storage.ref();
@@ -82,7 +90,6 @@ export default function SignInRegister() {
     );
     let upload = savePath.put(file);
 
-    // firebase code
     upload.on(
       "state_changed",
       null,
@@ -106,7 +113,9 @@ export default function SignInRegister() {
                 uid: result.user.uid,
                 profileImage: profileUrl,
               };
-              db.collection("user").doc(result.user.uid).set({ userInfo })
+              db.collection("user")
+                .doc(result.user.uid)
+                .set({ userInfo })
                 .then(() => {
                   setLoading(false);
                   navigate("/");
