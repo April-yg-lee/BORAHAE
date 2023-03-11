@@ -25,13 +25,13 @@ import "firebase/firestore";
 import "firebase/auth";
 
 export default function SignInMain() {
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [warning, setWarning] = useState(false);
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   let heartPosition;
   if (loading) {

@@ -15,7 +15,7 @@ import { faFile, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 export default function Myinfo() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>

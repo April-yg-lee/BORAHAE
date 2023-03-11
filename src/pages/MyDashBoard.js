@@ -21,19 +21,19 @@ import "firebase/firestore";
 import "firebase/database";
 
 export default function MyDashBoard() {
-  let navigate = useNavigate();
-  let [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [trick, setTrick] = useState([]);
   const [trickLikes, setTrickLikes] = useState("");
 
-  let [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState([]);
 
-  let userUidShow = useSelector((state) => state.userUidShow);
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userIntroShow = useSelector((state) => state.userIntroShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
+  const userCountryShow = useSelector((state) => state.userCountryShow);
+  const userCityShow = useSelector((state) => state.userCityShow);
+  const userIntroShow = useSelector((state) => state.userIntroShow);
+  const userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   let heartPosition;
   if (loading) {
@@ -41,12 +41,12 @@ export default function MyDashBoard() {
   }
 
   // get posting time
-  let currentMoment = (realTime) => {
+  const currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
 
   // get Posts data from firebase
-  let postCall = () => {
+  const postCall = () => {
     let postArray = [];
     db.collection("post")
       .where("uid", "==", userUidShow)

@@ -25,18 +25,18 @@ import "firebase/firestore";
 import "firebase/database";
 
 export default function Nearby() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [nearbyPostList, setNearbyPostList] = useState([]);
   const [trick, setTrick] = useState([]);
   const [trickLikes, setTrickLikes] = useState("");
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  let userUidShow = useSelector((state) => state.userUidShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
 
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
+  const userCityShow = useSelector((state) => state.userCityShow);
+  const userCountryShow = useSelector((state) => state.userCountryShow);
 
   let heartPosition;
   if (loading) {
@@ -44,12 +44,12 @@ export default function Nearby() {
   }
 
   // get posting time
-  let currentMoment = (realTime) => {
+  const currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
 
   // get Posts data from firebase
-  let postCall = () => {
+  const postCall = () => {
     let postArray = [];
     db.collection("post")
       .where("city", "==", userCityShow)

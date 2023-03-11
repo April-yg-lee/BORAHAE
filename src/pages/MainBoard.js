@@ -27,15 +27,15 @@ import "firebase/firestore";
 import "firebase/database";
 
 export default function MainBoard() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [trickLikes, setTrickLikes] = useState("");
 
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userUidShow = useSelector((state) => state.userUidShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
 
   let heartPosition;
   if (loading) {
@@ -43,7 +43,7 @@ export default function MainBoard() {
   }
 
   // get posting time
-  let currentMoment = (realTime) => {
+  const currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
 

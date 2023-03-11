@@ -1,109 +1,72 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-let userUidShow = createSlice({
+const userUidShow = createSlice({
   name: "userUidShow", // state 이름
   initialState: "hey",
   reducers: {
     setUserUidShow(state, action) {
-      return state = action.payload;
+      return (state = action.payload);
     },
   },
 });
 
-let userNameShow = createSlice({
+const userNameShow = createSlice({
   name: "userNameShow", // state 이름
   initialState: "name",
   reducers: {
     setUserNameShow(state, action) {
-      return state = action.payload;
+      return (state = action.payload);
     },
   },
 });
 
-let userCityShow = createSlice({
+const userCityShow = createSlice({
   name: "userCityShow", // state 이름
   initialState: "city",
   reducers: {
     setUserCityShow(state, action) {
-      return state = action.payload;
+      return (state = action.payload);
     },
   },
 });
 
-let userCountryShow = createSlice({
+const userCountryShow = createSlice({
   name: "userCountryShow", // state 이름
   initialState: "country",
   reducers: {
     setUserCountryShow(state, action) {
-      return state = action.payload;
+      return (state = action.payload);
     },
   },
 });
 
-let userIntroShow = createSlice({
+const userIntroShow = createSlice({
   name: "userIntroShow", // state 이름
   initialState: "Intro",
   reducers: {
     setUserIntroShow(state, action) {
-      return state = action.payload;
+      return (state = action.payload);
     },
   },
 });
 
-let userProfilePicShow = createSlice({
+const userProfilePicShow = createSlice({
   name: "userProfilePicShow", // state 이름
   initialState: "country",
   reducers: {
     setUserProfilePicShow(state, action) {
-      return state = action.payload;
-    },
-  },
-});
-
-
-
-let stock = createSlice({
-  name: "stock",
-  initialState: [10, 11, 12],
-});
-
-let items = createSlice({
-  name: "items",
-  initialState: [
-    { id: 0, name: "White and Black", count: 2 },
-    { id: 2, name: "Grey Yordan", count: 1 },
-  ],
-  reducers: {
-    addCount(state, action) {
-      let 번호 = state.findIndex((a) => {
-        return a.id === action.payload;
-      });
-      state[번호].count++;
-      // state[action.payload].count++;
-    },
-  },
-});
-
-let like = createSlice({
-  name: "like", // state 이름
-  initialState: 0,
-  reducers: {
-    increaseLike(state) {
-      return (state = state + 1);
+      return (state = action.payload);
     },
   },
 });
 
 // export part
-export let { setUserUidShow } = userUidShow.actions;
-export let { setUserNameShow } = userNameShow.actions;
-export let { setUserCityShow } = userCityShow.actions;
-export let { setUserCountryShow } = userCountryShow.actions;
-export let { setUserIntroShow } = userIntroShow.actions;
-export let { setUserProfilePicShow } = userProfilePicShow.actions;
-
-export let { addCount } = items.actions;
-export let { increaseLike } = like.actions;
+export const { setUserUidShow } = userUidShow.actions;
+export const { setUserNameShow } = userNameShow.actions;
+export const { setUserCityShow } = userCityShow.actions;
+export const { setUserCountryShow } = userCountryShow.actions;
+export const { setUserIntroShow } = userIntroShow.actions;
+export const { setUserProfilePicShow } = userProfilePicShow.actions;
 
 export default configureStore({
   reducer: {
@@ -113,8 +76,5 @@ export default configureStore({
     userCountryShow: userCountryShow.reducer,
     userIntroShow: userIntroShow.reducer,
     userProfilePicShow: userProfilePicShow.reducer,
-    stock: stock.reducer,
-    items: items.reducer,
-    like: like.reducer,
   },
 });

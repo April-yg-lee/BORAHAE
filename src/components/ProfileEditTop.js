@@ -10,8 +10,8 @@ import styles from "../pages/Myinfo.module.css";
 import { useSelector } from "react-redux";
 
 export default function ProfileEditTop() {
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
+  const userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
   return (
     <div className={styles.profile_box}>

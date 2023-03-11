@@ -13,14 +13,11 @@ import ProfileEdit from "./pages/ProfileEdit";
 import SignOutEdit from "./pages/SignOutEdit";
 import Inbox from "./pages/Inbox";
 import Chatting from "./pages/Chatting";
-import MyDashBoard from './pages/MyDashBoard';
-import Nearby from './pages/Nearby';
+import MyDashBoard from "./pages/MyDashBoard";
+import Nearby from "./pages/Nearby";
 import "firebase/firestore";
 
-
-
 function App() {
-
   return (
     <>
       <Routes>
@@ -58,9 +55,7 @@ function App() {
         ></Route>
         <Route path='/inbox' element={<Inbox></Inbox>}></Route>
         <Route path='/chatting' element={<Chatting></Chatting>}></Route>
-        
       </Routes>
-
     </>
   );
 }

@@ -1,9 +1,9 @@
 /**
-* @author April
-* @purpose Sign-out 하기 전 마지막단계 confirm page 구현 
-* @date 2023.03.11 
-* @update
-*/
+ * @author April
+ * @purpose Sign-out 하기 전 마지막단계 confirm page 구현
+ * @date 2023.03.11
+ * @update
+ */
 /*eslint-disable */
 import React from "react";
 import styles from "./SignOutEdit.module.css";
@@ -23,8 +23,8 @@ import "firebase/firestore";
 import "firebase/auth";
 
 export default function SignOutEdit() {
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>

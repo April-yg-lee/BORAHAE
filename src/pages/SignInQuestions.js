@@ -11,11 +11,11 @@ import styles from "./SignInQuestions.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function SignInQuestions() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  let [Q1_input, setQ1_input] = useState("");
-  let [Q2_input, setQ2_input] = useState("");
-  let [Q3_input, setQ3_input] = useState("");
+  const [Q1_input, setQ1_input] = useState("");
+  const [Q2_input, setQ2_input] = useState("");
+  const [Q3_input, setQ3_input] = useState("");
   const [warning, setWarning] = useState(false);
 
   // component for warning
@@ -28,7 +28,7 @@ export default function SignInQuestions() {
   }
 
   // check if answers are correct
-  let signUpQ_checker = (Q1, Q2, Q3) => {
+  const signUpQ_checker = (Q1, Q2, Q3) => {
     if (Q1 == "20130613") {
       if (Q2 == "RM" || Q2 == "Rap Monster") {
         if (Q3 == "7") {

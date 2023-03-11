@@ -13,8 +13,8 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
 export default function Location() {
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
+  const userCityShow = useSelector((state) => state.userCityShow);
+  const userCountryShow = useSelector((state) => state.userCountryShow);
 
   return (
     <h3 className={styles.subTitle}>

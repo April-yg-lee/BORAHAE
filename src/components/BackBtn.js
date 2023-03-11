@@ -10,7 +10,7 @@ import styles from "../pages/SignInQuestions.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function BackBtn() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <button
       onClick={() => {

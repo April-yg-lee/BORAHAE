@@ -22,16 +22,16 @@ import "firebase/database";
 import "firebase/storage";
 
 export default function PersonalPage() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const { state } = useLocation();
 
   const [userInfo, setUserInfo] = useState({});
-  let [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState([]);
   const [trick, setTrick] = useState([]);
   const [trickLikes, setTrickLikes] = useState("");
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  let userUidShow = useSelector((state) => state.userUidShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
 
   let heartPosition;
   if (loading) {
@@ -39,7 +39,7 @@ export default function PersonalPage() {
   }
 
   // get posting time
-  let currentMoment = (realTime) => {
+  const currentMoment = (realTime) => {
     return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
   };
 
@@ -58,7 +58,7 @@ export default function PersonalPage() {
   };
 
   // get Posts data from firebase
-  let postCall = () => {
+  const postCall = () => {
     let postArray = [];
     if (state.uid) {
       db.collection("post")

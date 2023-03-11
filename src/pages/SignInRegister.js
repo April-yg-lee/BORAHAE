@@ -18,7 +18,7 @@ import "firebase/auth";
 import Spinner from "../components/Spinner";
 
 export default function SignInRegister() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -26,9 +26,9 @@ export default function SignInRegister() {
   const [userIntro, setUserIntro] = useState("");
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
-  let [file, setFile] = useState();
-  let [fileNameShow, setFileNameShow] = useState("");
-  let [loading, setLoading] = useState(false);
+  const [file, setFile] = useState();
+  const [fileNameShow, setFileNameShow] = useState("");
+  const [loading, setLoading] = useState(false);
   const [warning, setWarning] = useState(false);
 
   // component for warning
@@ -47,7 +47,7 @@ export default function SignInRegister() {
   }
 
   // check if input user information are valid or not
-  let signUpRg_checker = (name, email, pw, city, country, intro) => {
+  const signUpRg_checker = (name, email, pw, city, country, intro) => {
     if (name == "" && !isNaN(name)) {
       setWarning(true);
       return false;
@@ -82,13 +82,13 @@ export default function SignInRegister() {
   };
 
   // add user information on firebase and show on app using dispatch
-  let uploadUserInfoForSignUp = () => {
-    let imgCreateDate = new Date();
-    let storageRef = storage.ref();
-    let savePath = storageRef.child(
+  const uploadUserInfoForSignUp = () => {
+    const imgCreateDate = new Date();
+    const storageRef = storage.ref();
+    const savePath = storageRef.child(
       "profileImage/" + "profile_" + imgCreateDate
     );
-    let upload = savePath.put(file);
+    const upload = savePath.put(file);
 
     upload.on(
       "state_changed",
@@ -105,7 +105,7 @@ export default function SignInRegister() {
               result.user.updateProfile({
                 displayName: userName,
               });
-              let userInfo = {
+              const userInfo = {
                 name: userName,
                 city: userCity,
                 country: userCountry,
@@ -150,7 +150,7 @@ export default function SignInRegister() {
                   <input
                     onChange={(e) => {
                       setFile(e.target.files[0]);
-                      let hidePath = e.target.value
+                      const hidePath = e.target.value
                         .split("/")
                         .pop()
                         .split("\\")

@@ -1,5 +1,10 @@
+/**
+ * @author April
+ * @purpose 원하는 내용으로 글+사진 포스팅 create 구현
+ * @date 2023.03.11
+ * @update
+ */
 /*eslint-disable */
-
 import React, { useState } from "react";
 import styles from "./PostingPage.module.css";
 import { useNavigate } from "react-router-dom";
@@ -12,33 +17,32 @@ import "firebase/storage";
 import Spinner from "../components/Spinner";
 
 export default function PostingPage() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  let [content, setContent] = useState("");
-  let [file, setFile] = useState();
-  let [fileNameShow, setFileNameShow] = useState("");
-  let [loading, setLoading] = useState(false);
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState();
+  const [fileNameShow, setFileNameShow] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userUidShow = useSelector((state) => state.userUidShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
+  const userCountryShow = useSelector((state) => state.userCountryShow);
+  const userCityShow = useSelector((state) => state.userCityShow);
 
   let listContent;
-  
+
   if (loading) {
     listContent = <Spinner />;
   }
 
-
   const addPost = () => {
     setLoading(true);
-    let imgCreateDate = new Date();
-    let storageRef = storage.ref();
-    let savePath = storageRef.child(
+    const imgCreateDate = new Date();
+    const storageRef = storage.ref();
+    const savePath = storageRef.child(
       "postingImage/" + "posting_" + imgCreateDate
     );
-    let upload = savePath.put(file);
+    const upload = savePath.put(file);
     // firebase code
     upload.on(
       "state_changed",
@@ -51,7 +55,7 @@ export default function PostingPage() {
       // 성공시 동작하는 함수
       () => {
         upload.snapshot.ref.getDownloadURL().then((postingUrl) => {
-          let saveData = {
+          const saveData = {
             content: content,
             date: formattedTimestamp(),
             postingImage: postingUrl,
@@ -77,10 +81,10 @@ export default function PostingPage() {
 
   const formattedTimestamp = () => {
     const dateObj = new Date();
-    const month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
-    const date = ('0' + dateObj.getDate()).slice(-2);
+    const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+    const date = ("0" + dateObj.getDate()).slice(-2);
     const year = dateObj.getFullYear();
-    const currentDate = year + '-' + month + '-' + date;
+    const currentDate = year + "-" + month + "-" + date;
     const currentTime = dateObj.toTimeString().split(" ")[0];
     return `${currentDate} ${currentTime}`;
   };
@@ -128,7 +132,7 @@ export default function PostingPage() {
                     <input
                       onChange={(e) => {
                         setFile(e.target.files[0]);
-                        let hidePath = e.target.value
+                        const hidePath = e.target.value
                           .split("/")
                           .pop()
                           .split("\\")

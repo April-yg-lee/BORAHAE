@@ -1,6 +1,6 @@
 /**
  * @author April
- * @purpose 원하는 내용으로 프로필 사진 포함 user information update 기능 구현 
+ * @purpose 원하는 내용으로 프로필 사진 포함 user information update 기능 구현
  * @date 2023.03.11
  * @update
  */
@@ -26,16 +26,16 @@ import "firebase/firestore";
 import "firebase/database";
 
 export default function ProfileEdit() {
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [userName, setUserName] = useState("");
   const [userIntro, setUserIntro] = useState("");
   const [userCity, setUserCity] = useState("");
   const [userCountry, setUserCountry] = useState("");
-  let [file, setFile] = useState();
-  let [fileNameShow, setFileNameShow] = useState("");
-  let [loading, setLoading] = useState(false);
+  const [file, setFile] = useState();
+  const [fileNameShow, setFileNameShow] = useState("");
+  const [loading, setLoading] = useState(false);
 
   let listContent;
   if (loading) {
@@ -43,14 +43,14 @@ export default function ProfileEdit() {
   }
 
   // state from redux
-  let userNameShow = useSelector((state) => state.userNameShow);
-  let userUidShow = useSelector((state) => state.userUidShow);
-  let userCountryShow = useSelector((state) => state.userCountryShow);
-  let userCityShow = useSelector((state) => state.userCityShow);
-  let userIntroShow = useSelector((state) => state.userIntroShow);
-  let userProfilePicShow = useSelector((state) => state.userProfilePicShow);
+  const userNameShow = useSelector((state) => state.userNameShow);
+  const userUidShow = useSelector((state) => state.userUidShow);
+  const userCountryShow = useSelector((state) => state.userCountryShow);
+  const userCityShow = useSelector((state) => state.userCityShow);
+  const userIntroShow = useSelector((state) => state.userIntroShow);
+  const userProfilePicShow = useSelector((state) => state.userProfilePicShow);
 
-  // set original user information after loading first 
+  // set original user information after loading first
   useEffect(() => {
     setUserName(userNameShow);
     setUserIntro(userIntroShow);
@@ -59,14 +59,14 @@ export default function ProfileEdit() {
     setFile(userProfilePicShow);
   }, []);
 
-  // update(edit) user information into firebase  
-  let updateUserInfo = () => {
-    let imgCreateDate = new Date();
-    let storageRef = storage.ref();
-    let savePath = storageRef.child(
+  // update(edit) user information into firebase
+  const updateUserInfo = () => {
+    const imgCreateDate = new Date();
+    const storageRef = storage.ref();
+    const savePath = storageRef.child(
       "profileImage/" + "profile_" + imgCreateDate
     );
-    let upload = savePath.put(file);
+    const upload = savePath.put(file);
 
     // firebase code
     upload.on(
@@ -96,7 +96,7 @@ export default function ProfileEdit() {
                       profileUrl = userProfilePicShow;
                     }
 
-                    let userInfo = {
+                    const userInfo = {
                       name: userName,
                       intro: userIntro,
                       city: userCity,
@@ -144,7 +144,7 @@ export default function ProfileEdit() {
                   <input
                     onChange={(e) => {
                       setFile(e.target.files[0]);
-                      let hidePath = e.target.value
+                      const hidePath = e.target.value
                         .split("/")
                         .pop()
                         .split("\\")
