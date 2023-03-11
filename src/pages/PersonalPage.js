@@ -130,6 +130,29 @@ export default function PersonalPage() {
       });
   };
 
+  const chattingBtn = () => {
+    if (userUidShow !== userInfo.uid) {
+      return (
+        <button
+          onClick={() => {
+            navigate("/chatting", {
+              state: {
+                uid: userInfo.uid,
+                name: userInfo.name,
+                profileImage: userInfo.profileImage,
+              },
+            });
+          }}
+          className={styles.chat_btn}
+        >
+          Chat
+        </button>
+      )
+    } else {
+      return "";
+    }
+  }
+
   useEffect(() => {
     getUserInfoFromMainBoard();
     postCall();
@@ -161,20 +184,8 @@ export default function PersonalPage() {
                     {userInfo.name}
                   </span>
                 </div>
-                <button
-                  onClick={() => {
-                    navigate("/chatting", {
-                      state: {
-                        uid: userInfo.uid,
-                        name: userInfo.name,
-                        profileImage: userInfo.profileImage,
-                      },
-                    });
-                  }}
-                  className={styles.chat_btn}
-                >
-                  Chat
-                </button>
+                {chattingBtn()}
+
               </div>
               <div className={styles.introduce}>
                 <h4>
