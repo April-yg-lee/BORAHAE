@@ -58,7 +58,6 @@ export default function Chatting() {
         .get()
         .then((result) => {
 
-          console.log(result);
           if (result.empty) {
             createNewChatRoom();
           } else {
@@ -98,11 +97,11 @@ export default function Chatting() {
         setRoomId(newRoomId);
         getChatRoomInfo(newRoomId);
       });
-    const hostRead = { readAt: newRoomData.lastestAt };
+    const hostRead = { readAt: newRoomData.lastestAt, uid: newRoomData.member[0] };
     db.collection("chatroom").doc(newRoomId).collection("isRead")
       .doc(newRoomData.member[0])
       .set(hostRead);
-    const guestRead = { readAt: newRoomData.lastestAt };
+    const guestRead = { readAt: newRoomData.lastestAt, uid: newRoomData.member[1] };
     db.collection("chatroom").doc(newRoomId).collection("isRead")
       .doc(newRoomData.member[1])
       .set(guestRead);

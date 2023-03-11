@@ -62,7 +62,7 @@ export default function SignInQuestions() {
                   .get()
                   .then((result) => {
                     if (result.size > 99) {
-                      tmp.newMessageCount = "100+";
+                      tmp.newMessageCount = "99+";
                     } else {
                       tmp.newMessageCount = result.size;
                     }

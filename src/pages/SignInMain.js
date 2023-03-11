@@ -5,12 +5,12 @@
  * @update
  */
 /*eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SignInMain.module.css";
 import LogoTitle from "../components/LogoTitle";
 import HeartSpinner from "../components/HeartSpinner";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setUserUidShow,
   setUserNameShow,
@@ -37,6 +37,43 @@ export default function SignInMain() {
   if (loading) {
     heartPosition = <HeartSpinner />;
   }
+
+  const checkSignInBefore = () => {
+    // user 가 로그인 되어 있는지 확인하는 코드
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setLoading(true);
+        dispatch(setUserNameShow(user.displayName));
+        // get data from firebase
+        db.collection("user")
+          .where("userInfo.uid", "==", user.uid)
+          .get()
+          .then((result) => {
+            result.forEach((doc) => {
+              dispatch(setUserUidShow(doc.data().userInfo.uid));
+              dispatch(setUserNameShow(doc.data().userInfo.name));
+              dispatch(setUserCityShow(doc.data().userInfo.city));
+              dispatch(
+                setUserCountryShow(doc.data().userInfo.country)
+              );
+              dispatch(setUserIntroShow(doc.data().userInfo.intro));
+              dispatch(
+                setUserProfilePicShow(
+                  doc.data().userInfo.profileImage
+                )
+              );
+              navigate("/mainboard");
+              setLoading(false);
+            });
+          });
+      }
+    });
+  }
+
+  useEffect(() => {
+    checkSignInBefore();
+  }, []);
+
 
   function WarningBox() {
     return (
@@ -81,39 +118,11 @@ export default function SignInMain() {
                 .signInWithEmailAndPassword(userEmail, userPassword)
                 .then((result) => {
                   setWarning(false);
+                  checkSignInBefore();
                 })
                 .catch((err) => {
                   setWarning(true);
                 });
-              // check if user sign-in or not | Setting user's information on app after sign-in
-              firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                  setLoading(true);
-                  dispatch(setUserNameShow(user.displayName));
-                  // get user information data from firebase
-                  db.collection("user")
-                    .where("userInfo.uid", "==", user.uid)
-                    .get()
-                    .then((result) => {
-                      result.forEach((doc) => {
-                        dispatch(setUserUidShow(doc.data().userInfo.uid));
-                        dispatch(setUserNameShow(doc.data().userInfo.name));
-                        dispatch(setUserCityShow(doc.data().userInfo.city));
-                        dispatch(
-                          setUserCountryShow(doc.data().userInfo.country)
-                        );
-                        dispatch(setUserIntroShow(doc.data().userInfo.intro));
-                        dispatch(
-                          setUserProfilePicShow(
-                            doc.data().userInfo.profileImage
-                          )
-                        );
-                        navigate("/mainboard");
-                        setLoading(false);
-                      });
-                    });
-                }
-              });
             }}
             className={styles.signin_btn}
           >
