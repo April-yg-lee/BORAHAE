@@ -148,7 +148,10 @@ export default function PostingPage() {
                 </div>
 
                 <div className={styles.btn_section}>
-                  <button onClick={addPost} className={styles.submit_btn}>
+                  <button
+                    onClick={fileNameShow == "" ? null : ()=> {addPost()}}
+                    className={styles.submit_btn}
+                  >
                     Submit
                   </button>
                 </div>

@@ -40,7 +40,7 @@ export default function PersonalPage() {
 
   // get posting time
   const currentMoment = (realTime) => {
-    return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
+    return moment.utc(realTime).add(7, "hours").startOf("seconds").fromNow();
   };
 
   // get user's information by clicking on the post in the mainBoard

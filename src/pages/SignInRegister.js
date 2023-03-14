@@ -77,6 +77,10 @@ export default function SignInRegister() {
       setWarning(true);
       return false;
     }
+    if (fileNameShow == "") {
+      setWarning(true);
+      return false;
+    }
     setWarning(false);
     return true;
   };

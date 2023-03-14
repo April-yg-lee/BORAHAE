@@ -42,7 +42,7 @@ export default function MyDashBoard() {
 
   // get posting time
   const currentMoment = (realTime) => {
-    return moment.utc(realTime).add(8, "hours").startOf("seconds").fromNow();
+    return moment.utc(realTime).add(7, "hours").startOf("seconds").fromNow();
   };
 
   // get Posts data from firebase
