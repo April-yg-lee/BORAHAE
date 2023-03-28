@@ -75,6 +75,7 @@
 
 .bell_icon {
   color: white;
+  visibility: hidden;
 }
 
 .mainBoard_option {
