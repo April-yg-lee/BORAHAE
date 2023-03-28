@@ -48,7 +48,7 @@ export default function SignInRegister() {
 
   // check if input user information are valid or not
   const signUpRg_checker = (name, email, pw, city, country, intro) => {
-    if (name == "" && !isNaN(name)) {
+    if (name == "" && name.length > 9 && !isNaN(name)) {
       setWarning(true);
       return false;
     }
