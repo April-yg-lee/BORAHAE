@@ -44,7 +44,7 @@ export default function MainBoard() {
 
   // get posting time
   const currentMoment = (realTime) => {
-    return moment.utc(realTime).add(7, "hours").startOf("seconds").fromNow();
+    return moment.utc(realTime).subtract(9, "hours").startOf("seconds").fromNow();
   };
 
   // get Posts data from firebase
