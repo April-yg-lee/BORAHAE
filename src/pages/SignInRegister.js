@@ -174,7 +174,7 @@ export default function SignInRegister() {
                 value={userName}
                 className={styles.input_Q}
                 type='text'
-                placeholder='Enter your name. (ex: Jimin)'
+                placeholder='Enter your name. (max 9 characters)'
               ></input>
               <input
                 onChange={(e) => {
